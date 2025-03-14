@@ -6,8 +6,8 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>충격! 매우 배고픈 상태. 긴장감 고조</h1>
-    <h2>점심메뉴 결정회 "옹헤야로 가닥 잡혀있어"</h2>
+    <h1>"점심메뉴 결정!"</h1>
+    <h2>점심메뉴 결정회 "오늘은 짜장면으로 해야.."</h2>
     <hr>
     <h3>H3 제목입니다.</h3>
     제목입니다.
@@ -23,5 +23,106 @@
 
     <p><a href="p1.html">p1페이지로 이동하기</a>
     </p>
+
+    <ol>
+        <li><a href="p1.html">군주론</a></li>
+        <li><a href="p2.html">이방인</a></li>
+        <li><a href="p3.html">동물농장</a></li>
+    </ol>
+
+    <hr>
+    <table border="1">
+        <tr>
+            <th>번호</th>
+            <th>이름</th>
+            <th>나이</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>문호랭</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>문소금</td>
+            <td>0</td>
+        </tr>
+    </table>
 </body>
+<br>
+<hr>
+<table border="1">
+    <tr><!--1행-->
+        <th colspan="2">번호/이름</th><!--열 병합-->       
+        <th>나이</th>
+        <th>성별</th>
+        <th>품종</th>
+    </tr>
+    <tr><!--2행-->
+        <th>1</th>
+        <th>문흑미</th>
+        <th>2</th>
+        <th colspan="2">F 벵갈</th>
+    </tr>
+    <tr><!--3행-->
+        <th>2</th>
+        <th>문현미</th>
+        <th>2</th>
+        <th colspan="2">M 렉돌</th>
+        
+    </tr>
+    <tr><!--4행-->
+        <th>3</th>
+        <th>문후추</th>
+        <th>1</th>
+        <th>M</th>
+        <th>엑조틱</th>
+    </tr>
+    <tr><!--5행-->
+        <th>4</th>
+        <th>문호랭</th>
+        <th>1</th>
+        <th>M</th>
+        <th>벵갈</th>
+    </tr>
+    <tr><!--6행-->
+        
+        <th colspan="5">5 문소금 0 M 노르웨이숲</th>
+    </tr>
+    <tr><!--7행-->
+        
+        <th colspan="5">6 문루 1 M 메인쿤</th>
+    </tr>
+</table>
+<hr>
+<form action="" method="GET"><!--name을 서용하지 않으면 서버로 파라미터를 절대로 전달할 수 없다-->
+   id:<input type="text" name="userid" id="id" placeholder="ID를 입력하세요" ><!--수정이 불가능 하도록 잠금-->
+   pwd: <input type="text" name="userpwd" id="pwd" placeholder="pwd를 입력하세요"><!--입력 양식에서 글자를 입력하면 placeholder값에 있음 value만 날아감-->
+   <input type="button" value="로그인"><br>
+   성별:<!--복수선택 불가능-->
+   <input type="radio" name="gender" value="남자">남자
+   <input type="radio" name="gender" value="여자">여자<br><br>
+   취미:<!--복수 선택 가능-->
+   <input type="checkbox" name="hobbi" value="게임">게임&nbsp;
+   <input type="checkbox" name="hobbi" value="독서">독서&nbsp;
+   <input type="checkbox" name="hobbi" value="축구">축구&nbsp;
+   <input type="checkbox" name="hobbi" value="등산">등산&nbsp;
+   <br><br>
+   <select name="job" ><!--여러가지 중에 선택하기-->
+    <option value="student">훈련생</option>
+    <option value="teacher">훈련강사</option>
+    <option value="staff">행정직원</option>
+   </select><br><br>
+   <textarea name="message" placeholder="input message"></textarea><br><br>
+
+
+   <input type="submit" value="전송"><!--<form> 제출용 -->
+
+
+
+
+</form>
+
+
+
 </html>

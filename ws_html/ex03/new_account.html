@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+</head>
+<body>
+    <h1>신규 회원가입</h1>
+    <h5>아래의 내용을 작성해주세요</h5>
+    <form action="login.html" method="GET">
+        성명: <input type="text" name="user_name" id="name" placeholder="이름을 입력해주세요"><br>
+        
+        <table>
+            <tr>
+                생일: 년<input type="text" name="user_birth_y" placeholder="1998">
+            </tr>
+            <tr>
+                월 <select name="user_birth_m">
+                    <option value="1">1월</option>
+                    <option value="2">2월</option>
+                    <option value="3">3월</option>
+                    <option value="4">4월</option>
+                    <option value="5">5월</option>
+                    <option value="6">6월</option>
+                    <option value="7">7월</option>
+                    <option value="8">8월</option>
+                    <option value="9">9월</option>
+                    <option value="10">10월</option>
+                    <option value="11">11월</option>
+                    <option value="12">12월</option>
+
+                </select>
+            </tr>
+            <tr>
+                일 <input type="text" name="user_birth_d" placeholder="25">
+            </tr>
+        </table>
+    
+        성별 
+        <input type="radio" value="남자" name="gender">남자
+        <input type="radio" value="여자" name="gender">여자<br>
+        이메일: <input type="text" name="user_email" placeholder="이메일을 입력해주세요"><br>
+        ID: <input type="text" name="user_id"  placeholder="사용할 ID를 입력해주세요"><br>
+        비밀번호: <input type="text" name="user_pwd" placeholder="사용할 비밀번호 입력"><br>
+        닉네임: <input type="text" name="user_nickname"><br><br>
+        <input type="submit" value="제출하기">
+        
+
+
+    </form>
+    
+</body>
+</html>
