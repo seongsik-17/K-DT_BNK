@@ -17,11 +17,11 @@ public class Test16 {
 		int rdNum = 0;
 
 		for (int i = 0; i < 6; i++) {
-			rdNum = rd.nextInt(45)+1;
+			rdNum = rd.nextInt(6)+1;
 			lotto[i] = rdNum;
 			for(int k = 0; k < i; k++) {
 				if(lotto[i]== lotto[k]) {
-					lotto[i] = rd.nextInt(45)+1;
+					i--;
 				}
 			}
 			
