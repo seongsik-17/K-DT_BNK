@@ -1,0 +1,31 @@
+@charset "utf=8";
+#title{
+    width: 120px;
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    box-shadow: 3px 3px 10px black;
+    
+
+}
+img{
+    border-radius: 100px;
+}
+#info{
+    line-height: 150%;
+    border-style: solid black;
+    border-width: 1px;
+}
+
+#intro{
+    text-shadow: 3px 3px 10px purple;
+    text-decoration: underline;
+}
+#p2{
+    border: solid 3px green;
+    line-height: 150%;
+    padding: 20px;
+    font-weight: bold;
+    border-radius: 50px;
+
+}

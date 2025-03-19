@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        span{
+            border: solid 1px black;
+            background-color: yellow;
+            width: 100px;
+            height: 100px;
+            text-align: center;
+
+        }
+        #a{
+            width: 100px;
+            height: 100px;
+            margin: 20px;
+        }
+        #b{
+            display: block;/*인라인 요소를 블록처럼 처리*/
+            width: 100px;
+            height: 100px;
+            margin: 20px;
+        }
+        #c{
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h3>인라인과 블록</h3><!--블록형에는 사이즈 지정 가능-->
+    <p>
+        글자1
+        <span id="a">요소 A</span>
+        글자2
+        <span id="b">요소 B</span>
+        글자3
+        <span id="c">요소 C</span>
+        글자4
+        <!--p는 블록, span은 인라인-->
+
+    </p>
+</body>
+</html>
