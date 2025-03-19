@@ -24,7 +24,7 @@ public class Class_practice3 {
 	public static void calculator(int a, int b) {
 		System.out.println(add(a, b));
 		System.out.println(minus(a, b));
-		System.out.println(multi(a, b));
+		System.out.println(multi(a, b)); 
 		System.out.println(division(a, b));
 	}
 
