@@ -21,7 +21,7 @@ public class Binary_serch {
 		}System.out.println(Arrays.toString(arr));
 		
 		int start = (int)Math.floor((arr.length/2));
-		int find_num = 8;
+		int find_num = 6;
 		
 		while(true) {
 			if(arr[start] < find_num) {//중간 값이 찾는 수보다 작을 경우 배열 오른쪽으로 가서 또 중간값을 찾기
@@ -32,14 +32,11 @@ public class Binary_serch {
 				}
 				else {
 					continue;
-				}
-				
+				}			
 				
 				
 			}
-			else {
-				
-			}
+			
 		}
 		
 		
