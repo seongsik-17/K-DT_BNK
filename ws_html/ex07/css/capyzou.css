@@ -1,0 +1,40 @@
+@charset "UTF-8";
+body{
+    background-color: #bbf1ef;
+    font-family: 'Verdana', 'Apple SD Gothic Neo', 'NamunGothic';
+}
+h1{
+    font-size: 18px;
+    border: 3px solid white;
+    border-radius: 20px;
+    padding: 6px 0;
+    width: 300px;
+    text-align: center;
+    margin: 20px auto;
+}
+p, ul{
+    text-align: center;
+    margin-bottom: 20px;
+}
+img{
+    border-radius: 50%;
+}
+a{
+    display: block;
+    padding: 20px 0;
+    background-color: rgb(250, 152, 169);
+    color: white;
+    font-weight:bold ;
+    border-radius: 4px;
+}
+ul{
+    width: 300px;
+    margin: 0 auto;
+}
+li{
+    margin: 20px;
+}
+div{
+    margin: 0 10px 10px 0;
+    
+}
