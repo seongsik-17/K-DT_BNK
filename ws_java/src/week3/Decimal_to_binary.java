@@ -25,7 +25,7 @@ public class Decimal_to_binary {
 		for (int j = cnt; j >= 0; j--) {
 			System.out.print(arr[j]);
 		}
-		System.out.println("⑵");
+		System.out.println("16");
 	}
 
 	static void octal(int deci) {
