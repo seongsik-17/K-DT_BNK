@@ -8,10 +8,15 @@ public class Binary_serch {// 이진탐색의 선행 과제는 정렬이다!!!
 	static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		int arr[] = new int[100];
+		int arr[] = new int[] {1,3,5,8,9,2,6,4,7};
 		int n = (int) Math.floor(10.9);
 		int temp = 0;
 		int rdNum = 0;
+		
+		for(int m = 0; m < arr.length; m++) {
+			rdNum = rd.nextInt(arr.length)+1;
+			arr[m] = rdNum;
+		}
 		
 
 		for (int i = 0; i < arr.length - 1; i++) {// 들어오는 숫자를 오름차순으로 정렬하는 코드
@@ -27,7 +32,7 @@ public class Binary_serch {// 이진탐색의 선행 과제는 정렬이다!!!
 		// System.out.println(Arrays.toString(arr));
 
 		int start = (int) Math.floor((arr.length / 2));
-		int find_num = 18;
+		int find_num = 1;
 
 		while (true) {
 			if (arr[start] < find_num) {// 중간 값이 찾는 수보다 작을 경우 배열 오른쪽으로 가서 또 중간값을 찾기
@@ -40,8 +45,8 @@ public class Binary_serch {// 이진탐색의 선행 과제는 정렬이다!!!
 					continue;// 찾을때 까지 반복하기
 				}
 
-			} else {
-				start = (0 + start) / 2;
+			} else{
+				start = (start) / 2;
 				if (arr[start] == find_num) {// 새로운 중간 값과 찾는 수가 일치하면 종료
 					System.out.println("수를 찾았습니다!" + arr[start]);
 					System.out.println("수의 위치: arr[" + start + "]");
