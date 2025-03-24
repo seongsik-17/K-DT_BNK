@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table,tr,td{
+            border: 5px solid blue;
+            background-color: skyblue;
+            border-collapse: collapse;
+            font-size: 18px;
+            
+            
+        }
+        #myhead{
+            text-align: center;
+            font-weight: bold;
+            height: 100px;
+           
+        }
+        .footer{
+            height: 100px;
+        }
+        .main{
+            width: 100px;
+            height: 300px;
+            
+            
+            
+        }
+        .main a{
+            font-weight: bold;
+        
+        }
+        .lorem{
+            padding: 0 0 0 20px;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>CSS grid Layout</h1>
+    <p>he Grid Layout Module offers a grid-based layout system, with rows and columns</p>
+    <p>The Grid Layout Module makes it easy to design complex and responsive 
+        web pages without using floats and positioning:</p>
+<table>
+    <tr id="myhead">
+        <td colspan="2">My header</td>
+    </tr>
+    <tr>
+        <td valign="top" class="main"><a href="#">link1</a><br><a href="#">link2</a><br><a href="#">link3</a></td>
+        <td class="lorem">
+            <h3>Lorem Ipsum</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae veniam cumque voluptas fugiat nostrum rem, iusto odit. Saepe necessitatibus rem illum aut similique eos aperiam! Odit, rerum commodi? Itaque, nemo.</p>
+        
+        </td>
+        
+
+    </tr>
+    <tr class="footer">
+        <td colspan="2">Footer</td>
+    </tr>
+
+</table>    
+    
+</body>
+</html>
