@@ -5,8 +5,8 @@ public class Student {
 	String name;
 	int kor_score;
 	int eng_score;
-	int math_score;
-	
+	int math_score;	
 	
 }
+
 

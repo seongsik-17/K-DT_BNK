@@ -29,37 +29,14 @@ public class Student_test {
 		bread.eng_score = 70;
 		bread.math_score = 60;
 		
-		
-		int arr_kor[] = new int[3];
-		arr_kor[0] = james.kor_score;
-		arr_kor[1] = ann.kor_score;
-		arr_kor[2] = bread.kor_score;
-		
-		String arr_name[] = new String[3];
-		arr_name[0] = james.name;
-		arr_name[1] = ann.name;
-		arr_name[2] = bread.name;
-		
 		Student studnes[] = new Student[3];
 		studnes[0] = james;
 		studnes[1] = bread;
 		studnes[2] = ann;
 		
-		int arr_eng[] = new int[3];
-		arr_eng[0] = james.eng_score;
-		arr_eng[1] = ann.eng_score;
-		arr_eng[2] = bread.eng_score;
 		
-		int arr_math[] = new int[3];
-		arr_math[0] = james.math_score;
-		arr_math[1] = ann.math_score;
-		arr_math[2] = bread.math_score;
-		
-		
-		System.out.println(studnes[0].kor_score);
-		
-		
-		
+	
 	}
+	
 
 }
