@@ -1,4 +1,4 @@
-package class_test01;
+package class_test1;
 
 public class Change_num {
 	int no;//멤버 변수
