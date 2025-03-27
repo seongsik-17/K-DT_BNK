@@ -51,6 +51,7 @@ public class Human_main {
 			}
 
 		}
+		
 		Human_main at = new Human_main();
 		at.find(Human);
 		
