@@ -1,6 +1,8 @@
-package vo;
+package class_test5;
 
 import java.util.Scanner;
+
+import vo.Human;
 
 public class Human_main {
 
