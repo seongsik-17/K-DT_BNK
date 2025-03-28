@@ -1,4 +1,4 @@
-package class_test01;
+package class_test1;
 
 public class Bookmain {
 
