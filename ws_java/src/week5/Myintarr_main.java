@@ -17,8 +17,6 @@ public class Myintarr_main {
 		
 		my.showInfo();		
 		
-		
-		
 	}
 
 }
