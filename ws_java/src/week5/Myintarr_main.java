@@ -13,9 +13,31 @@ public class Myintarr_main {
 		my.setter(3, 0);
 		my.setter(4, 9);
 		
-		my.getter(3);
 		
-		my.showInfo();		
+		my.showInfo();
+		my.addInt(2);
+		my.showInfo();
+		my.addInt(2);
+		my.showInfo();
+		
+		my.remover(1);
+		my.showInfo();
+		
+		my.addInt(2);
+		my.showInfo();
+		my.addInt(2);
+		my.showInfo();
+		my.addInt(2);
+		my.showInfo();
+		my.addInt(2);
+		my.showInfo();
+		
+		my.remover(1);
+		my.showInfo();
+		
+		my.showPoint();
+		
+		my.getter(3);
 		
 	}
 
