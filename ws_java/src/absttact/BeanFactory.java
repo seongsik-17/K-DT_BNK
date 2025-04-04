@@ -5,12 +5,14 @@ public class BeanFactory {
 	TV sam = new SamsungTV();
 	TV LG = new LgTV();
 
-	public TV getBean(int num) {
-		if (num == 1) {
+	public TV getBean(String tv) {
+		if(tv.equals("samsung")) {
 			return sam;
-		} else if (num == 2) {
+		}
+		else if(tv.equals("lg")) {
 			return LG;
-		} else {
+		}
+		else {
 			return null;
 		}
 
