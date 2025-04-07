@@ -1,4 +1,4 @@
-package absttact;
+package abstract_parctice;
 
 public interface TV {
 	public void powerON();

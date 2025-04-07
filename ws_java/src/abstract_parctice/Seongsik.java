@@ -1,4 +1,4 @@
-package absttact;
+package abstract_parctice;
 
 public class Seongsik extends Jump implements Fly,Run,Sit {
 	String name;

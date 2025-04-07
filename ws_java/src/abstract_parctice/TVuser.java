@@ -1,4 +1,4 @@
-package absttact;
+package abstract_parctice;
 
 import java.util.Scanner;
 

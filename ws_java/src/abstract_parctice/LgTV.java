@@ -1,4 +1,4 @@
-package absttact;
+package abstract_parctice;
 
 public class LgTV implements TV  {
 	public void powerON() {

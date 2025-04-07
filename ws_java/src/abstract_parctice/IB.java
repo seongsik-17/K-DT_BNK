@@ -1,4 +1,4 @@
-package absttact;
+package abstract_parctice;
 
 public interface IB {
 	//추상메서드에는 완성된 함수도 존재 가능하지만

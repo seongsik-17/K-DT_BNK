@@ -1,4 +1,4 @@
-package absttact;
+package abstract_parctice;
 
 public class SamsungTV implements TV {
 	public void powerON() {

@@ -1,4 +1,4 @@
-package absttact;
+package abstract_parctice;
 
 public class BlackPrinter implements Printable {
 
