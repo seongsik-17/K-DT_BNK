@@ -105,7 +105,7 @@ SELECT SQRT(16) FROM DUAL; --???
 SELECT SIGN(50) FROM DUAL;--숫자 부호 반환(-1:음수, 0:0, 1:양수)
 
 SELECT LENGTH('ORACLE') FROM DUAL;
-SELECT SUBSTR('ORALE',2,3)FROM DUAL;
+SELECT SUBSTR('ORALE',2,3)FROM DUAL;--문자열 길이
 SELECT INSTR('ORACL','A') FROM DUAL;
 SELECT UPPER('oracle') FROM DUAL;
 SELECT LOWER('ORACLE') FROM DUAL;
@@ -214,7 +214,7 @@ SELECT LPAD(job,20,'%') FROM emp;
 --39.사원번호와 급여를 100으로 나눈 나머지를 검색하시오
 --40.사원번호, 사원이름, 입사일 일사 후 100일의 날짜를 검색하시오
 --41.사원번호------근무 일자를 계산하여 검색하시오
---42.사원들의 입서일에서 3달째 되는 날짜는 검색
+--42.사원들의 입사일에서 3달째 되는 날짜를 검색
 
 
 
