@@ -1,7 +1,7 @@
 package week6;
 
-public class Box {//제네릭
-	Object t;
+public class Box<T> {//제네릭
+	T t;
 	
 
 }

@@ -7,9 +7,6 @@ public class Client {
 	}
 	private Client[] arr_c = new Client[10];
 	
-	public void setClient() {
-		arr_c[i] = 
-	}
 	
 	
 	
