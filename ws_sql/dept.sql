@@ -98,7 +98,7 @@ FROM DUAL;--더미테이블(SELECT문을 완성시키기 위해서 오라클에�
 SELECT ABS(-19) FROM DUAL;--부호 변환
 SELECT CEIL(3.14) FROM DUAL;--올림
 SELECT FLOOR(3.99) FROM DUAL;--버림
-SELECT TRUNC(10, 3) FROM DUAL;
+SELECT TRUNC(160.123452, 2) FROM DUAL;
 SELECT MOD(10,3) FROM DUAL;
 SELECT POWER(2,3) FROM DUAL;--제곱근
 SELECT SQRT(16) FROM DUAL; --???
@@ -146,54 +146,55 @@ select ename, mgr from emp;
 select ename,job,comm from emp;
 select ename,job,NVL2(comm,sal+comm,sal)from emp;--comm값이 NULL이면 sal, 아님 comm+sal을 표시
 
---부서의 부서이름과 지역을 검색하시오
+--1.부서의 부서이름과 지역을 검색하시오
 SELECT dname,loc FROM dept;
---사원들의 입사일 중복을 제거하고 검색하시오
+--2.사원들의 입사일 중복을 제거하고 검색하시오
 SELECT DISTINCT hiredate FROM emp;
---사원들의 부서번호 중복을 제거하고 검색하시오(DISTINCT)
+--3.사원들의 부서번호 중복을 제거하고 검색하시오(DISTINCT)
 SELECT DISTINCT deptno FROM dept;
---사원들의 6개월 급여의 합을 검색하시오
-SELECT SUM(sal)*6 FROM emp; 
---사원 이름을 'name'으로 사원의 급여를 salary로 이름 부여하여 검색
+--4.사원들의 6개월 급여의 합을 검색하시오
+SELECT sal*6 FROM emp; 
+--5.사원 이름을 'name'으로 사원의 급여를 salary로 이름 부여하여 검색
 SELECT ename  AS name, sal AS salary  FROM emp;
---부서번호, 부서이름, 지역을 한글 제목으로 검색하시오
+--6.부서번호, 부서이름, 지역을 한글 제목으로 검색하시오
 SELECT deptno as 부서번호, dname as 부서이름, loc as 지역 FROM dept;
---사원의 직무와 사원이름을 합쳐서 검색하시오(ex.PRESIDENTKING)
+--7.사원의 직무와 사원이름을 합쳐서 검색하시오(ex.PRESIDENTKING)
 SELECT job || ename from emp;
---WARD 사원의 모든 정보를 검색
+--8.WARD 사원의 모든 정보를 검색
 SELECT * FROM emp WHERE ename ='WORD';
---10번 부서에 근무하는 MANAGER의 사원 이름을 검색
+--9.10번 부서에 근무하는 MANAGER의 사원 이름을 검색
 SELECT ename FROM emp WHERE deptno = 10 and job='MANAGER';
---급여가 2000이상이며 30번 부서에 근무하는 사원들의 사원번호와 사원이름을 검색하시오
+--10.급여가 2000이상이며 30번 부서에 근무하는 사원들의 사원번호와 사원이름을 검색하시오
 SELECT empno, ename FROM emp WHERE sal >= 2000 AND deptno = 30;
---20번 부서 외에 근무하는 MANAGER 사원의 이름을 검색
+--11.20번 부서 외에 근무하는 MANAGER 사원의 이름을 검색
 SELECT ename FROM emp WHERE deptno <> 20;
---SALESMAN의 급여가 1500이상인 사원이름을 검색하시오
+--12.SALESMAN의 급여가 1500이상인 사원이름을 검색하시오
 SELECT ename from emp where sal >= 1500 and job = 'SALESMAN';
---부서번호가 10 또는 30에 근무하는 사원들의 사원이름과 급여를 검색하시오
+--13.부서번호가 10 또는 30에 근무하는 사원들의 사원이름과 급여를 검색하시오
 SELECT ename, sal from emp WHERE deptno=10 OR deptno=30;
---상급자 사원번호가 76으로 시작하는 사원들의 사원이름을 검색하시오
+--14.상급자 사원번호가 76으로 시작하는 사원들의 사원이름을 검색하시오
 SELECT ename FROM emp WHERE empno like '76%';
---1981년 2월에 입사한 사원의 사원번호, 사원이름, 부서번호를 검색
+--15.1981년 2월에 입사한 사원의 사원번호, 사원이름, 부서번호를 검색
 SELECT empno, ename, deptno FROM emp WHERE EXTRACT(MONTH FROM hiredate)=2 AND EXTRACT(YEAR FROM hiredate) = 1981;
---사원이름 중간에'A'가 들어간 사원의 사원번호와 서사원이름을 검색
+--16.사원이름 중간에'A'가 들어간 사원의 사원번호와 서사원이름을 검색
 SELECT empno, ename FROM emp WHERE ename LIKE '%A%';
---상급자 사원번호가 NULL인 사원의 사원번호와 사원이름을 검색
+--17.상급자 사원번호가 NULL인 사원의 사원번호와 사원이름을 검색
 SELECT empno, ename FROM emp WHERE  mgr is NULL;
---상급자 사원번호가 NULL이 아닌 사원의 사원번호와 사원이름을 검색
---사원들의 사원번호와 사원이름을 사원번호 순으로 검색(오름차순)
+--18.상급자 사원번호가 NULL이 아닌 사원의 사원번호와 사원이름을 검색
+SELECT empno,ename FROM emp WHERE mgr  IS NOT NULL;
+--19.사원들의 사원번호와 사원이름을 사원번호 순으로 검색(오름차순)
 SELECT empno, ename FROM emp
 ORDER BY  empno ASC;
---사원들의 정보를 사원직무별 급여가 많은 순으로 검색
+--20.사원들의 정보를 사원직무별 급여가 많은 순으로 검색
 SELECT * FROM emp
 ORDER BY job, sal DESC;
---사원들의 이름을 소문자로 검색
+--21.사원들의 이름을 소문자로 검색
 SELECT LOWER (ename) FROM emp;
---사원들의 사원이름,사원직무를 대문자로 검색하시오
+--22.사원들의 사원이름,사원직무를 대문자로 검색하시오
 SELECT UPPER(ename),UPPER(job) FROM emp;
---사원들의 사원이름을 첫 자만 대문자로 검색하시오
+--23.사원들의 사원이름을 첫 자만 대문자로 검색하시오
 SELECT INITCAP(ename) FROM emp;
---사원들의 사원이름과 사원직무를 연결하여 검색하시오
+--24.사원들의 사원이름과 사원직무를 연결하여 검색하시오
 SELECT CONCAT(ename,job) FROM emp;
 --사원들의 사원이름과 첫 두 글자를 검색하시오
 SELECT SUBSTR('ORALE',2,3)FROM DUAL;
@@ -210,12 +211,67 @@ SELECT RPAD(ename,15,'&') FROM emp;
 --사원직무를 20자리로 하고 앞에 %를 채워 검색하시오
 SELECT LPAD(job,20,'%') FROM emp;
 --37.사원의 사원번호, 사원이름 급여를 검색(급여는 두번째 자리에서 반올림함)
+SELECT empno, ename, ROUND(sal) FROM emp;
 --38.사원의 사원번호, 사원이름, 급여를 검색(급여는 두번째 자리에서 절삭)
+SELECT empno, ename, TRUNC(sal,2) FROM emp;
 --39.사원번호와 급여를 100으로 나눈 나머지를 검색하시오
+SELECT MOD(empno,100),MOD(sal,100) FROM emp;
 --40.사원번호, 사원이름, 입사일 일사 후 100일의 날짜를 검색하시오
---41.사원번호------근무 일자를 계산하여 검색하시오
+SELECT empno, ename, hiredate+100 FROM emp;
+--41.사원번호, 사원이름, 입사일 이후 근무 일자를 계산하여 검색하시오
+SELECT empno, ename,SYSDATE - TO_DATE(hiredate,'YYYY-MM-DD') FROM emp;
 --42.사원들의 입사일에서 3달째 되는 날짜를 검색
+SELECT ADD_MONTHS(hiredate, 3) FROM emp;
+--43.상급자 사원번호가 없는 사원의 경우 '상급자없음'을 나타내도록 하시오
+SELECT NVL(MGR, '상급자없음') FROM emp;
+--44.커미션을 포함한 급여를 사원번호,사원 이름과 함께 검색하시오
+SELECT NVL(sal+comm,sal), empno, ename FROM emp;
+--45.커미션을 포함한 연봉을 사원번호, 사원 이름과 함께 검색하시오
+SELECT NVL((sal+comm)*12,sal*12),empno, ename FROM emp; 
 
+
+--46.10,20번 부서의 사원 중 최고급여를 받는 사원의 사원번호, 사원이름, 급여를 검색하시오
+SELECT empno,ename,sal FROM emp WHERE deptno IN(10,20) AND sal = (SELECT MAX(sal) FROM emp);
+--47.30번 부서의 사원 중 최저급여를 받는 사원의 사원번호, 사원이름, 급여를 검색하시오
+SELECT empno,ename,sal,deptno FROM emp WHERE sal = (SELECT MIN((SELECT sal FROM emp WHERE deptno = 30))); 
+
+
+--48.전체 사원들 중 최고 커미션을 받는 사원의 사원번호, 사원이름, 커미션을 검색하시오
+SELECT empno, ename, comm FROM emp WHERE comm = (SELECT MAX(comm) FROM emp);
+--49.전체 사원들 중 최저 커미션을 받는 사원의 사원번호, 사원이름, 커미션을 검색하시오
+SELECT empno, ename, comm FROM emp WHERE comm = (SELECT MIN(comm) FROM emp) AND comm IS NOT NULL;
+--50전체 사원의 입사일 중 MAX와MIN 값을 검색하시오
+SELECT MAX(hiredate), MIN(hiredate) FROM emp;
+--51.사원번호의 MAX와 MIN 값을 검색하시오
+SELECT MAX(empno),MIN(empno) FROM emp; 
+--52.상급자 사원번호 열의 갯수를 검색하시오
+SELECT COUNT(DISTINCT mgr) FROM emp;
+--53.사원이름의 갯수를 검색하시오
+SELECT COUNT(ename)||'명'  AS 사원이름의갯수 FROM emp;
+--54.사원 테이블의 튜플 수를 검색하시오
+SELECT COUNT(*) FROM emp;
+--55.부서별 사원들의 인원수를 검색하시오
+SELECT job,COUNT(*) FROM emp GROUP BY job;
+--56.상급자 사원번호별 사원들의 인원수를 검색하시오
+SELECT mgr,COUNT(*) FROM emp GROUP BY mgr HAVING mgr IS NOT NULL;
+--57.부서별 사원들의 평균급여를 검색하시오
+SELECT job,AVG(sal) FROM emp GROUP BY job;
+--58.부서별 사원직무별 사원의 급여의 합을 검색하시오
+SELECT deptno,job,SUM(sal) FROM emp GROUP BY deptno,job ORDER BY deptno;
+--59부서별 사원직무별 사원들의 평균 급여를 검색하시오
+SELECT deptno,job,AVG(sal) FROM emp GROUP BY deptno,job ORDER BY deptno;
+--60.부서별 사원직무별 사원들의 입사일의 MAX와 MIN 값을 검색하시오.
+SELECT deptno,job, MAX(hiredate),MIN(hiredate) FROM emp GROUP BY deptno,job ORDER BY deptno;
+
+
+--JOIN: 두 개 이상의 테이블을 참조하여 결과를 내주는것 
+SELECT e.empno,e.ename,d.dname,d.loc FROM emp e,dept d WHERE e.deptno = d.deptno; 
+
+--JONES의 부서명, 부서 이름을 알려주는 쿼리를 작성하시오
+SELECT e.ename, d.dname FROM emp e, dept d WHERE e.ename = 'JONES' AND e.deptno = d.deptno;
+
+SELECT ename, dname FROM (SELECT emp.*,dept.* From emp, dept WHERE emp.deptno = dept.deptno) 
+WHERE ename = 'JONES';
 
 
 
