@@ -9,6 +9,7 @@ public class Create_Acc {
 	private String pw;
 
 	public Create_Acc() {
+		System.out.println("회원가입을 환영합니다!");
 		System.out.print("이름을 입력해주세요>> ");
 		name = sc.nextLine();
 		System.out.print("사용할 아이디를 입력해주세요>> ");

@@ -12,10 +12,9 @@ public class Login_main {
 		ArrayList<Create_Acc> sList = new ArrayList<>();
 		
 		Create_Acc ca1 = new Create_Acc();
-		Create_Acc ca2 = new Create_Acc();
+		
 		
 		sList.add(ca1);
-		sList.add(ca2);
 		
 		
 		
