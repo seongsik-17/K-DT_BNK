@@ -35,7 +35,7 @@ public class Homepage_main {
 				System.out.println("가입된 정보▼");
 				System.out.println(mka.toString());
 
-				List<Board_R> list = new ArrayList<>();
+				List<Board> list = new ArrayList<>();
 				Class.forName("oracle.jdbc.driver.OracleDriver");
 
 				System.out.println("전체조회");
@@ -44,7 +44,7 @@ public class Homepage_main {
 				ResultSet rs_s = stmt.executeQuery(qurey_s);
 
 				while (rs_s.next()) {
-					Board_R br = new Board_R();
+					Board br = new Board();
 					int bno = rs_s.getInt("bno");
 					String title = rs_s.getString("title");
 					String content = rs_s.getString("content");
@@ -59,13 +59,13 @@ public class Homepage_main {
 
 					list.add(br);
 				}
-				for (Board_R b : list) {
+				for (Board b : list) {
 					System.out.println(b);
 				}
 			}
 
 		} else if (cheak == 2) {// 게시판으로 이동
-			List<Board_R> list = new ArrayList<>();
+			List<Board> list = new ArrayList<>();
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			String url = "jdbc:oracle:thin:@localhost:1521:testdb";
 			String id = "green";
@@ -79,7 +79,7 @@ public class Homepage_main {
 			ResultSet rs = stmt.executeQuery(qurey);
 
 			while (rs.next()) {
-				Board_R br = new Board_R();
+				Board br = new Board();
 				int bno = rs.getInt("bno");
 				String title = rs.getString("title");
 				String content = rs.getString("content");
@@ -95,7 +95,7 @@ public class Homepage_main {
 				list.add(br);
 			}
 
-			for (Board_R b : list) {
+			for (Board b : list) {
 				System.out.println(b);
 			}
 			System.out.println("게시글을 작성하시겠습니까?\n1.예 2.아니오");

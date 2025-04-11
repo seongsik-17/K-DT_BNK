@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class X {
-	public void insert() throws ClassNotFoundException, SQLException {
+	public void insert() throws ClassNotFoundException, SQLException {//회원가입용 INSERT
 		Member m = new Member();
 		Class.forName("oracle.jdbc.driver.OracleDriver");
 		String url = "jdbc:oracle:thin:@localhost:1521:testdb";

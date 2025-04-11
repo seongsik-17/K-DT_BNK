@@ -2,7 +2,7 @@ package c03;
 
 import java.util.Scanner;
 
-public class Member {
+public class Member {//vo클래스는 테이블과 1ㄷ1로 생성된다. (혼동을 방지하기 위해)
 	private String id;
 	private String pw;
 	private String name;

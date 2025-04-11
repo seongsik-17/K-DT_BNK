@@ -1,4 +1,4 @@
-package c01;
+package c05;
 
 public class Member {
 	private String id;
@@ -38,10 +38,14 @@ public class Member {
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
+	
 	@Override
 	public String toString() {
 		return "Member [id=" + id + ", pw=" + pw + ", name=" + name + ", phone=" + phone + ", grade=" + grade + "]";
 	}
+	
+	
+	
 	
 
 }
