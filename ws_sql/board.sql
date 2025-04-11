@@ -42,3 +42,5 @@ INSERT INTO tbl_board VALUES(3,'어쩔TV','언제 준다고 말 안했잖아 기
 
 commit;
 select * from tbl_member;
+DROP TABLE tbl_board;
+DROP TABLE tbl_member;

@@ -293,7 +293,71 @@ HAVING MAX(STU_HEIGHT) >= 175;
 SELECT to_char(MAX(AVG(STU_HEIGHT)),'999.99') FROM student GROUP BY STU_DEPT;
 
 
+CREATE TABLE t_student
+AS SELECT * FROM student WHERE STU_DEPT = '기계';--기존에 있는 테이블을 활용하여 새로운 테이블을 생성*************
 
+desc t_student;
+
+SELECT * FROM t_student;
+
+--새로운 열 추가
+ALTER TABLE t_student ADD (army CHAR(1));--컬럼을 추가한다(추가된 컬럼은 NULL로 세팅이 된다.
+
+SELECT * FROM t_student;
+
+ALTER TABLE t_student ADD (age NUMBER(3) DEFAULT 20);
+
+ALTER TABLE t_student DROP COLUMN age;//칼럼을 삭제하는 명령어
+
+UPDATE t_student SET age = 22 WHERE STU_NAME = '이태연';
+UPDATE t_student SET age = 25 WHERE STU_NO = 20143054;
+
+ALTER TABLE t_student DROP (army);--COLUMN대신 ()로 대체 가능
+
+--테이블 이름 변경
+RENAME t_student TO test_student;--테이블 이름을 변경
+
+desc test_student;
+
+TRUNCATE TABLE test_student;
+select * from test_student;
+
+--DDL로 작업하면 커밋을 안해도 DB를 영구적으로 저장 가능
+--DML은 커밋을 해야만 DB에 반영된다.
+--DML을 사용했다가 커밋을 안해도 DDL을 실행하면 자동으로 커밋된다.
+
+DROP TABLE test_student;
+DELETE FROM  test_student;
+ROLLBACK;
+
+
+--제약조건
+--데이터베이스 상태(인스턴스)가 항상 만족해야할 규칙
+
+CREATE TABLE members(
+mno NUMBER PRIMARY KEY,--기본키로 설정한다는건 다른 요소와 구별하기 위한 기준이라는 것, 중복은 안된다, 값이 비어도 안된다는 제약조건이 존재한다 UNIQUE + NOT NULL
+mobile CHAR(13) UNIQUE NOT NULL,
+gender CHAR(1) CHECK (gender IN ('M','F')),
+hobby VARCHAR2(30) NOT NULL--빈 값 ㄴㄴ
+);
+
+INSERT INTO members VALUES(1,'010-1111-1111','M','축구');
+INSERT INTO members VALUES(2,'','','축구');
+INSERT INTO members VALUES(3,'3333-3333','M','축구');
+INSERT INTO members VALUES(4,'4444-4444','','축구');
+INSERT INTO members VALUES(5,'5555-5555','s','축구');
+
+
+select * from members;
+
+UPDATE members SET gender = 'M' WHERE mno = 5;
+
+ALTER TABLE members DISABLE CONSTRAINT SYS_C007537;
+ALTER TABLE members ENABLE CONSTRAINT SYS_C007538;
+
+ALTER TABLE members ENABLE CONSTRAINT SYS_C007534;
+ 
+DROP TABLE members;
 
 
 
