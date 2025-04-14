@@ -273,5 +273,61 @@ SELECT e.ename, d.dname FROM emp e, dept d WHERE e.ename = 'JONES' AND e.deptno 
 SELECT ename, dname FROM (SELECT emp.*,dept.* From emp, dept WHERE emp.deptno = dept.deptno) 
 WHERE ename = 'JONES';
 
+--1.부서번호가 2030인 자료들로 emp1 테이블을 만드시오
+CREATE TABLE emp1 AS SELECT * FROM emp WHERE deptno IN ('20','30');
+--2.dept테이블을 바탕으로 dept1을 만드시오
+CREATE TABLE dept1 AS SELECT * FROM dept;
+--3.salgradde 테이블을 바탕으로 salgrade 1 테이블을 만드시오
+CREATE TABLE salgrade1 AS SELECT * FROM salgrade;
+--4.사원번호 7703, 사원이름 JOSH, 사원직무 SALESMAN, 상급자 사원번호 7566, 급여 1400, 커미션 0 부서번호 20인 사원이 오늘 입사
+INSERT INTO emp1 VALUES(7703, 'JOSH', 'SALSESMAN', 7566, TO_DATE(SYSDATE, 'dd-mm-yyyy'), 1400, NULL, 20);
+SELECT * FROM emp1;
+--5.사원번호 7401 사원이름 HOMER 급여 1300 부서번호 10인 사원이 입사
+INSERT INTO emp1 VALUES(7401,'HOMER',NULL,NULL,TO_DATE(SYSDATE, 'dd-mm-yyyy'),1300,NULL,10);
+--6.사원번호 7323 사원이름 BRANDA 부서번호 30 사원번호 7499와 동일한 급여를 받는 사원이 입사하였다
+INSERT INTO emp1 VALUES(7323,'BRANDA',NULL,NULL,TO_DATE(SYSDATE, 'dd-mm-yyyy'),NULL,NULL,30);
+UPDATE emp1 SET sal = 1600 WHERE empno = 7323;
+--7.사원(emp)테이블애서 부서번호가 10인 데이터를 emp1 테이블에 삽입하시오
+INSERT INTO emp1 SELECT * FROM emp WHERE deptno = 10;
+--8.사원번호 7369의 사원직무를 ALALYST로 바꾸시오
+UPDATE emp1 SET job = 'ALALYST' WHERE empno = 7369;
+--9.부서번호 20인 직원들의 급여를 10% 감하시오
+UPDATE emp1 SET sal = sal * 0.9 WHERE deptno = 20;
+--10. 모든 사원의 급여를 100 증가시키시오
+UPDATE emp1 SET sal = sal+100;
+--11.사원번호 7902의 상급자 사원번호를 7654, 부서번호를 30으로 바꾸시오
+UPDATE emp1 SET mgr = 7654, deptno = 30 WHERE empno = 7902;
+--12.지역이 DALLDAS인 사원들의 급여를 10감하시오
+UPDATE emp1 SET sal = sal - 10 WHERE deptno = 20;
+--13.급여등급이 2인 사원들의 급여를 20감하시오
+UPDATE emp1 SET sal = sal - 20 WHERE salgrade = 2;
+--14.사원번호 7499가 퇴사하였다.
+DELETE FROM emp1 WHERE empno = 7499;
+--15.부서번호 50 부서이름 PLANNING 지역 MIAMI가 추가되었다
+INSERT INTO dept1
+VALUES(50, 'PLANNING','MIAMI');
+--16.부서번호가 40인 부서가 60으로 변경되었다
+UPDATE dept1 SET deptno = 60 WHERE deptno = 40;
+select * from dept1;
+Select * from emp1;
+--17.부서번호가 30인 부서가 폐쇄되었다
+DELETE FROM dept1 WHERE deptno = 30;
+--18.dept1 테이블에 없는 부서번호들을 갖고 있는 사원들의 부서번호를 99로 변경하시오
+--=UPDATE emp1 SET deptno = 99 WHERE deptno = 30;
+UPDATE emp1 SET deptno = 99
+WHERE deptno NOT IN (SELECT deptno FROM dept1);
+
+--19.emp1에tj 99번 부서번호를 삭제하시오
+UPDATE emp1 SET deptno = NULL WHERE deptno = 99;
+--20.상급자 사원번호가 없는 사원의 급여를 100올렸다
+UPDATE emp1 SET sal  = sal+100 WHERE mgr IS NULL;
+--21.JONES, JOSH, CLARK가 30번 부서로 바뀌었다
+UPDATE emp1 SET deptno = 30 WHERE ename IN('JONES','JOSH','CLARK');
+--22.커미션이 NULL인 데이터를 0으로 바꾸시오
+UPDATE emp1 SET comm = 0 WHERE comm IS NULL;
+--23. emp1 전체 테이블의 데이터를 삭제하시오
+TRUNCATE TABLE emp1;
+ROLLBACK;
+select * from emp1;
 
 
