@@ -40,7 +40,7 @@ public class JDBCTest_Select {
 			member.setPw(pw);
 			member.setName(name);
 			member.setPhone(phone);
-			member.setGrade(grade);
+			//member.setGrade(grade);
 
 			list.add(member);
 		}

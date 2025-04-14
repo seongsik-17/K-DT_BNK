@@ -49,9 +49,9 @@ public class Login {
 				m.setGrade(rs.getString("grade"));
 
 				System.out.println("로그인에 성공하였습니다!");
-				++cnt;
+				cnt = cnt+1;
 				Map<String, String>map = new HashMap<>();
-				map.put(m.getId(), m.getPw());
+				map.put(m.getId(), m.getName());
 				System.out.println(map.get(m.getId()));
 				System.out.println(m.getName() + "님 환영합니다!");
 				flag = false;
