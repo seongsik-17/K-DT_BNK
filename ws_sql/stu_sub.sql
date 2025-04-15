@@ -405,17 +405,202 @@ DELETE FROm subject1 WHERE SUB_NO = 101;
 UPDATE enroll1 SET SUB_NO = 999
 WHERE SUB_NO NOT IN (SELECT SUB_NO FROM subject1);
 --16.enroll1 테이블에서 student1에 없는 학생번호를 99999999로 변경하시오
---UPDATE enroll1 SET SUB_NO = 99999999
---WHERE 
+UPDATE enroll1 SET STU_NO = 99999999 WHERE STU_NO NOT IN (SELECT STU_NO FROM student1);
 --17.enrol1테이블에서 과목번호 999를 삭제하시오
+SELECT * FROM enroll1 ;
+UPDATE enroll1 SET SUB_NO = NULL WHERE SUB_NO = 999;
 --18. enrol1네이블에서 학번99999999을 삭제하시오
+UPDATE enroll1 SET STU_NO = NULL WHERE STU_NO = 99999999;
+
 --19. enrol1테이블의 전체 데이터 삭제
+TRUNCATE TABLE enroll1;
+select * from enroll1;
 
 
+--Cross JOIN
+--두 개이상의 테이블을 조건없이 합치는 연산 수행.
+
+SELECT student.*, enroll.*
+FROM student CROSS JOIN enroll;
+SELECT * FROM student;
+
+--EQIT JOIN
+--두 개 이상의 테이블에 관련 있는 공통 열의 값을 이용하여 논리적으로 결합하는 연산 수행
+--WHERE절에서 '=' 사용.
+SELECT student.STU_NO,STU_DEPT,STU_GRADE, enr_grade
+FROM student , enroll 
+WHERE student.STU_NO = enroll.STU_NO;
+
+--NATURAL JOIN ->자동으로 두 테이블의 공통 열을 찾아서 WHERE부분을 자동으로 맞춰준다.     
+--※하지만 공통 된 열이 2개 이상이면 사용이 불가능 하다.
+SELECT STU_NO,STU_NAME,STU_DEPT,ENR_GRADE
+FROM STUDENT NATURAL JOIN ENROLL;
+
+--공통된 열이 2개 이상일 경우 - JOIN ~ USING
+SELECT stu_no, stu_name,stu_dept,enr_grade
+FROM student JOIN enroll USING(stu_no);
+
+--JOIN ~ ON
+SELECT student.stu_no, stu_name,stu_dept,enr_grade
+FROM student JOIN enroll ON student.stu_no = enroll.stu_no;
+
+--101번 과목을 수강하는 학생들의 학번과 이름을 검색하시오
+SELECT student.stu_no, stu_name
+FROM student,enroll
+WHERE student.stu_no = enroll.stu_no
+AND sub_no = 101;
+
+--101번 또는 102번 과목을 수강하는 학생의 학번과 이름을 검색하시오
+SELECT student.stu_no,stu_name
+FROM student, enroll
+WHERE student.stu_no = enroll.stu_no
+AND sub_no IN (101,102);
+
+SELECT stu_no, stu_name FROM student JOIN enroll USING(stu_no);
+
+--'컴퓨터개론' 과목을 수강하는 학생들의 학번, 이름, 과목이름을 검색하시오
+SELECT student.stu_no,stu_name, sub_name
+FROM student,enroll,subject
+WHERE enroll.stu_no = student.stu_no
+AND enroll.sub_no = subject.sub_no
+AND sub_no = 101;
+
+--Non-equl JOIN
+--'='연산자를 사용하지 안호는다
+--기본키와 외래키 관계가 아닌 열값들의 의미있는 관계로 조인하는 경우
+
+--인사관리 DB에서 사원 테이블의 급여 열 값이 급여테이블의 하위급여와 상위급여 사이에 사원의 급여등급을 결정하는 질의문.
+SELECT empno, ename,sal,grade
+FROM emp, salgrade
+WHERE sal BETWEEN losal AND hisal;
+
+--OUTHER JOIN : LEFT RIGHT FULL
+--조인 조건을 만족하지 않는 행들도 결과에 포함시키기 위한 조인
+SELECT e.*, sub_name
+FROM enroll e, subject s
+WHERE e.sub_no = s.sub_no;
+
+select * from enroll order by sub_no;
+select * from subject;
+
+SELECT e.*, sub_name
+FROM enroll e RIGHT OUTER JOIN subject s --왼쪽에 없는 값이 오른쪽에 있음
+ON e.sub_no = s.sub_no;
+
+SELECT e.*, sub_name
+FROM enroll e FULL OUTER JOIN subject s --왼쪽에 없는 값이 오른쪽에 있음
+ON e.sub_no = s.sub_no;
+
+--집합 연산자
+--UNION : 두 질의 결과값의 합. 중복을 제거함
+--UNION ALL: 두 질의 결과값의 합. 중복 포함
+--INTERSECT : 두 질의 결과 공통되는 값(교집합)
+--MINUS :  첫 번쨰 질의 결과에서 두 번째 결과에 있는 행을 제거함(차집합)
+
+CREATE TABLE a_student
+AS SELECT * FROM student WHERE stu_dept IN ('기계','전기전자');
+
+SELECT * FROM a_student;
+
+CREATE TABLE b_student
+AS SELECT * FROM student WHERE stu_dept IN ('전기전자','컴퓨터정보');
+
+--UNION : 두 질의 결과값의 합. 중복을 제거함
+SELECT * FROM a_student
+UNION
+SELECT * FROM b_student;
+
+--UNION ALL: 두 질의 결과값의 합. 중복 포함
+SELECT * FROM a_student
+UNION ALL
+SELECT * FROM b_student;
+
+--INTERSECT : 두 질의 결과 공통되는 값(교집합)
+SELECT * FROM a_student
+INTERSECT
+SELECT * FROM b_student;
+
+--MINUS :  첫 번쨰 질의 결과에서 두 번째 결과에 있는 행을 제거함(차집합)
+SELECT * FROM a_student
+MINUS
+SELECT * FROM b_student;
 
 
+--부질의(subQuery)
+--SELECT 문 안에 포함된 또 다른 SELECT 문을 서브쿼리라고 한다.
+
+--'옥성우' 학생보다 신장이 큰 학생들의 학번 이름 신장을 구하시오
+
+SELECT stu_no,stu_name,stu_height
+FROM student
+WHERE stu_height > (SELECT stu_height FROM student WHERE stu_name = '옥성우');
+
+--SELF JOIN
+--자기 자신 테이블과 조인
+--사원의 상급자 사원을 구하는 질의문
+SELECT a.empno as 사원번호, a.ename as 사원이름, b.empno as 상급자사원번호, b.ename as 상급자이름
+FROM emp a, emp b
+WHERE a.mgr = b.empno; 
+
+SELECT  a.stu_name,a.stu_height
+FROM student a, student b
+WHERE a.stu_height > b.stu_height 
+AND b.stu_name = '옥성우';
+
+SELECT stu_height FROM student;
 
 
+--학생테이블에서 '박희철' 학생과 같은 ㅊ중인 학생의 정보를 구하시오
+SELECT * 
+FROM student
+WHERE stu_weight = (SELECT stu_weight FROM student WHERE stu_name = '박희철')
+AND stu_name <> '박희철';
+
+--학생테이블에서 '컴퓨터정보' 학과와 같은 반인 다른 학과 학생정보를 구하시오
+SELECT *
+FROM student
+WHERE stu_class IN('A','B','C') AND stu_dept <> '컴퓨터정보';
+
+--최대 신장이 175 이상인 학과와 학과별 최대 신장을 구하시오
+SELECT STU_DEPT, MAX(STU_HEIGHT) FROM student
+GROUP BY STU_DEPT
+HAVING MAX(STU_HEIGHT) >= 175;
 
 
+--전체 학생들의 평균 신장보다 큰 학생을 구하시오
+SELECT *
+FROM student
+WHERE stu_height >(SELECT AVG(stu_height) FROM student);
+
+--모든 학과들의 평균 신장보다 큰 학생의 정보를  구하시오
+SELECT MAX(AVG(stu_height))
+FROM student
+GROUP BY stu_dept;
+
+SELECT stu_dept, ROUND(AVG(stu_height),2) AS AVG_height
+FROM student
+GROUP BY stu_dept;
+
+
+--컴퓨터정보과의 최소신장과 비교하여 최소신장이 더 큰 학과의 학과명과 최소 신장을 구하시오
+SELECT stu_dept, MIN(stu_height)
+FROM student
+GROUP BY stu_dept
+HAVING MIN(stu_height) > (SELECT MIN(stu_height) FROM student GROUP BY stu_dept HAVING stu_dept = '컴퓨터정보');
+
+--101번 과목을 수강하는 학생들의 학번과 이름을 검색
+SELECT stu_no, stu_name
+FROM student
+WHERE stu_no IN (SELECT stu_no FROM enroll WHERE sub_no = 101);
+
+--101번 과목을 수강한 학생들의 학번, 이름, 점수를 검색하시오
+SELECT s.stu_no,s.stu_name,e.enr_grade
+FROM student s, enroll e
+WHERE s.stu_no = e.stu_no
+AND sub_no = 101;
+
+
+--모든 학과들의 평균 신장보다 큰 학생의 정보를 구하시오
+SELECT * FROM student
+WHERE stu_height > (SELECT AVG(AVG(stu_height)) FROM student GROUP BY stu_dept);
 

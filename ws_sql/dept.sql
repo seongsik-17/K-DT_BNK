@@ -330,4 +330,25 @@ TRUNCATE TABLE emp1;
 ROLLBACK;
 select * from emp1;
 
+SELECT empno, ename,sal,grade
+FROM emp, salgrade
+WHERE sal BETWEEN losal AND hisal;
 
+--SELF JOIN
+--자기 자신 테이블과 조인
+--사원의 상급자 사원을 구하는 질의문
+SELECT a.empno as 사원번호, a.ename as 사원이름, b.empno as 상급자사원번호, b.ename as 상급자이름
+FROM emp a, emp b
+WHERE a.mgr = b.empno; 
+
+--OUTHER JOIN
+--조인 조건을 만족하지 않는 행들도 결과에 포함시키기 위한 조인
+SELECT e.*,sub_name
+FROM enroll e, subject s
+WHERE e.sub_no = s.sub_no;
+
+select * from emp;
+
+SELECT a.empno as 사원번호, a.ename as 사원이름, b.empno as 상급자사원번호, b.ename as 상급자이름
+FROM emp a LEFT OUTER JOIN emp b
+ON a.mgr = b.empno; 
