@@ -7,5 +7,4 @@ public class AnnoymousInner1Test {
 		Unit unit = hc.getMarine();
 		unit.move();
 	}
-
 }
