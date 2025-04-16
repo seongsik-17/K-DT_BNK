@@ -15,17 +15,24 @@ public class BookDAO {
 	}
 
 	public void insert() throws SQLException, ClassNotFoundException {// 삽입
-		
-		while(true) {
+
+		while (true) {
 			Book b = new Book();
 			db.connsql();
 			System.out.print("책 번호>> ");
 			b.setBno(sc.nextInt());
 			sc.nextLine();
-			String query_test = "SELECT * FROM tbl_book WHERE bno = ?" ;
+			String query_test = "SELECT * FROM tbl_book WHERE bno = ?";
 			PreparedStatement pstmt_test = db.connsql().prepareStatement(query_test);
 			pstmt_test.setInt(1, b.getBno());
 			ResultSet rs = pstmt_test.executeQuery();
+			if (rs.next()) {
+				System.out.println("""
+						이미 존재하는 책번호 입니다!!!
+						다른 번호를 입력 해주세요...
+								""");
+				continue;
+			}
 			System.out.print("책 제목>> ");
 			b.setBtitle(sc.nextLine());
 			System.out.print("책 저자>> ");
@@ -37,9 +44,7 @@ public class BookDAO {
 
 			System.out.println("입력된 값 ▼");
 			System.out.println(b.toString());
-			
 
-			
 			String query = "INSERT INTO tbl_book VALUES(?,?,?,?,?)";
 			PreparedStatement pstmt = db.connsql().prepareStatement(query);
 			pstmt.setInt(1, b.getBno());
@@ -50,12 +55,10 @@ public class BookDAO {
 			int result = pstmt.executeUpdate();
 			if (result == 1) {
 				System.out.println("책 정보가 정상적으로 입력 되었습니다.");
-				System.out.println(b.toString());
+
 				break;
 			}
 		}
-
-		
 
 	}
 
@@ -92,7 +95,7 @@ public class BookDAO {
 			pstmt.setInt(1, c);
 			pstmt.setInt(2, s);
 			result = pstmt.executeUpdate();
-			if(result ==1) {
+			if (result == 1) {
 				System.out.println("정상 처리되었습니다...");
 			}
 
@@ -102,9 +105,9 @@ public class BookDAO {
 			pstmt = db.connsql().prepareStatement(query);
 			pstmt.setInt(2, s);
 			pstmt.setInt(1, c);
-			
+
 			result = pstmt.executeUpdate();
-			if(result ==1) {
+			if (result == 1) {
 				System.out.println("정상 처리되었습니다...");
 			}
 
@@ -122,33 +125,31 @@ public class BookDAO {
 			pstmt = db.connsql().prepareStatement(query);
 			pstmt.setInt(2, sbook);
 			pstmt.setString(1, s);
-			
+
 			result = pstmt.executeUpdate();
-			if(result ==1) {
+			if (result == 1) {
 				System.out.println("정상 처리되었습니다...");
 			}
 
-		}
-		else if(i == 3) {
+		} else if (i == 3) {
 			query = "UPDATE tbl_book SET bwriter = ? WHERE bno = ?";
 			pstmt = db.connsql().prepareStatement(query);
 			pstmt.setInt(2, sbook);
 			pstmt.setString(1, s);
 			result = pstmt.executeUpdate();
-			if(result ==1) {
+			if (result == 1) {
 				System.out.println("정상 처리되었습니다...");
 			}
-		}
-		else if(i == 4) {
+		} else if (i == 4) {
 			query = "UPDATE tbl_book SET bco = ? WHERE bno = ?";
 			pstmt = db.connsql().prepareStatement(query);
 			pstmt.setInt(2, sbook);
 			pstmt.setString(1, s);
 			result = pstmt.executeUpdate();
-			if(result ==1) {
+			if (result == 1) {
 				System.out.println("정상 처리되었습니다...");
 			}
-			
+
 		}
 
 	}

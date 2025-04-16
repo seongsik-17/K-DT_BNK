@@ -9,5 +9,8 @@ public class Book {
 	private String bwriter;
 	private String bco;
 	private int bprice;
+	
+	
+	
 
 }
