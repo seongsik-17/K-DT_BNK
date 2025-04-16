@@ -22,6 +22,6 @@ public class IteratorTest {
 			System.out.print(itr.next()+"\t");
 		}
 
-	}
+	} 
 
 }
