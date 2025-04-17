@@ -11,13 +11,13 @@ public class Index {
 		Scanner sc = new Scanner(System.in);
 		DBcon jdbc = new DBcon();
 		jdbc.connect();
-		ProductService product = new ProductService();
+		ProductService product = new ProductService(sc,jdbc);
 		CustomerService customer = new CustomerService(sc, jdbc);
 		StoreService store = new StoreService(sc, jdbc);
 		//고객 정보 입력 구현 완료
 		//customer.customerInfo();
 		//입고 처리 구현 완료
-		//store.storeInfo();
+		store.storeInfo();
 		//고객 정보 수정 구현 완료
 		//customer.customerUpdateInfo();
 		//고객정보 삭제
