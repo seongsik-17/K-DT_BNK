@@ -11,7 +11,7 @@ public class DBcon {
 	public Connection connect() throws ClassNotFoundException, SQLException{
 		Class.forName("oracle.jdbc.driver.OracleDriver");
 		String url = "jdbc:oracle:thin:@localhost:1521:XE";
-		String id = "scott";
+		String id = "green";
 		String pw = "1234";
 		
 		Connection conn = DriverManager.getConnection(url,id,pw);
