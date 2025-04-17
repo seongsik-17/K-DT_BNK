@@ -604,3 +604,5 @@ AND sub_no = 101;
 SELECT * FROM student
 WHERE stu_height > (SELECT AVG(AVG(stu_height)) FROM student GROUP BY stu_dept);
 
+
+

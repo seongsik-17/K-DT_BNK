@@ -352,3 +352,5 @@ select * from emp;
 SELECT a.empno as 사원번호, a.ename as 사원이름, b.empno as 상급자사원번호, b.ename as 상급자이름
 FROM emp a LEFT OUTER JOIN emp b
 ON a.mgr = b.empno; 
+
+
