@@ -25,12 +25,33 @@ public class Stream1 {
 		List<String> list =  Arrays.asList("홍길동","임꺽정","해리포터");
 		
 		list.stream()
-		.sorted()
+		.sorted()//매개변수가 없으면 오름차순으로 정렬
 		.forEach(n -> System.out.println(n + "\n"));//요소를 하나씩 꺼내어서 출력
 		
 		list.stream()
-		.sorted((s1,s2) -> s1.length() - s2.length())
+		.sorted((s1,s2) -> s1.length() - s2.length())//내림차순
 		.forEach(n -> System.out.println(n + "\t"));
+		/**
+		Stream은 자료의 흐름이자 Collection(데이터 뭉치) 중의 한 기능이다.
+		-중간연산
+		filter : 조건에 맞는 자료들 추출하기**
+		map: 자료를 특정한 형태로 변환하기**
+		sorted : 정렬
+		distict(): 중복제거
+		limit(): 스트림 범위 제한
+		skip(): 스트림 내 데이터들 중 앞에서 n개 요소 건너 뜀
+		--최종 연산
+		collect(): 콜렉션 자료 만들어 반환**
+		forEach(): 각 요소에 대한 작업 수행**
+		count(): 요소 갯수 반환
+		reduce(): 요소들의 하나의 결과로 만들기
+		anyMathch(), allMatch() : 조건 검사
+		*/
+		
+		
+		
+		
+		//문자열의 갯수가 5보다 큰
 		
 		
 		
