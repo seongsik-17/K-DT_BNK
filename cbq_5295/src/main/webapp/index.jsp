@@ -5,24 +5,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="CSS/main.css">
+<!--<link rel="stylesheet" type="text/css" href="CSS/main.css">  -->
 
 </head>
 <body>
-	<header>
-		<h1>할인점 주문프로그램 ver 1.0</h1>
-	</header>
-	<nav>
-		<table>
-			<tr>
-			<td><a href="regestOrder.jsp">주문등록</a></td>
-				<td><a href="orderList.jsp">주문목록조회</a></td>
-				<td><a href="orderStatus.jsp">점포별주문현황</a></td>
-				<td><a href="pcodeSelect.jsp">제품코드조회</a></td>
-				<td><a href="index.jsp">홈으로</a></td>
-			</tr>
-		</table>
-	</nav>
+	<div class="navbar">
+    <h1>할인점 주문프로그램 ver 1.0</h1>
+    <ul class="nav-menu">
+        <li><a href="regestOrder.jsp">주문등록</a></li>
+        <li><a href="orderList.jsp">주문목록조회</a></li>
+        <li><a href="orderStatus.jsp">점포별주문현황</a></li>
+        <li><a href="pcodeSelect.jsp">제품코드조회</a></li>
+        <li><a href="index.jsp">홈으로</a></li>
+    </ul>
+</div>
 	<section>
 		<ul>
 			<li>과정평가혀 자격 CBQ</li>
