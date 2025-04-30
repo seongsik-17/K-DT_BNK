@@ -14,14 +14,19 @@ public class Index {
 		ProductService product = new ProductService(sc,jdbc);
 		CustomerService customer = new CustomerService(sc, jdbc);
 		StoreService store = new StoreService(sc, jdbc);
+		DeliveryService ds = new DeliveryService(sc,jdbc);
 		//고객 정보 입력 구현 완료
 		//customer.customerInfo();
 		//입고 처리 구현 완료
-		store.storeInfo();
+		//store.storeInfo();
 		//고객 정보 수정 구현 완료
 		//customer.customerUpdateInfo();
 		//고객정보 삭제
 		//customer.customerDeleteInfo();
+		//출고작업
+		//ds.deliveryInfo();
+		//거래처 전체 정보 조회
+		customer.checkAllCustomerInfo();
 		
 
 	}
