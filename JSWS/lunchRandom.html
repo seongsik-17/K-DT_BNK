@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>점심메뉴 생성기</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: bisque;
+        }
+
+        img {
+            border-radius: 10px;
+        }
+
+        button {
+            background-color: skyblue;
+            border-radius: 50px;
+            height: 80px;
+            width: 300px;
+            font-weight: bolder;
+            font-size: 30px;
+            margin-top: 20px;
+        }
+
+        table, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+           
+        }
+
+       
+    </style>
+</head>
+
+<body id="body">
+
+    <div>
+        <h1>점심메뉴 생성기</h1>
+        <hr>
+        <h2>오늘의 점심은....</h2>
+        <img id="menuimg" src="./RCP_Game/img/물음표.png" alt="???" width="300" height="300">
+        <h3 id="menuname">오늘의 메뉴는?????</h3>
+        <button onclick="lunchGet()">점심메뉴 추천 받기</button>
+    </div>
+    <div>
+        <h3>통계</h3>
+        <table>
+            <thead>
+                <tr>
+                    <td>가게명</td>
+                    <td>횟수</td>
+                </tr>
+            </thead>
+            <tbody id="statBody">
+                <tr><td>짬뽕관</td><td id="cnt0">0</td></tr>
+                <tr><td>한솥</td><td id="cnt1">0</td></tr>
+                <tr><td>찌개마을</td><td id="cnt2">0</td></tr>
+                <tr><td>칸다소바</td><td id="cnt3">0</td></tr>
+                <tr><td>부산집</td><td id="cnt4">0</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        
+        const lunchMenu = ['짬뽕관', '한솥', '찌개마을', '칸다소바', '부산집'];
+        const lunchImages = [
+            "./RCP_Game/lunchimages/짜장면.jpg",
+            "./RCP_Game/lunchimages/한솥.jpg",
+            "./RCP_Game/lunchimages/김치찌개.jpg",
+            "./RCP_Game/lunchimages/마제소바.jpg",
+            "./RCP_Game/lunchimages/두루치기.jpg"
+        ];
+        const counts = [0, 0, 0, 0, 0];
+        const body = document.getElementById("body");
+        function lunchGet() {
+            let rdNum = Math.floor(Math.random() * lunchMenu.length);
+            let red = Math.floor(Math.random() *255);
+            let green = Math.floor(Math.random() *255);
+            let blue = Math.floor(Math.random() *255);
+            body.style.backgroundColor = "rgb("+red+","+green+","+blue+")";
+            document.getElementById("menuimg").src = lunchImages[rdNum];
+            document.getElementById("menuname").innerHTML = '<h3>' + lunchMenu[rdNum] + '</h3>';
+
+            // 카운트 증가
+            counts[rdNum]++;
+            document.getElementById("cnt" + rdNum).innerText = counts[rdNum];
+        }
+    </script>
+</body>
+
+</html>
