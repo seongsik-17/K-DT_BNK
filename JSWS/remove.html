@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container">
+        <hr>
+        <h1>제거할 엘리먼트</h1>
+        <hr>
+    </div>
+
+    <script>
+        const container = document.getElementById('container');
+        const h1 = document.querySelector('h1');
+        setTimeout(()=>{//화살표(람다식) 무명함수
+            container.removeChild(h1);
+
+        },2000);//2000ms 후 삭제, 타임을 의미
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <!--*****************************************-->
+    <button onclick="stu()">-버튼-</button>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>아이디</th><th>비밀번호</th><th>이름</th>
+            </tr>
+        </thead>
+        <tbody id="tbody2">
+
+        </tbody>
+    </table>
+    <script>
+        //아이디 패스워드 이름
+        const tbody2 = document.getElementById("tbody2");
+        let index2 = 0;
+        function stu(){
+            
+            const student = [{
+            "id":"abc",
+            "pw":"1234",
+            "name":"kim"
+        },{
+            "id":"def",
+            "pw":"1234",
+            "name":"lee"
+        },{
+            "id":"ghi",
+            "pw":"1234",
+            "name":"park"
+        },{
+            "id":"jkl",
+            "pw":"1234",
+            "name":"choi"
+        },{
+            "id":"mno",
+            "pw":"1234",
+            "name":"moon"
+        }]
+            
+            const tr = document.createElement("tr");
+            const td4 = document.createElement("td"); 
+            td4.textContent = student[index2].id;
+            const td5 = document.createElement("td"); 
+            td5.textContent = student[index2].pw;
+            const td6 = document.createElement("td"); 
+            td6.textContent = student[index2].name;
+            tr.appendChild(td4);
+            tr.appendChild(td5);
+            tr.appendChild(td6);
+            tbody2.appendChild(tr);
+            
+            index2++;
+
+        }
+       
+    </script>
+</body>
+</html>

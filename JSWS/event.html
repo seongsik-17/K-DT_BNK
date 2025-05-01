@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #item{
+            border: 1px solid black;
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+            background-color: palevioletred;
+            
+        }
+    </style>
+</head>
+<body>
+    <h1>이벤트 객체</h1>
+    <hr>
+    <div id="item" onclick="f(event)">1</div>
+
+    <script>
+        function f(event){
+            alert('♥');
+            const targetTagName = event.target.tagName;//이벤트가 발생한 요소를 출력해주는 구문
+            if(targetTagName == 'DIV'){
+                console.log('div태그 입니다....');
+            }
+            else{
+                console.log('div태그가 아닙니다...')
+            }
+        }
+    </script>
+</body>
+</html>
