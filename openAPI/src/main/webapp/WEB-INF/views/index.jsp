@@ -47,7 +47,7 @@
 		}
 		
 		//두번째 페이지
-		function getAll(){
+		function getAll2(){
 			const xhr = new XMLHttpRequest();
 			xhr.onload = function(){
 				var obj = JSON.parse(xhr.responseText);
@@ -68,7 +68,7 @@
 				view.innerHTML = html;
 				
 			}
-			xhr.open('GET','getAll');
+			xhr.open('GET','getAll2');
 			xhr.send();
 		}
 	</script>
