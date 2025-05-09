@@ -50,7 +50,7 @@
 		function getAll2(){
 			const xhr = new XMLHttpRequest();
 			xhr.onload = function(){
-				var obj = JSON.parse(xhr.responseText);
+				var obj = JSON.parse(xhr.responseText);//JSON타입의 데이터를 객체 타입으로 변환하는 코드
 				var list = obj.gyeongnamculturallist.body.items.item;
 				
 				let html = '<br><table border="1">';
