@@ -17,6 +17,5 @@
 	<a href="/listContent">게시글 전체조회</a>
 </body>
 <script>
-	
 </script>
 </html>

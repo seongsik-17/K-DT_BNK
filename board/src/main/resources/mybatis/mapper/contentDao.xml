@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.board.dao.IContentDao">
+	<!-- SELECT -->
+	<select id="getContent">
+		SELECT * FROM tbl_board WHERE bno = #{id}
+	</select>
+	<select id="getContentList" resultType="com.example.board.dto.ContentDTO">
+		SELECT * FROM
+		(SELECT rownum rn, b.* FROM tbl_board b)
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
+	<select id="getPageNum" resultType="int">
+		SELECT MAX(rawnum) FROM tbl_board
+	</select>
+	<!-- INSERT -->
+	<insert id="insert">
+		INSERT INTO tbl_board VALUES(seq_board1.nextval,#{b.title},#{b.content},#{b.writer},#{b.regdate})
+	</insert>
+	
+</mapper>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>  
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +29,11 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	
+	<table>
+	<c:forEach var="i" begin="1" end="${endofPage }">
+		<a href="/listContent?pageNum=${i }">${i }</a>
+	</c:forEach>
+	</table>
 	<script>
 		const tbl = document.getElementById("tbl");
 		
@@ -57,6 +62,7 @@
 			xhr.open('GET', 'detail?id=' + bno);
 			xhr.send();
 		}
+		
 	</script>
 </body>
 </html>
