@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numeric Keypad Only</title>
+    <style>
+        .key {
+            border: 2px solid black;
+            height: 100px;
+            width: 100px;
+            background-color: bisque;
+            color: red;
+            text-align: center;
+            line-height: 100px;
+            font-weight: bolder;
+            font-size: 30px;
+            border-radius: 50px;
+            user-select: none;
+        }
+
+        .key:hover {
+            background-color: #f5cfa0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <table id="keypad"></table>
+
+    <script>
+        const table = document.getElementById('keypad');
+
+        // 1 ~ 9: 3줄
+        let number = 1;
+        for (let i = 0; i < 3; i++) {
+            const tr = document.createElement('tr');
+            for (let j = 0; j < 3; j++) {
+                const td = document.createElement('td');
+                const div = document.createElement('div');
+                div.className = 'key';
+                div.textContent = number++;
+                td.appendChild(div);
+                tr.appendChild(td);
+            }
+            table.appendChild(tr);
+        }
+
+        // 마지막 줄 (0만 가운데)
+        const lastRow = document.createElement('tr');
+
+        for (let i = 0; i < 3; i++) {
+            const td = document.createElement('td');
+            if (i === 1) {
+                const div = document.createElement('div');
+                div.className = 'key';
+                div.textContent = '0';
+                td.appendChild(div);
+            }
+            lastRow.appendChild(td);
+        }
+
+        table.appendChild(lastRow);
+
+        // 클릭 이벤트 위임
+        table.addEventListener('click', function(event) {
+            if (event.target.classList.contains('key')) {
+                console.log('이벤트가 발생한곳: '+event.target.tagName);
+                console.log('번호: '+event.target.textContent);
+            }
+        });
+    </script>
+</body>
+</html>

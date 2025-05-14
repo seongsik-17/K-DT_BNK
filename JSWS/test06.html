@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <input type="text" id="txt" placeholder="영어문자를 입력">
+   <button onclick="f()">아스키로바꾸기</button>
+   <p id="p1">----</p>
+    <script>
+        const txt = document.getElementById("txt");
+        const p1 = document.getElementById("p1");
+       function f(){
+            p1.innerText = txt.value.charCodeAt(0);
+       }
+        let str = 'hello world!';
+        console.log(str.includes(" "));
+
+        str = "abcdef";
+        console.log(str.slice(2,5));//원본을 건들지는 않는다
+        console.log(str);
+
+        str = "JavaScript";
+        console.log(str.toUpperCase());
+        console.log(str.toLowerCase());
+
+        str = "I like apples";
+        console.log(str.replace("apples","bananas"));
+        str = "red,green,blue";
+        let colors = str.split(",");
+        console.log(colors);
+
+        str = "       hello        ";
+        console.log(str.trim());
+
+        let numStr = "5";
+
+        console.log(numStr.padStart(3,"0"));
+        console.log(numStr.padEnd(3,"*"));
+
+        str = "ABC";
+        console.log(str.charAt(1));
+        console.log(str.charCodeAt(1));//아스키코드
+        /*텍스트 박스에 영문자를 입력하면 밑에 아스키 코드값이 나오는 웹*/
+
+    </script>
+</body>
+</html>

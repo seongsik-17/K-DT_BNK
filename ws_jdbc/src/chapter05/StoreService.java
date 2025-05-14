@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import chapter05_vo.DBcon;
 import chapter05_vo.Product;
+import chapter05_vo.Stock;
 import chapter05_vo.Store;
 
 public class StoreService {
@@ -46,13 +47,14 @@ public class StoreService {
 			if (checkCode(s.getP_code()) != 1) {
 				System.out.println("존재하지 않는 상품번호 입니다!");
 				System.out.println("새로운 상품을 추가하시겠습니까? \n 1.예 2.아니오");
-				choice = sc.nextInt(); sc.nextLine();
+				choice = sc.nextInt();
 				if (choice == 1) {
 					System.out.println("상품 추가를 시작합니다...");
 					ps.productInfo();
 					break;
 		
 				} else if (choice == 2) {
+					System.out.println("다시 입력해주세요...");
 					continue;
 				}
 
@@ -63,6 +65,15 @@ public class StoreService {
 				String query = "SELECT s_qty FROM stock WHERE p_code = ?";
 				pstmt = db.connect().prepareStatement(query);
 				pstmt.setString(1, s.getP_code());
+				ResultSet rs = pstmt.executeQuery();
+				if(rs.next()) {
+					int sum = rs.getInt("s_qty");
+					sum = sum+s.getS_sto();
+					s.setS_sto(sum);
+				}
+				
+				
+				
 
 				query = "UPDATE stock SET s_qty = ? WHERE p_code = ?";// "+"'"+s.getP_code()+"'";
 				pstmt = db.connect().prepareStatement(query);
@@ -74,7 +85,7 @@ public class StoreService {
 				int result = pstmt.executeUpdate();
 				if (result == 1) {
 					System.out.println("입고 작업이 정상 처리되었습니다!");
-					System.out.println("입고 작업 내역서");
+					System.out.println("입고 작업 내역서▼");
 					System.out.println(s.toString());
 					break;
 				}

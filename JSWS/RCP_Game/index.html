@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    
+</head>
+
+<body>
+    <h1>가위바위보게임</h1>
+    <div>
+        <h2>USER</h2>
+        <img src="./img/물음표.png" alt="?" id="img1"><br>
+        <button onclick="sisser()"> <img src="./img/가위.png" alt="가위" width="50" height="50"></button>
+        <button onclick="rock()"> <img src="./img/바위.png" alt="바위" width="50" height="50"></button>
+        <button onclick="paper()"> <img src="./img/보.png" alt="보" width="50" height="50"></button>
+    </div>
+    <h1>VS</h1>
+    <div>
+        <h2>CPU</h2>
+        <img src="./img/물음표.png" alt="?" id="cpuimg">
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <td>승</td>
+                    <td>무</td>
+                    <td>패</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="win">0</td>
+                    <td id="draw">0</td>
+                    <td id="lose">0</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+
+        let cpuchoice;
+        let win = 0;
+        let lose = 0;
+        let draw = 0;
+        
+
+        function sisser() {
+            document.getElementById("img1").src = "./img/가위.png";
+            userchoice = 1;
+            losewin(userchoice);
+
+
+        }
+        function rock() {
+            document.getElementById("img1").src = "./img/바위.png";
+            userchoice = 2;
+            losewin(userchoice);
+
+
+        }
+        function paper() {
+            document.getElementById("img1").src = "./img/보.png";
+            userchoice = 3;
+            losewin(userchoice);
+
+
+        }
+        function losewin(userchoice) {
+            cpuchoice = Math.floor(Math.random() * 3) + 1;
+            if (cpuchoice == 1) {
+                document.getElementById("cpuimg").src = "./img/가위.png";
+            }
+            if (cpuchoice == 2) {
+                document.getElementById("cpuimg").src = "./img/바위.png";
+            }
+            if (cpuchoice == 3) {
+                document.getElementById("cpuimg").src = "./img/보.png";
+            }
+            if ((cpuchoice - userchoice == -1) || (cpuchoice - userchoice == 2)) {
+                console.log("승리");
+                win++;
+                document.getElementById("win").textContent = win;
+
+
+            }
+            if ((cpuchoice - userchoice == -2) || (cpuchoice - userchoice == 1)) {
+                console.log("패배");
+                lose++;
+                document.getElementById("lose").textContent = lose;
+
+            }
+            if ((cpuchoice == userchoice)) {
+                console.log("비김")
+                draw++;
+                document.getElementById("draw").textContent = draw;
+            }
+        }
+
+
+
+
+
+    </script>
+
+</body>
+
+</html>

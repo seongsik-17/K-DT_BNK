@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            text-align: center;
+            width: 30px;
+            height: 30px;
+            background-color: beige;
+            color: red;
+            border: 1px solid black;
+            line-height: 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td><div class="bt1" onclick="f(this)">A</div></td>
+            <td><div class="bt1" onclick="f(this)">B</div></td>
+            <td><div class="bt1" onclick="f(this)">C</div></td>
+            <td><div class="bt1" onclick="f(this)">D</div></td>
+            <td><div class="bt1" onclick="f(this)">E</div></td>
+        </tr>
+        <tr>
+            <td><div class="bt1" onclick="f(this)">F</div></td>
+            <td><div class="bt1" onclick="f(this)">G</div></td>
+            <td><div class="bt1" onclick="f(this)">H</div></td>
+            <td><div class="bt1" onclick="f(this)">I</div></td>
+            <td><div class="bt1" onclick="f(this)">J</div></td>
+        </tr>
+        <tr>
+            <td><div class="bt1" onclick="f(this)">K</div></td>
+            <td><div class="bt1" onclick="f(this)">L</div></td>
+            <td><div class="bt1" onclick="f(this)">M</div></td>
+            <td><div class="bt1" onclick="f(this)">N</div></td>
+            <td><div class="bt1" onclick="f(this)">O</div></td>
+        </tr>
+        <tr>
+            <td><div class="bt1" onclick="f(this)">P</div></td>
+            <td><div class="bt1" onclick="f(this)">Q</div></td>
+            <td><div class="bt1" onclick="f(this)">R</div></td>
+            <td><div class="bt1" onclick="f(this)">S</div></td>
+            <td><div class="bt1" onclick="f(this)">T</div></td>
+        </tr>
+        <tr>
+            <td><div class="bt1" onclick="f(this)">U</div></td>
+            <td><div class="bt1" onclick="f(this)">V</div></td>
+            <td><div class="bt1" onclick="f(this)">W</div></td>
+            <td><div class="bt1" onclick="f(this)">X</div></td>
+            <td><div class="bt1" onclick="f(this)">Y</div></td>
+        </tr>
+        <tr>
+            <td><div class="bt1" onclick="f(this)">Z</div></td>
+        </tr>
+    </table>
+
+    <button onclick="f()">아스키로바꾸기</button>
+    <p id="p1">----</p>
+
+    <script>
+        function f(element) {
+            const txt = element.innerText;  // 클릭된 div의 텍스트를 가져옴
+            const p1 = document.getElementById("p1");
+            p1.innerText = txt.charCodeAt(0);  // 텍스트의 ASCII 코드로 변환
+        }
+    </script>
+</body>
+
+</html>
+
+<div class="result-container">
+    <h2>이체결과</h2>
+    
+</div>

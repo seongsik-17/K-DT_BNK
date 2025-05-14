@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .div{
+            border: 2px solid black;
+            height: 100px;
+            width: 100px;
+            background-color: bisque;
+            color: red;
+            text-align: center;
+            line-height: 100px;
+            font-weight: bolder;
+            font-size: 30px;
+            border-radius: 50px;
+            
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td><div class="div" onclick="f(event)">1</div></td>
+            <td><div class="div" onclick="f(event)">2</div></td>
+            <td><div class="div" onclick="f(event)">3</div></td>
+        </tr>
+        <tr>
+            <td><div class="div" onclick="f(event)">4</div></td>
+            <td><div class="div" onclick="f(event)">5</div></td>
+            <td><div class="div" onclick="f(event)">6</div></td>
+        </tr>
+        <tr>
+            <td><div class="div" onclick="f(event)">7</div></td>
+            <td><div class="div" onclick="f(event)">8</div></td>
+            <td><div class="div" onclick="f(event)">9</div></td>
+        </tr>
+        <tr>
+            <td><div class="div" onclick="f(event)">*</div></td>
+            <td><div class="div" onclick="f(event)">0</div></td>
+            <td><div class="div" onclick="f(event)">#</div></td>
+        </tr>
+    </table>
+
+    <script>
+        function f(event){
+            const number = event.target.innerText;
+            console.log(number);
+        }
+    </script>
+</body>
+</html>

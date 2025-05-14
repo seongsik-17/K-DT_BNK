@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+    </style>
+</head>
+
+<body>
+    <h1>문장 생성기</h1>
+    <hr>
+    <div>
+        <span id="s">-----</span><span> </span><span id="o">-----</span><span> </span><span id="p">----</span>
+    </div>
+    
+    <button id="d1" onclick="getsentence()">생성하기</button>
+
+    <script>
+
+
+
+
+        function getsentence() {
+            const subject = ['영희가', '철수가', '일식이가', '이식이가', '삼식이가'];
+            const object = ['밥을', '차를', '버스를', '집을', '술을'];
+            const predicate = ['먹는다', '탄다', '산다', '마신다'];
+            let subno = Math.floor(Math.random() * subject.length);
+            let objno = Math.floor(Math.random() * object.length);
+            let predino = Math.floor(Math.random() * predicate.length);
+            document.getElementById("s").innerText = subject[subno];
+            document.getElementById("o").innerText = object[objno];
+            document.getElementById("p").innerText = predicate[predino];
+        }
+
+    </script>
+</body>
+
+</html>

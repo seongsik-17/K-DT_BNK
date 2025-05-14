@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<h1></h1>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .demo {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <p>아래에 내용이 추가됩니다...</p>
+    </div>
+    <div class="container">
+        <p>2아래에 내용이 추가됩니다...</p>
+    </div>
+    <div class="container">
+        <p>3아래에 내용이 추가됩니다...</p>
+    </div>
+    <button onclick="f()">이미지 생성</button>
+    <img  src="" alt="">
+
+
+    <script>
+        const container = document.querySelectorAll('.container')[0];
+        console.log(container.innerText);
+        
+
+        const h1 = document.createElement('h1');//<h1></h1>
+        h1.textContent = '엘리먼트 동적 생성';//<h1>엘리먼트 동적생성
+        h1.setAttribute('class', 'demo');
+
+        container.appendChild(h1);
+        
+        
+        function f(){
+            const img = document.createElement('img');
+            img.src="./RCP_Game/lunchimages/김치찌개.jpg";
+            container.appendChild(img);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="f()">신규생성</button>
+    <table border="1">
+        <thead>
+            <tr>
+                <td>번호</td><td>이름</td>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+    <script>
+        const name = ['James','Ann','Benjamin'];
+        let index = 0;
+
+        function f() {
+           if(index == 3){
+            index = 0;
+           }
+
+            const tbody = document.getElementById('tbody');
+            const tr = document.createElement('tr');
+
+            const td1 = document.createElement('td');
+            td1.textContent = index + 1;
+
+            const td2 = document.createElement('td');
+            td2.textContent = name[index];
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tbody.appendChild(tr);
+
+            index++;
+        }
+    </script>
+</body>
+</html>
