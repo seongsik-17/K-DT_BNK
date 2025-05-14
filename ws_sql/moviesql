@@ -1,0 +1,120 @@
+--영화소개 페이지 구성
+--영화코드(단순 식별용, 대외비)
+--영화 제목
+--상영기간
+--상영시간
+--연령제한
+--홍보멘트
+--영화의 간략한 줄거리
+
+CREATE TABLE tbl_movie(
+movie_code number PRIMARY KEY,
+title VARCHAR2(100),
+season_start DATE,
+season_end DATE,
+age_limit number(3),
+adment VARCHAR2(1000),
+plot VARCHAR2(2000),
+status number(1)--상영 종료(0), 상영중(1), 상영예정(2)
+);
+DROP TABLE tbl_movie;
+DESC tbl_movie;
+
+CREATE TABLE member(
+id VARCHAR2(30) PRIMARY KEY,
+pw VARCHAR2(50),
+name VARCHAR2(20),
+phone CHAR(13),
+viewcnt number(4),
+grade CHAR(1)
+);
+INSERT INTO member values('mss5295','1234','엄준식','010-1234-2356','0','C');
+commit;
+CREATE SEQUENCE member_seq
+       INCREMENT BY 1
+       START WITH 2
+       MINVALUE 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+       
+INSERT INTO tbl_movie VALUES (1, '어벤져스: 엔드게임', TO_DATE('2023-01-01','YYYY-MM-DD'), TO_DATE('2023-02-15','YYYY-MM-DD'), 12, '마블 스튜디오', '지구를 구하기 위한 마지막 전투', 0);
+INSERT INTO tbl_movie VALUES (2, '기생충', TO_DATE('2023-02-20','YYYY-MM-DD'), TO_DATE('2023-03-30','YYYY-MM-DD'), 15, '씨제이엔터테인먼트', '두 가족의 기묘한 공생 관계', 0);
+INSERT INTO tbl_movie VALUES (3, '이터널스', TO_DATE('2023-04-01','YYYY-MM-DD'), TO_DATE('2023-05-10','YYYY-MM-DD'), 12, '마블 스튜디오', '영원한 존재들의 지구 수호기', 1);
+INSERT INTO tbl_movie VALUES (4, '서울의 봄', TO_DATE('2023-06-01','YYYY-MM-DD'), TO_DATE('2023-07-15','YYYY-MM-DD'), 15, '리틀빅픽처스', '1980년 서울의 뜨거운 하루', 1);
+INSERT INTO tbl_movie VALUES (5, '범죄도시4', TO_DATE('2023-08-01','YYYY-MM-DD'), TO_DATE('2023-09-10','YYYY-MM-DD'), 18, '에이비오엔터테인먼트', '마석도 형사의 통쾌한 액션', 2);
+INSERT INTO tbl_movie VALUES (6, '엘리멘탈', TO_DATE('2023-09-15','YYYY-MM-DD'), TO_DATE('2023-10-20','YYYY-MM-DD'), 0, '디즈니픽사', '불과 물의 환상적인 이야기', 2);
+INSERT INTO tbl_movie VALUES (7, '극한직업', TO_DATE('2022-12-01','YYYY-MM-DD'), TO_DATE('2023-01-10','YYYY-MM-DD'), 15, 'CJ 엔터테인먼트', '치킨집 위장 수사의 반전 수사극', 0);
+INSERT INTO tbl_movie VALUES (8, '헌트', TO_DATE('2023-03-01','YYYY-MM-DD'), TO_DATE('2023-04-10','YYYY-MM-DD'), 15, '메가박스중앙(주)', '두 스파이의 진실 추적', 0);
+INSERT INTO tbl_movie VALUES (9, '비상선언', TO_DATE('2023-11-01','YYYY-MM-DD'), TO_DATE('2023-12-15','YYYY-MM-DD'), 15, '쇼박스', '재난 항공기의 숨막히는 순간', 2);
+INSERT INTO tbl_movie VALUES (10, '승리호', TO_DATE('2023-12-20','YYYY-MM-DD'), TO_DATE('2024-01-31','YYYY-MM-DD'), 12, '넷플릭스', '우주 청소부의 대서사시', 1);
+INSERT INTO tbl_movie VALUES (11, '한산: 용의 출현', TO_DATE('2023-07-01','YYYY-MM-DD'), TO_DATE('2023-08-10','YYYY-MM-DD'), 12, '롯데엔터테인먼트', '이순신의 해전 대서사시', 0);
+INSERT INTO tbl_movie VALUES (12, '타짜', TO_DATE('2023-05-01','YYYY-MM-DD'), TO_DATE('2023-06-10','YYYY-MM-DD'), 18, '싸이더스', '도박판의 숨막히는 긴장', 0);
+INSERT INTO tbl_movie VALUES (13, '인셉션', TO_DATE('2023-01-10','YYYY-MM-DD'), TO_DATE('2023-02-20','YYYY-MM-DD'), 15, '워너브라더스', '꿈 속의 꿈을 넘나드는 스릴', 0);
+INSERT INTO tbl_movie VALUES (14, '라라랜드', TO_DATE('2023-03-10','YYYY-MM-DD'), TO_DATE('2023-04-25','YYYY-MM-DD'), 12, '라이온스게이트', '꿈과 사랑 사이의 선택', 1);
+INSERT INTO tbl_movie VALUES (15, '듄: 파트2', TO_DATE('2024-03-01','YYYY-MM-DD'), TO_DATE('2024-04-15','YYYY-MM-DD'), 15, '워너브라더스', '사막의 운명을 결정하는 전쟁', 2);
+INSERT INTO tbl_movie VALUES (16, '인터스텔라', TO_DATE('2023-10-01','YYYY-MM-DD'), TO_DATE('2023-11-10','YYYY-MM-DD'), 12, '파라마운트', '시간과 공간을 초월한 여정', 0);
+INSERT INTO tbl_movie VALUES (17, '어벤져스: 인피니티 워', TO_DATE('2022-11-01','YYYY-MM-DD'), TO_DATE('2022-12-10','YYYY-MM-DD'), 12, '마블 스튜디오', '최강의 적, 타노스의 등장', 0);
+INSERT INTO tbl_movie VALUES (18, '더 퍼스트 슬램덩크', TO_DATE('2023-02-01','YYYY-MM-DD'), TO_DATE('2023-03-10','YYYY-MM-DD'), 12, '도에이 애니메이션', '농구에 걸린 열정과 성장', 0);
+INSERT INTO tbl_movie VALUES (19, '스파이더맨: 노 웨이 홈', TO_DATE('2023-04-01','YYYY-MM-DD'), TO_DATE('2023-05-10','YYYY-MM-DD'), 12, '소니픽처스', '다차원 세계의 히어로 대결', 0);
+INSERT INTO tbl_movie VALUES (20, '탑건: 매버릭', TO_DATE('2023-06-01','YYYY-MM-DD'), TO_DATE('2023-07-15','YYYY-MM-DD'), 15, '파라마운트 픽처스', '하늘을 가르는 베테랑의 귀환', 1);
+
+INSERT INTO tbl_movie VALUES (21, '서울의 봄', TO_DATE('2024-01-18', 'YYYY-MM-DD'), TO_DATE('2024-03-15', 'YYYY-MM-DD'), 15, '현실감 넘치는 정치 스릴러', '1979년 12월, 대한민국의 격동의 한복판에서 벌어지는 정치 드라마.', 0);
+
+INSERT INTO tbl_movie VALUES (22, '외계+인 2부', TO_DATE('2024-01-10', 'YYYY-MM-DD'), TO_DATE('2024-03-01', 'YYYY-MM-DD'), 12, 'SF와 사극의 만남', '과거와 현재를 오가는 시간의 균열 속에서 외계 존재와의 전쟁이 벌어진다.', 0);
+
+INSERT INTO tbl_movie VALUES (23, '웡카', TO_DATE('2024-01-31', 'YYYY-MM-DD'), TO_DATE('2024-04-05', 'YYYY-MM-DD'), 0, '달콤한 상상력의 기원', '젊은 윌리 웡카가 초콜릿 공장을 세우기까지의 모험.', 0);
+
+INSERT INTO tbl_movie VALUES (24, '듄: 파트2', TO_DATE('2024-03-06', 'YYYY-MM-DD'), NULL, 15, '사막의 전설이 다시 깨어난다', '폴 아트레이디스의 복수와 예언을 향한 여정이 계속된다.', 0);
+
+INSERT INTO tbl_movie VALUES (25, '고질라 x 콩: 뉴 엠파이어', TO_DATE('2024-03-27', 'YYYY-MM-DD'), NULL, 12, '괴수들의 세력전쟁', '지구를 지키기 위한 고질라와 콩의 새로운 연합.', 0);
+
+INSERT INTO tbl_movie VALUES (26, '남은 인생 10년', TO_DATE('2024-04-03', 'YYYY-MM-DD'), NULL, 12, '짧지만 뜨거운 사랑', '10년 남짓 남은 삶 속에서 시작된 사랑과 이별의 이야기.', 0);
+
+INSERT INTO tbl_movie VALUES (27, '귀멸의 칼날: 인연의 이야기', TO_DATE('2024-02-14', 'YYYY-MM-DD'), TO_DATE('2024-04-30', 'YYYY-MM-DD'), 15, '귀살대의 뜨거운 유대', '탄지로와 동료들이 새로운 위협에 맞선다.', 0);
+
+INSERT INTO tbl_movie VALUES (28, '명탐정 코난 vs 괴도 키드', TO_DATE('2024-04-24', 'YYYY-MM-DD'), NULL, 0, '최고의 두 두뇌의 대결', '코난과 키드의 긴장감 넘치는 한 판 승부!', 2);
+
+INSERT INTO tbl_movie VALUES (29, '혹성탈출: 새로운 시대', TO_DATE('2024-05-08', 'YYYY-MM-DD'), NULL, 15, '지배와 자유 사이', '인류와 유인원의 미래를 건 갈등이 시작된다.', 2);
+
+INSERT INTO tbl_movie VALUES (30, '쿵푸팬더 4', TO_DATE('2024-05-15', 'YYYY-MM-DD'), NULL, 0, '다시 돌아온 포의 전설', '새로운 적과 함께 시작되는 쿵푸 어드벤처!', 2);
+
+
+UPDATE tbl_movie SET status=1;
+
+SELECT * FROM tbl_movie WHERE status = 1;
+
+commit;
+DROP TABLE tbl_coment;
+CREATE TABLE tbl_coment(
+comentId number PRIMARY KEY,
+id VARCHAR2(30),
+movie_code number,
+coment VARCHAR2(200),
+regdate DATE
+);
+
+INSERT INTO tbl_coment VALUES(1,'test',1,'재미있네요',SYSDATE);
+DROP SEQUENCE coment_seq;
+CREATE SEQUENCE coment_seq
+INCREMENT BY 1
+START WITH 1
+MINVALUE 1
+MAXVALUE 99999
+NOCYCLE
+NOCACHE
+NOORDER;
+
+
+select * FROM tbl_coment;
+
+SELECT MAX(comentId) FROM tbl_coment;
+
+CREATE TABLE tbl_notice(
+n_id number PRIMARY KEY,
+n_content VARCHAR2(2000),
+n_regdate DATE,
+n_writer VARCHAR2(30)
+);
+INSERT INTO tbl_notice VALUES(1,'첫 공지사항',SYSDATE,'admin');

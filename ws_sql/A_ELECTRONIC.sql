@@ -48,14 +48,20 @@ FOREIGN KEY(c_code) REFERENCES customer(c_code)
 );
 
 --영업사원 테이블
+DROP TABLE employee;
+
 CREATE TABLE employee(
 e_no NUMBER PRIMARY KEY,
+e_pw VARCHAR2(10),
 e_name VARCHAR2(10),
-e_rank VARCHAR2(10),
+e_pos VARCHAR2(10),
+e_dept VARCHAR2(10),
 e_date DATE
 );
 
 --판매실적 테이블
+DROP TABLE sales;
+
 CREATE TABLE sales(
 e_no NUMBER PRIMARY KEY,--FK
 s_sales NUMBER,
@@ -104,13 +110,16 @@ INSERT INTO stock VALUES('m-r-03',3);
 select * from stock where p_code = 'm-f-01'; --재고 확인
 
 --3.영업사원 고용
-INSERT INTO employee VALUES(202501,'김사원','사원','2025-01-01'); 
-INSERT INTO employee VALUES(202502,'이대리ㄴ','대리','2024-01-01'); 
-INSERT INTO employee VALUES(202503,'박팀장','팀장','2022-01-01'); 
-INSERT INTO employee VALUES(202504,'최사원','사원','2025-01-01'); 
-INSERT INTO employee VALUES(202505,'문대리','대리','2023-01-01'); 
+INSERT INTO employee VALUES(202501,'1234','김사원','사원','구매','2025-01-01'); 
+INSERT INTO employee VALUES(202502,'1234','이대리','대리','구매','2024-01-01'); 
+INSERT INTO employee VALUES(202503,'1234','박팀장','팀장','영업','2022-01-01'); 
+INSERT INTO employee VALUES(202504,'1234','최사원','사원','구매','2025-01-01'); 
+INSERT INTO employee VALUES(202505,'1234','문대리','대리','구매','2023-01-01'); 
 select * from employee;
 --4.구매 -> 거래단가 + 10% --> 자바에서 구현
 --INSERT INTO trade VALUES(2025041701,2025-04-17,1,select 
 
 --5. 판매실적
+commit;
+select * from product;
+select * from stock;

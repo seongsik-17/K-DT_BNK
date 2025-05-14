@@ -44,3 +44,4 @@ commit;
 select * from tbl_member;
 DROP TABLE tbl_board;
 DROP TABLE tbl_member;
+

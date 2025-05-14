@@ -570,7 +570,7 @@ HAVING MAX(STU_HEIGHT) >= 175;
 --전체 학생들의 평균 신장보다 큰 학생을 구하시오
 SELECT *
 FROM student
-WHERE stu_height >(SELECT AVG(stu_height) FROM student);
+WHERE stu_height >(SELECT AVG(stu_height) FROM student);                                                              
 
 --모든 학과들의 평균 신장보다 큰 학생의 정보를  구하시오
 SELECT MAX(AVG(stu_height))
