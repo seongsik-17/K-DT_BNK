@@ -12,4 +12,5 @@ public interface IComentDao {
 	List<ComentDTO> selectAll(@Param("movie_code")int m_code);
 	void insert(@Param("c")ComentDTO coment);
 	int selectEndNum();
+	void delete(@Param("comentId")String id);
 }

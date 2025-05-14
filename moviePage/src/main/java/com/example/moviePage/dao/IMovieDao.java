@@ -15,4 +15,6 @@ public interface IMovieDao {
 	int getLastMovie_code();
 	//종료된 영화
 	List<MovieDTO>selectEndMovie();
+	//개봉할 영화
+	List<MovieDTO>selectExpectedMovie();
 }

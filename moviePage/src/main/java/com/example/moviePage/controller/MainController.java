@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.moviePage.dao.IComentDao;
 import com.example.moviePage.dao.IMemberDao;
 import com.example.moviePage.dao.IMovieDao;
+import com.example.moviePage.dao.INoticeDao;
 import com.example.moviePage.dto.ComentDTO;
 import com.example.moviePage.dto.MemberDTO;
 import com.example.moviePage.dto.MovieDTO;
+import com.example.moviePage.dto.NoticeDTO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -25,12 +28,14 @@ public class MainController {
 	IMemberDao memberdao;
 	IMovieDao moviedao;
 	IComentDao comentdao;
+	INoticeDao noticedao;
 	
 	@Autowired
-	private MainController(IMemberDao mdao,IMovieDao mov,IComentDao cdao) {
+	private MainController(IMemberDao mdao,IMovieDao mov,IComentDao cdao,INoticeDao ndao) {
 		memberdao = mdao;
 		moviedao = mov;
 		comentdao = cdao;
+		noticedao = ndao;
 		
 	}
 	//-------------------------------------------
@@ -38,7 +43,9 @@ public class MainController {
 	@GetMapping("/")
 	public String root(Model model) {
 		List<MovieDTO> list = moviedao.selectAll();
+		List<NoticeDTO> n_list = noticedao.selectAll();
 		model.addAttribute("list",list);
+		model.addAttribute("notice",n_list);
 		return "index";
 	}
 	@GetMapping("/login")
@@ -68,15 +75,28 @@ public class MainController {
 		HttpSession session = request.getSession();
 		List<MovieDTO>list = moviedao.selectAll();
 		if(member != null && m.getPw().equals(member.getPw())) {
-			session.setAttribute("member", m );
+			session.setAttribute("member",member);
+			System.out.println("세션 저장정보: "+member);
 			model.addAttribute("list",list);
 			System.out.println("로그인 성공!");
 			return "index";
 		}
 		return "login";
 	}
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("member");
+		return "index";
+	}
 	//---------------------------------------------------------
 	//영화보드 컨트롤러
+	@GetMapping("/expectedMovie")
+	public String expectedMovie(Model model) {
+		List<MovieDTO> list = moviedao.selectExpectedMovie();
+		
+		model.addAttribute("list",list);
+		return "expectedMoviePage";
+	}
 	@GetMapping("/endMovieList")
 	public String endMoveList(Model model) {
 		List<MovieDTO>list = moviedao.selectEndMovie();
@@ -92,6 +112,7 @@ public class MainController {
 	@PostMapping("/insertMovie")
 	public String insertMovie(MovieDTO mdto) {
 		int lastNum = moviedao.getLastMovie_code();
+		
 		mdto.setMovie_code(lastNum+1);
 		moviedao.insertMovie(mdto);
 		
@@ -118,6 +139,13 @@ public class MainController {
 		comentdao.insert(coment);
 		return "redirect:/detail?movie_code="+c.getMovie_code();
 	}
+	@GetMapping("/rmComent/{id}/{movie_code}")
+	public String rmComent(@PathVariable("id")String id,@PathVariable("movie_code")int code) {
+		comentdao.delete(id);
+		return "redirect:/detail?movie_code="+code;
+	}
+	
+	//--------------------------------------------------------------
 	
 	
 }
