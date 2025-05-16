@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>//비동기 통신의 결과가 성공/실패를 담당하는 각각의 객체가 존재한다...
+        const promise = new Promise((resolve, reject) => {
+            setTimeout(function(){
+                resolve('success');
+            },2000);
+        });
+
+        console.log(promise);
+        setTimeout(function(){
+            console.log(promise);
+        },3000);
+            
+    </script>
+</body>
+</html>

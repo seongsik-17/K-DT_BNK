@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script><!--필수영역-->
+
+    <script>
+       
+
+        $(document).ready(function () {
+            
+            $('input[id=btn_exe]').click(function () {
+                $("#title").css("color","red");
+            });
+            const id = document.getElementById("title");
+                id.style.color = "red"; 
+           
+            
+            $('#btn_exe2').click(function () {
+                $('#menu li:lt(2)').css({ "background-color": "#00f" }); // 파랑 lt: lowerThen <2
+                $('#menu li:eq(2)').css({ "background-color": "#f00" }); // 빨강 eq: equal ==
+                $('#menu li:gt(2)').css({ "background-color": "#ff0" }); // 노랑 gt: >2
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+    <div>
+        <input type="button" id="btn_exe" value="실행">
+    </div>
+
+    <div id="wrap">
+        <h1>머리글</h1>
+        <h1 id="title">제목</h1>
+        <h2>내용</h2>
+        <h3>작성자</h3>
+    </div>
+
+    <div>
+        <input type="button" id="btn_exe2" value="실행">
+    </div>
+
+    <div>
+        <ul id="menu">
+            <li>내용1</li>
+            <li>내용2</li>
+            <li>내용3</li>
+            <li>내용4</li>
+        </ul>
+    </div>
+
+</body>
+
+</html>

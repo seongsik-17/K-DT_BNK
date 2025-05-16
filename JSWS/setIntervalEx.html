@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1 id="head">-----</h1>
+    <button onclick="stop()">STOP</button>
+    <hr>
+    <h1>타이머</h1>
+    <span id="hr_d">0</span>:<span id="min_d">0</span>:<span id="sec_d">0</span><br>
+    시: <input type="number" name="hr" id="hr"><br>
+    분: <input type="number" name="min" id=""><br>
+    초: <input type="number" name="sec" id="sec"><br>
+    <button type="button" onclick="start()">시작</button>
+    <button type="button" onclick="hold()">대기</button>
+    <button type="button" onclick="stop()">종료</button>
+
+    <script>
+        const sec = document.getElementById("sec_d");
+        const min = document.getElementById("min_d");
+        const hr = document.getElementById("hr_d");
+        let cnt = 0;
+        function start() {
+            cnt = document.getElementById("sec").value;
+            const id = document.getElementById("sec_d");
+            const intervalId = setInterval(() => {
+                cnt--;
+                if (cnt < 0 | cnt == 0 ) {
+                    clearInterval(intervalId);
+                    alert("🚨")
+                }else{
+                    id.innerText = cnt;
+                }
+                
+            }, 1000);
+
+        }
+        function hold() {
+            
+        }
+
+        function stop() {
+            clearInterval(intervalId);
+            console.log('stop');
+        }
+
+        setInterval(() => {
+            
+        }, interval);
+    </script>
+</body>
+
+</html>

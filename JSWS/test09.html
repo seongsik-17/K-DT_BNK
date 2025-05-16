@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="ptxt" data-greet="hello" >-------</p>
+    <input type="text" data-name="kim" data-nickname="KK" name="name">
+    <div id="div1">
+        div
+    </div>
+    <div id="user" data-user='{"name":"James","age":23,"job":"Actor"}'></div>
+    <div id="hobby" data-hobby='["독서","달리기","코딩"]'></div>
+    <script>
+        //hidden input을 사용하지 않고 데이터 사용 가능
+        const ptxt = document.getElementById("ptxt");
+        console.log(ptxt.dataset.greet);
+        console.log(ptxt.dataset['greet']);
+        console.log(ptxt.dataset.greet === 'hello');
+
+        const $txt = document.querySelector('input[data-name="kim"]');
+        //$:달러 표시를 변수 앞에 쓰는건 Element를 지정할 경우 붙인다.
+        $txt.value = 'I miss you';
+        
+        const $div1 = document.getElementById("div1");
+        $div1.dataset.comment = 'good job';
+        console.log($div1.dataset.comment);
+        $div1.setAttribute('data-encode-char','utf-8');
+        console.log($div1.getAttribute('data-encode-char'));
+        $div1.dataset.nickname = 'apple';
+        console.log($div1.dataset.nickname);
+        console.log($div1.getAttribute('data-nickname'));
+
+        const $div2 = document.querySelector('#user');
+        const obj = $div2.dataset.user;
+        console.log(obj);
+        const user = JSON.parse(obj);
+
+        console.log(user.name);
+        console.log(user.age);
+        console.log(user.job);
+
+        const $div3 = document.getElementById('hobby');
+        const arr = $div3.dataset.hobby;
+        console.log(arr);
+
+        const hobbies = JSON.parse(arr);
+        console.log(hobbies);
+        console.log(hobbies[1]);
+
+
+
+
+
+
+
+        
+    </script>
+</body>
+</html>

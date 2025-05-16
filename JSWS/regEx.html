@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!--
+    [정규표현식 기본 문법 요약]
+
+표현식   | 의미           | 설명                             | 예시
+--------|----------------|----------------------------------|--------------------------
+.       | 임의의 문자     | 줄바꿈(\n) 제외                  | a.c → abc, axc
+^       | 문자열의 시작   | 시작 위치에만 일치               | ^Hello → Hello world
+$       | 문자열의 끝     | 끝 위치에만 일치                 | world$ → Hello world
+*       | 0회 이상 반복   | "a*", "", "a", "aa" 등 가능       | a* → "", "a", "aaa"
++       | 1회 이상 반복   | "a+", "a", "aa" 등                | a+ → "a", "aa"
+?       | 0 또는 1회 반복 | "a?", "", "a" 가능                | a? → "", "a"
+{n}     | 정확히 n회 반복 | 반복 횟수 지정                    | a{3} → "aaa"
+{n,}    | n회 이상 반복   | n번 이상 반복                    | a{2,} → "aa", "aaa"
+{n,m}   | n~m회 반복      | 범위 지정                        | a{2,4} → "aa", "aaa", "aaaa"
+[]      | 문자 집합       | 대괄호 안의 문자 중 하나         | [abc] → "a", "b", "c"
+[^abc]  | 문자 제외 집합  | 괄호 안 제외한 문자 하나         | [^abc] → "d", "e"
+|       | OR 조건         | A 또는 B                         | cat|dog → "cat" 또는 "dog"
+()      | 그룹            | 괄호 안을 하나의 단위로 처리     | (ab)+ → "ab", "abab"
+\       | 이스케이프 문자 | 특수문자 자체를 문자로 인식      | \. → 마침표 "."
+
+[자주 쓰는 정규식 패턴 예시]
+
+용도       | 정규식 패턴                                         | 예시
+----------|----------------------------------------------------|---------------------
+이메일     | [a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}     | test@example.com
+휴대폰 번호 | 01[016789]-\d{3,4}-\d{4}                          | 010-1234-5678
+우편번호   | \d{5} 또는 \d{3}-\d{3}                             | 12345, 123-456
+숫자만     | ^\d+$                                              | 123456
+영어 소문자 | ^[a-z]+$                                          | hello
+한글만     | ^[가-힣]+$                                         | 안녕하세요
+
+
+    -->
+    <!--[아이디 입력 조건]
+    1. 입력되는 전체 길이는 5~8 사이여야 한다
+    2. 아이디는 숫자와 영문자로만 사용가능하다.
+    3. 아이디의 첫 글자는 영문으로만 가능
+-->
+    아이디: <input type="text" name="mid" id="mid">
+    <button onclick="submit()">입력하기</button><br>
+    <div id="demo">---</div>
+<!--
+    [날짜 입력 조건]
+    1. 연도 4자리, 월이나 일은 1자리 or 2자리로 한다.
+    ex) 2018-05-14    
+-->
+    <hr>    
+    날짜: <input type="text" name="date" id="date">
+    <button onclick="submit2()">입력하기</button>
+    <div id="demo2">----</div>
+    
+    <script>
+        function submit() {
+            const mid = document.getElementById("mid").value;
+            const patt = new RegExp('^[A-Za-z][0-9a-zA-Z]{4,7}$');//정규표현식 사용 선언'()'안에 정규표현식을 넣음
+
+            if (patt.test(mid)) {
+                document.getElementById("demo").innerHTML = '성공';
+            } else {
+                alert("다시 입력");
+                document.getElementById("mid").value = '';
+                document.getElementById("mid").focus;//텍스트박스에 커서를 올려줌
+                document.getElementById("demo").innerHTML = '실패';
+            }
+        }
+
+        function submit2(){
+            const date = document.getElementById("date").value;
+            const patt = new RegExp('^[0-9]{4}\-0[1-9]|1[012]\-0[1-9]|1[0-9]|2[0-9]|3[01]$');
+
+             if (patt.test(date)) {
+                document.getElementById("demo2").innerHTML = date;
+            } else {
+                alert("다시 입력");
+                document.getElementById("date").value = '';
+                document.getElementById("date").focus;//텍스트박스에 커서를 올려줌
+                document.getElementById("demo2").innerHTML = '실패';
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function makeFriedEgg() {
+            return new Promise(resolve => {//Promis로 Mapping함...
+                setTimeout(() => {
+                    resolve("짜잔! 계란 후라이 완성!");
+                }, 1000);
+            })
+        }
+
+        //비동기함수를 내포한다는 의미의 async...
+        async function cookBreakfast() {
+            console.log("계란 후라이를 만들기 시작합니다.");
+            //비동기 함수에 await를 붙여주면 비동기 함수가 끝나는 시점까지 대기한다..
+            const friedEggResult = await makeFriedEgg();//async가 함수에 붙어있어야 실행이 가능하다. 함수 내부에 await 함수는 복수 존재 가능
+            console.log(friedEggResult); //아직 함수가 완료되지 않아서 실행시 오류가 발생한다.
+
+            //메인요리를 요청해서 받는 코드추가하기(fetch 사용하기)
+            const response = await fetch("http://localhost:8092/cook/maindish");//요청
+            const mainDish = await response.text();//응답
+            console.log(mainDish);
+            console.log("토스트도 준비 완료!");
+        }
+
+        cookBreakfast();
+        console.log("커피를 내리는 중");
+
+    </script>
+</body>
+
+</html>

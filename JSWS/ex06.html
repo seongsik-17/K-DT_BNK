@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--동기는 순차적 비동기는 비 순차적-->
+    <h1>비동기 함수 실행 순서 테스트</h1>
+    <script>
+        console.log("1");
+        setTimeout(()=>{
+            console.log("2");
+        },2000);
+        console.log("3");
+        console.log("4");
+    </script>
+</body>
+</html>

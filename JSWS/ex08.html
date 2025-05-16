@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="sendData()">formData전송</button>
+<form id="frm">
+    name: <input type="text" name="name"><br>
+    age: <input type="text" name="id"><br>
+    role: <input type="text" name="role"><br>
+</form>
+
+    <button onclick="sendData1()">formData전송1</button>
+    <button onclick="sendData2()">JsonData전송</button>
+
+    <script>
+        function sendData1(){
+            const frm = document.getElementById("frm");
+            const formData = new FormData(frm);
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function(){
+                console.log()
+            }
+            xhr.open('POST','http://localhost:8090/member');
+            xhr.send(formData);
+        }
+
+        
+        
+        function sendData(){//form 객체 생성
+            const form = new FormData();
+            form.append('name','홍길동');
+            form.append('age',30);
+            form.append('role','MEMBER');
+
+            fetch('http://localhost:8090/member',{
+                method: 'POST',
+                body: form
+            })
+             .then(response => response.text())
+             .then(data => console.log(data))
+             .catch(error => console.error('Error',error));
+            /*
+            const xhr = new XMLHttpRequest();
+
+            xhr.onload = function(){
+                console.log(xhr.responseText);
+            }
+            xhr.open('POST','http://localhost:8090/member');
+            xhr.send(form);
+            */
+
+        }
+
+
+        function sendData2(){
+            const member = {
+                name: 'Benjamin',
+                age : 32,
+                role : 'Teacher'
+            }
+            /*
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function(){
+                console.log(xhr.responseText);
+            }
+            xhr.open('POST','http://localhost:8090/member2');
+            xhr.setRequestHeader('Content-type','application/json');
+            xhr.send(JSON.stringify(member));
+            */
+           fetch('http://localhost:8090/member2',{
+            method: 'POST',
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body : JSON.stringify(member)
+           })
+           //성공.후속처리 메소드 : .then
+           .then(response => response.text())//비동기 -> 서버로 부터 받은 객체로 부터 데이터를 뽑아내기 위한
+           .then(data => console.log(data))//동기, 마지막 처리 -? 뽑아낸 데이터를 처리
+           .catch(error => console.error('Error',error));//오류가 발생할 경우 처리
+        }
+    </script>
+</body>
+</html>
