@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.moviePage.dao.IComentDao">
+	<select id="selectAll" resultType="com.example.moviePage.dto.ComentDTO">
+		SELECT * FROM tbl_coment WHERE movie_code = #{movie_code}
+	</select>
+	<select id="selectEndNum" resultType="int">
+		SELECT MAX(comentId) FROM tbl_coment
+	</select>
+	<insert id="insert">
+		INSERT INTO tbl_coment VALUES(#{c.comentId},#{c.id},#{c.movie_code},#{c.coment},SYSDATE)
+	</insert>
+	<delete id="delete">
+		DELETE FROM tbl_coment WHERE comentid = #{comentId}
+	</delete>
+</mapper>

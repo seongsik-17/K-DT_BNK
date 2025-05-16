@@ -1,5 +1,6 @@
 --성적처리
 --1.부서번호가 2030인 자료들로 emp1 테이블을 만드시오
+CREATE TABLE  emp2 AS SELECT * FROM emp WHERE deptno IN(20,30);
 --2.dept테이블을 바탕으로 dept1을 만드시오
 --3.salgradde 테이블을 바탕으로 salgrade 1 테이블을 만드시오
 --4.사원번호 7703, 사원이름 JOSH, 사원직무 SALESMAN, 상급자 사원번호 7566, 급여 1400, 커미션 0 부서번호 20인 사원이 오늘 입사
