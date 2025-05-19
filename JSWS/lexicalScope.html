@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="myBtn">1.Click!</button>
+    <button id="myBtn2">2.Click!</button>
+    <script>
+        let x = 100;
+        
+        function f() {
+            let x = 10;
+
+            function f2() {
+                console.log(x);
+
+            }
+            f2();
+        }
+
+
+        f();
+        //f2();
+    </script>
+    <script>
+        let globalVar = '전역변수';
+
+        function outerFunction(){
+            let outerVar = '외부함수 지역변수';
+
+            return function innerFunction(){
+                console.log(globalVar);
+                console.log(outerVar);
+            };
+        }
+        const myInnerFunc = outerFunction();
+        //함수가 끝나면서 지역변수는 소멸 해야하나 JS에서는 그렇지 않음...
+        myInnerFunc();
+
+        //클로저의 핵심은 내부함수가 외부함수의 실행이 끝난 후에도
+        //외부함수의 변수를 기억하고 접근할수 있다는 점이다
+
+        //클로저 사용 예 1: 카운터
+        function createCounter(){
+            let count = 0;
+
+            return function(){
+                count++;
+                return count;
+            }
+        }
+        const counter1 = createCounter();
+
+
+        console.log(counter1());
+        console.log(counter1());
+        console.log(counter1());
+
+        const counter2 = createCounter();
+
+        console.log(counter2());
+        console.log(counter2());
+        console.log(counter2());
+
+
+        //클로저 사용 예2: 카운터
+        function createCounter2(){
+            let count = 0;
+
+            return{
+                increment: function(){
+                    count++;
+                    return count;
+                },
+                decrement: function(){
+                    count--;
+                    return count;
+                }
+            };
+        }
+
+        const counter3 = createCounter2();
+
+        console.log(counter3.increment());
+        console.log(counter3.increment());
+        console.log(counter3.increment());
+        console.log(counter3.decrement());
+        console.log(counter3.decrement());
+        console.log(counter3.decrement());
+
+        //클로저 사용 예3: 정보은닉/캡슐화
+        function createSecret(secret){
+            return {
+                getSecret: function(key){
+                    if(key === 'green1234'){
+                        return secret;
+                    }else{
+                        return '비밀접근 실패!';
+                    }
+                }
+            };
+        }
+        const mySecret = createSecret('js짱!');
+        console.log(mySecret.getSecret('wrongpw'));
+        console.log(mySecret.getSecret('green1234'));
+        //클로저 사용 예4: private 변수 구현
+        function createBankAccount(initialBalance){
+            let balance = initialBalance;
+
+            return{
+                deposit:function(amount){
+                    balance += amount;
+                    return `입금완료 : 현재 잔액 ${balance}원`;
+                },
+                widthraw:function(amount){
+                    if(amount>balance){
+                        return "잔액이 부족합니다..."
+                    }
+                    balance -= amount;
+                    return `출금완료 : 현재 잔액 ${balance}원`;
+                },
+                getbalance: function(){
+                    return `현재 잔액: ${balance} 원`;
+                }
+            };
+        }
+
+        const myAccount = createBankAccount(10000);
+        console.log(myAccount.getbalance());
+        console.log(myAccount.deposit(5000));
+        console.log(myAccount.widthraw(3000));
+
+        //클로저 사용 예5: 함수 팩토리
+
+        function multiplyBy(factor){
+            return function(number){
+                return number * factor;
+            };
+        }
+        const double = multiplyBy(2);
+        const triple = multiplyBy(3);
+        const quadruple = multiplyBy(4);
+
+        console.log(double(5));//10
+        console.log(triple(5));//15
+        console.log(quadruple(5));//20
+
+        const number = [1,2,3,4,5];
+
+        console.log(number.map(double));
+
+        //클로저 사용 예6: 이벤트 핸들러
+        function setupButton(buttonElement, message){
+            buttonElement.addEventListener('click',function(){
+                alert(message);
+            })
+        }
+        const myBtn = document.getElementById('myBtn');
+        setupButton(myBtn, '버튼이 클릭되었습니다.');
+
+        const myBtn2 = document.getElementById('myBtn2');
+        setupButton(myBtn2,'버튼2 클릭됨');
+
+        //구조 분해 할당: 배열, 객체 대상으로 해당 값들을 변수에소 분리해서 저장해주는 문법
+        const colors = ['red','green','blue'];
+        //각 변수에 배열의 요소를 차례로 분리하여 저장하기
+        let [first, second, third] = colors; //변수선언
+
+        console.log(first); //red
+        console.log(second);
+        console.log(third);
+
+        function getCordinates(){
+            return [37.5665, 126.9780];
+        }
+        
+        const [latitude,longitude] = getCordinates();
+
+        console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+         //객체 구조 분할 할당
+         const person = {
+            name: 'Alice',
+            age: 30,
+            city: 'Busan'
+         };
+         //객체 속성(프로퍼티)를 변수에 나누어 저장하기
+         const {name,age,city} = person;
+
+         console.log(name);
+         console.log(age);
+         console.log(city);
+
+         function displayUserInfo(name, age){
+            console.log(`이름: ${name}, 나이: ${age}`);
+
+         }
+         const user = {
+            name: 'Bob',
+            age: 25,
+            email: 'bob@green.com'
+         };
+
+         displayUserInfo(user);
+
+         fetch('/login',)
+         .then()
+         .then()
+         .catch()
+    </script>
+</body>
+
+</html>

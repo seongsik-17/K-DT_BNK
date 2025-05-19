@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>시험 페이지</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+	<h1>시험 페이지</h1>
+	<hr>
+	<h2>문제</h2>
+	<div id="exam1">--------------</div>
+	<hr>
+	<div id="choices"></div>
+	<br>
+	<input type="button" value="다음" onclick="next()">
+	<h3 id="score">점수: 0</h3>
+    <input type="button" value="제출" onclick="submit()">
+    
+
+	<script>
+		const questions = [
+			{ text: "1 + 1", choice: [1, 2, 3, 4], answer: 2 },
+			{ text: "1 + 2", choice: [1, 2, 3, 4], answer: 3 },
+			{ text: "1 + 3", choice: [1, 2, 3, 4], answer: 4 },
+			{ text: "1 + 4", choice: [1, 2, 3, 5], answer: 5 },
+			{ text: "1 + 1", choice: [1, 2, 3, 4], answer: 2 }
+		];
+
+		let current = 0;
+		let score = 0;
+
+		$(function() {
+			loadQuestion();
+		});
+
+		function loadQuestion() {
+			if (current >= questions.length) {
+				$('#exam1').text("시험이 끝났습니다!");
+				$('#choices').html("");
+				$('input[type="button"]').hide();
+				return;
+			}
+
+			const q = questions[current];
+			$('#exam1').text(q.text);
+
+			let html = "";
+			for (let i = 0; i < q.choice.length; i++) {
+				html += `
+					<input type="radio" name="choice" value="${q.choice[i]}" id="choice${i}">
+					<label for="choice${i}">${q.choice[i]}</label>&nbsp;
+				`;
+			}
+			$('#choices').html(html);
+		}
+
+		function next() {
+			const selected = $('input[name="choice"]:checked').val();
+			if (!selected) {
+				alert("답을 선택하세요.");
+				return;
+			}
+
+			if (parseInt(selected) === questions[current].answer) {
+				score++;
+			}
+
+			current++;
+			loadQuestion();
+			$('#score').text("점수: " + score);
+		}
+
+       
+	</script>
+</body>
+</html>

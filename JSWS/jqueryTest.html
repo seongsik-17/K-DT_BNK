@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+
+//버튼을 클릭하면 hello라는 문자를 출력
+$(function(){
+    $("#btn").click(function(){
+        $("#demo").html("<h2>hello</h2>");
+    })
+});
+
+function get(){
+    $.ajax({
+        //속성명
+        url: 'http://localhost:8092/api/data',
+        type:'GET',
+        success:function(response){
+            console.log('GET 성공: ',response);
+        },
+        error:function(xhr){
+            console.log('GET 실패: ',xhr);
+        }
+
+    });
+}
+
+function post(){
+    $.ajax({
+        url: 'http://localhost:8092/api/data',
+        type:'POST',
+        contentType: 'application/json',
+        data:JSON.stringify({
+            name: '홍길동',
+            age: 30
+        }),
+        success:(response)=>{
+            console.log("POST성공: ",response);
+        },
+        error: function(xhr){
+            console.log("POST실패: ",xhr);
+        }
+    });
+}
+
+</script>
+</head>
+<body>
+
+<button id="btn" onclick="get()">GET방식</button>
+<button id="btn" onclick="post()">POST방식</button>
+<div id="demo">-----</div>
+
+</body>
+</html>
