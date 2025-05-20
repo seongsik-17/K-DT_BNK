@@ -3,10 +3,12 @@
     pageEncoding="UTF-8"%>
 <%
 	MemberDTO member = (MemberDTO)session.getAttribute("member");
+	String id = null;
 	boolean b;
 	if(member == null){
 		b = false;
 	}else{
+		 id = member.getId();
 		b = true;
 	}
 
@@ -58,7 +60,11 @@ header ul li a:hover {
 			<li><a href="/endMovieList">상영종료</a></li>
 			<li><a href="/">상영중</a></li>
 			<li><a href="/expectedMovie">상영예정</a></li>
+			<li><a href="#">Q&A</a></li>
+			<li><a href="#">이벤트</a></li>
 			<li id="logbtn"><a href="login">로그인</a></li>
+			<li id="adminBtn"></li>
+			
 		</ul>
 </header>
 <script>
@@ -71,5 +77,9 @@ header ul li a:hover {
 		location.href="/logout"
 		alert("로그아웃 되었습니다!!");
 	}
+	const adminInfo = "<%=id%>";
 	
+	if(adminInfo == "admin"){
+		document.getElementById("adminBtn").innerHTML = "<li id='adminBtn'><a href='#'>관리자페이지</a></li>";
+	}
 </script>

@@ -159,7 +159,7 @@ a:hover {
 		</tbody>
 	</table>
 
-
+	<h3>상영중인 영화</h3>
 	<table>
 		<thead>
 			<tr>
@@ -194,7 +194,7 @@ a:hover {
 		window.onload = function () {
 			const adminBtn = document.getElementById("admin");
 			<c:if test="${member != null && member.id eq 'admin'}">
-				alert("관리자 로그인!!");
+				
 				adminBtn.innerHTML = '<button onclick="admin()">🎬 영화 추가</button>';
 			</c:if>
 		};

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.newBoard.dao.IBoardDao">
+	<select id="selectAll" resultType="com.example.newBoard.dto.BoardDTO">
+		SELECT * FROM tbl_board ORDER BY BNO
+	</select>
+	<select id="selectEndNum" resultType="int">
+		SELECT MAX(bno) FROM tbl_board
+	</select>
+	<!-- 삽입 -->
+	<insert id="">
+		INSERT INTO tbl_board VALUES(#{b.bno},#{b.title},#{b.content},#{b.writer},SYSDATE)
+	</insert>
+
+</mapper>

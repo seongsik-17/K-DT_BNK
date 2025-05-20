@@ -49,8 +49,8 @@
 			</div>
 
 			<div>
-				<label for="ploat">줄거리</label>
-				<textarea id="ploat" name="ploat" placeholder="줄거리를 입력하세요..."></textarea>
+				<label for="plot">줄거리</label>
+				<textarea id="plot" name="plot" placeholder="줄거리를 입력하세요..."></textarea>
 			</div>
 
 			<div>

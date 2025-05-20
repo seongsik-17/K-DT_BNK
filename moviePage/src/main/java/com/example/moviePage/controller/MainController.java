@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,11 +21,13 @@ import com.example.moviePage.dto.ComentDTO;
 import com.example.moviePage.dto.MemberDTO;
 import com.example.moviePage.dto.MovieDTO;
 import com.example.moviePage.dto.NoticeDTO;
+import com.example.moviePage.dto.User;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
+@CrossOrigin("*")
 public class MainController {
 	IMemberDao memberdao;
 	IMovieDao moviedao;
@@ -44,6 +48,7 @@ public class MainController {
 	public String root(Model model) {
 		List<MovieDTO> list = moviedao.selectAll();
 		List<NoticeDTO> n_list = noticedao.selectAll();
+		
 		model.addAttribute("list",list);
 		model.addAttribute("notice",n_list);
 		return "index";
@@ -114,9 +119,10 @@ public class MainController {
 		int lastNum = moviedao.getLastMovie_code();
 		
 		mdto.setMovie_code(lastNum+1);
+		
 		moviedao.insertMovie(mdto);
 		
-		return "index";
+		return "redirect/:index";
 	}
 	@GetMapping("/detail")
 	public String detail(@RequestParam("movie_code")int code,Model model) {
@@ -146,6 +152,23 @@ public class MainController {
 	}
 	
 	//--------------------------------------------------------------
+	@GetMapping("/cook/maindish")
+	public @ResponseBody String maindish() {
+		System.out.println("mainDish...........");
+		return "메인 요리가 나옵니다.";
+	}
+	@GetMapping("/api/data")
+	public @ResponseBody String dataGet() {
+		System.out.println("api/data.......");
+		return "통신 성공";
+	}
+	@PostMapping("/api/data")
+	public @ResponseBody String dataPost(@RequestBody User user){
+		
+		System.out.println("name: "+user.getName());
+		System.out.println("age: "+user.getAge());
+		return "통신 성공";
+	}
 	
 	
 }
