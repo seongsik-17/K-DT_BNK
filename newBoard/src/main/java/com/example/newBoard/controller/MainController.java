@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.newBoard.dao.IBoardDao;
 import com.example.newBoard.dto.BoardDTO;
@@ -27,7 +29,7 @@ public class MainController {
 	}
 	@PostMapping("/insertContent")
 	public String insertContent(@Valid BoardDTO board, BindingResult result, Model model) {
-		board.setBno(boarddao.selectEndNum());
+		board.setBno(boarddao.selectEndNum()+1);
 		if(result.hasErrors()) {
 			if(result.getFieldError("bno") != null) {
 				System.out.println(result.getFieldError("bno").getDefaultMessage());
@@ -42,5 +44,12 @@ public class MainController {
 		}
 		boarddao.insertContent(board);
 		return "redirect:/";
+	}
+	
+	@GetMapping("/serch")
+	public @ResponseBody String serch(@RequestParam("word")String word) {
+		
+		return null;
+		
 	}
 }

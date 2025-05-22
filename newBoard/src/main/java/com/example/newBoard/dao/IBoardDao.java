@@ -11,5 +11,6 @@ import com.example.newBoard.dto.BoardDTO;
 public interface IBoardDao {
 	 List<BoardDTO> selectAll();
 	 void insertContent(@Param("b")BoardDTO b);
+	 List<BoardDTO> serchContent(@Param("word")String word);
 	 int selectEndNum();
 }

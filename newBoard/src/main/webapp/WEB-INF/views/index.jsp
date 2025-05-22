@@ -32,9 +32,14 @@
 		<input type="text" name="writer" placeholder="작성자">
 		<input type="submit" value="등록">
 	</form>
+	<input type="text" id="serchWord">
+	<button onclick="serch()">검색</button>
 	<script>
+	function serch(){
+		const serch = 
+	}
 	const msg = document.getElementById("div1").value;
-		if(msg != ''){
+		if(msg != null){
 			alert="등록실패!";
 		}
 	</script>

@@ -10,8 +10,17 @@
 	<select id="selectEndNum" resultType="int">
 		SELECT MAX(bno) FROM tbl_board
 	</select>
+	<select id="searchContent" resultType="Board">
+  SELECT * FROM tbl_board
+  <where>
+    <if test="word != null and word != ''">
+      AND content LIKE CONCAT('%', #{word}, '%')
+    </if>
+  </where>
+</select>
+
 	<!-- 삽입 -->
-	<insert id="">
+	<insert id="insertContent">
 		INSERT INTO tbl_board VALUES(#{b.bno},#{b.title},#{b.content},#{b.writer},SYSDATE)
 	</insert>
 
