@@ -27,20 +27,26 @@
 	</table>
 	<div id="div1">${msg }</div>
 	<form action="insertContent" method="post">
-		<input type="text" name="title" placeholder="제목">
-		<input type="text" name="content" placeholder="내용">
-		<input type="text" name="writer" placeholder="작성자">
+		<input type="text" name="title" placeholder="제목"><br>
+		<input type="text" name="content" placeholder="내용"><br>
+		<input type="text" name="writer" placeholder="작성자"><br>
 		<input type="submit" value="등록">
 	</form>
 	<input type="text" id="serchWord">
 	<button onclick="serch()">검색</button>
 	<script>
+<<<<<<< HEAD
 	function serch(){
 		const serch = 
 	}
 	const msg = document.getElementById("div1").value;
 		if(msg != null){
 			alert="등록실패!";
+=======
+	const msg = document.getElementById("div1").innerText;
+		if(msg != ''){
+			alert=("등록실패!");
+>>>>>>> branch 'main' of https://github.com/seongsik-17/K-DT_BNK.git
 		}
 	</script>
 </body>
