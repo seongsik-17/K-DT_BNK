@@ -27,15 +27,15 @@
 	</table>
 	<div id="div1">${msg }</div>
 	<form action="insertContent" method="post">
-		<input type="text" name="title" placeholder="제목">
-		<input type="text" name="content" placeholder="내용">
-		<input type="text" name="writer" placeholder="작성자">
+		<input type="text" name="title" placeholder="제목"><br>
+		<input type="text" name="content" placeholder="내용"><br>
+		<input type="text" name="writer" placeholder="작성자"><br>
 		<input type="submit" value="등록">
 	</form>
 	<script>
-	const msg = document.getElementById("div1").value;
+	const msg = document.getElementById("div1").innerText;
 		if(msg != ''){
-			alert="등록실패!";
+			alert=("등록실패!");
 		}
 	</script>
 </body>

@@ -11,7 +11,7 @@
 		SELECT MAX(bno) FROM tbl_board
 	</select>
 	<!-- 삽입 -->
-	<insert id="">
+	<insert id="insertContent">
 		INSERT INTO tbl_board VALUES(#{b.bno},#{b.title},#{b.content},#{b.writer},SYSDATE)
 	</insert>
 

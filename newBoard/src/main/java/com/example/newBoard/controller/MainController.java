@@ -27,7 +27,7 @@ public class MainController {
 	}
 	@PostMapping("/insertContent")
 	public String insertContent(@Valid BoardDTO board, BindingResult result, Model model) {
-		board.setBno(boarddao.selectEndNum());
+		board.setBno(boarddao.selectEndNum()+1);
 		if(result.hasErrors()) {
 			if(result.getFieldError("bno") != null) {
 				System.out.println(result.getFieldError("bno").getDefaultMessage());
