@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ManageMentPage</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js"></script>
 </head>
 <body>
 	<h1>ManagementPage🛠</h1>
@@ -16,13 +17,13 @@
 				<li><div onclick="getUserList()">회원현황</div></li>
 				<li><div onclick="getUser()">개별회원 조회</div></li>
 				<li><div onclick="getReservationList()">예약현황</div></li>
-				<li><div onclick="">여행상품통계</div></li>
-				
+				<li><div onclick="productStatistics()">매출보고</div></li>
+				<li><div onclick="monthlySalse()">월별 매출보고</div>
 				<li><div onclick="">보고서생성</div></li>
 			</ul>
 		</nav>
 	</header>
-	<div id="main">
+	<div id="main" style="width: 1000px;height:800px;">
 		<div id="qnaDisplay">
 			<h3>QnA List</h3>
 			<table>
@@ -46,10 +47,9 @@
 							<td>${qna.content }</td>
 							<td>${qna.views }</td>
 							<td>${qna.created_at }</td>
-							<td>
-								<input type="text" id="answer">
-								<button type="button" onclick="registAnswer()">답변등록(아직 작동X)</button>
-							</td>
+							<td><input type="text" id="answer">
+								<button type="button" onclick="registAnswer()">답변등록(아직
+									작동X)</button></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -57,12 +57,17 @@
 		</div>
 		<hr>
 	</div>
+	<div id="sub">
+		
+	</div>
 	<script>
+	
 function getQna(){
 	  location.href='/management';
 }
 	
   function getUserList() {
+	
     fetch('/getUserList')
       .then(response => {
         if (!response.ok) {
@@ -154,6 +159,7 @@ function getQna(){
 		        <td>\${reservation.product_id}</td>
 		        <td>\${reservation.reservation_date}</td>
 		        <td>\${reservation.num_people}</td>
+		        <td>\${reservation.total_price}</td>
 		        <td>\${reservation.status}</td>
 		      </tr>
 		    `;
@@ -230,8 +236,142 @@ function getQna(){
 	    });
 	  });
 	}
-
   
+	//통계 차트
+	function productStatistics() {
+    const main = document.getElementById('main');
+    main.innerHTML = `<div id="salesChart" style="width: 1000px; height: 800px;"></div>`; // 차트 전용 div
+
+    var chartDom = document.getElementById('salesChart');
+    var myChart = echarts.init(chartDom);
+
+    fetch('/getSalse') 
+    .then(response => response.json())
+    .then(rawData => {
+        const formattedData = rawData.map(item => ({
+            name: item.title,
+            value: item.total_sale
+        }));
+
+        var option = {
+        		  title: {
+        			    text: '매출 종합 집계',
+        			    subtext: '여행 상품별',
+        			    left: 'center'
+        			  },
+        			  tooltip: {
+        			    trigger: 'item'
+        			  },
+        			  legend: {
+        			    orient: 'vertical',
+        			    left: 'left'
+        			  },
+        			  series: [
+        			    {
+        			      name: 'Access From',
+        			      type: 'pie',
+        			      radius: '50%',
+        			      data: formattedData,
+        			      emphasis: {
+        			        itemStyle: {
+        			          shadowBlur: 10,
+        			          shadowOffsetX: 0,
+        			          shadowColor: 'rgba(0, 0, 0, 0.5)'
+        			        }
+        			      }
+        			    }
+        			  ]
+        			};
+        myChart.setOption(option);
+    })
+    .catch(err => {
+        console.error('매출 데이터 로딩 실패:', err);
+        main.innerHTML = '<p>매출 데이터를 불러오는 데 실패했습니다.</p>';
+    });
+
+}
+	function monthlySalse() {
+	    const main = document.getElementById('main');
+	    main.innerHTML = `<div id="salesChart" style="width: 1000px; height: 800px;"></div>`;
+	    var chartDom = document.getElementById('salesChart');
+	    var myChart = echarts.init(chartDom);
+
+	    fetch('/getMonthlySalesDataset')
+	        .then(response => response.json())
+	        .then(sourceData => {
+	            let option = {
+	                legend: {},
+	                tooltip: {
+	                    trigger: 'axis',
+	                    showContent: false
+	                },
+	                dataset: {
+	                    source: sourceData
+	                },
+	                xAxis: { type: 'category' },
+	                yAxis: { gridIndex: 0 },
+	                grid: { top: '55%' },
+	                series: [], // 아래에서 채움
+	            };
+
+	            // 상품 개수만큼 라인 시리즈 추가
+	            for (let i = 1; i < sourceData.length; i++) {
+	                option.series.push({
+	                    type: 'line',
+	                    smooth: true,
+	                    seriesLayoutBy: 'row',
+	                    emphasis: { focus: 'series' }
+	                });
+	            }
+
+	            // pie 차트 추가 (기본은 첫 번째 월인 '1월')
+	            option.series.push({
+	                type: 'pie',
+	                id: 'pie',
+	                radius: '30%',
+	                center: ['50%', '25%'],
+	                emphasis: {
+	                    focus: 'self'
+	                },
+	                label: {
+	                    formatter: '{b}: {@[1]} ({d}%)'
+	                },
+	                encode: {
+	                    itemName: 'product',
+	                    value: 1,
+	                    tooltip: 1
+	                }
+	            });
+
+	            // pie 갱신
+	            myChart.on('updateAxisPointer', function (event) {
+	                const xAxisInfo = event.axesInfo[0];
+	                if (xAxisInfo) {
+	                    const dimension = xAxisInfo.value + 1;
+	                    myChart.setOption({
+	                        series: {
+	                            id: 'pie',
+	                            label: {
+	                                formatter: `{b}: {@[${dimension}]} ({d}%)`
+	                            },
+	                            encode: {
+	                                value: dimension,
+	                                tooltip: dimension
+	                            }
+	                        }
+	                    });
+	                }
+	            });
+
+	            myChart.setOption(option);
+	        })
+	        .catch(err => {
+	            console.error("월별 매출 데이터 로딩 실패:", err);
+	            main.innerHTML = "<p>데이터를 불러오지 못했습니다.</p>";
+	        });
+	}
+
+
   
 </script>
 
