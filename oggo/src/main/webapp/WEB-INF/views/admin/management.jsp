@@ -6,66 +6,192 @@
 <head>
 <meta charset="UTF-8">
 <title>ManageMentPage</title>
-<script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js"></script>
+<style>
+* {
+	box-sizing: border-box;
+	font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+	margin: 0;
+	display: flex;
+	height: 100vh;
+}
+
+header {
+	width: 220px;
+	background-color: #2c3e50;
+	color: white;
+	padding: 20px 0;
+}
+
+nav ul {
+	list-style: none;
+	padding: 0;
+}
+
+nav ul li {
+	padding: 15px 20px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+nav ul li:hover {
+	background-color: #34495e;
+}
+
+nav li.no-hover:hover {
+	background-color: inherit;
+	cursor: default;
+	font-weight: bold;
+}
+
+nav ul li div {
+	color: white;
+	text-decoration: none;
+}
+
+#main {
+	flex: 1;
+	padding: 20px;
+	overflow-y: auto;
+	background-color: #f4f6f9;
+}
+
+h1 {
+	background-color: #1abc9c;
+	color: white;
+	padding: 20px;
+	margin: 0;
+	text-align: center;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 20px 0;
+	background: white;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+	border: 1px solid #ddd;
+	padding: 10px;
+	text-align: center;
+}
+
+th {
+	background-color: #ecf0f1;
+	font-weight: bold;
+}
+
+input[type="text"], input[type="date"], input[type="submit"] {
+	padding: 6px 10px;
+	margin: 5px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+input[type="submit"] {
+	background-color: #3498db;
+	color: white;
+	cursor: pointer;
+}
+
+input[type="submit"]:hover {
+	background-color: #2980b9;
+}
+
+#salesChart {
+	background-color: white;
+	border-radius: 10px;
+	padding: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+</style>
 </head>
+<!-- 구현하고 싶은 기능 -->
+<!-- QnA를 작성하면 비속어 필터링을 통해 비속어가 감지되면 관리자에게 알려지도록 알람이 오고 삭제를 관리자가 진행하면 작성 내역과 로그를 DB에 기록 -->
+<!-- 각 예약현황 및 월별매출, 매출보고 PDF파일로 변환하기 기능 -->
+<!--  -->
 <body>
-	<h1>ManagementPage🛠</h1>
 	<header>
 		<nav>
 			<ul>
-				<li><div onclick="getQna()">QnAList</div></li>
-				<li><div onclick="getUserList()">회원현황</div></li>
-				<li><div onclick="getUser()">개별회원 조회</div></li>
-				<li><div onclick="getReservationList()">예약현황</div></li>
-				<li><div onclick="productStatistics()">매출보고</div></li>
-				<li><div onclick="monthlySalse()">월별 매출보고</div>
-				<li><div onclick="">보고서생성</div></li>
+				<li class="no-hover">OGGO</li>
+				<li><div onclick="getQnAList()">❌미응답QnAList</div></li>
+				<li><div onclick="">👮🏼‍♂️필터링된 QnAList</div></li>
+				<li><div onclick="getUserList()">👥 회원 현황</div></li>
+				<li><div onclick="getUser()">🔍 개별 회원 조회</div></li>
+				<li><div onclick="getReservationList()">📝 예약 현황</div></li>
+				<li><div onclick="productStatistics()">📊 매출 보고</div></li>
+				<li><div onclick="monthlySalse()">📈 월별 매출</div></li>
+				<li><div onclick="">🧾 보고서 생성</div></li>
 			</ul>
 		</nav>
 	</header>
-	<div id="main" style="width: 1000px;height:800px;">
-		<div id="qnaDisplay">
-			<h3>QnA List</h3>
-			<table>
-				<thead>
-					<tr>
-						<th>식별번호</th>
-						<th>유저 ID</th>
-						<th>제목</th>
-						<th>내용</th>
-						<th>조회수</th>
-						<th>작성일자</th>
-						<!-- 6개 -->
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="qna" items="${list }" varStatus="status">
-						<tr>
-							<td>${qna.qna_id }</td>
-							<td>${qna.user_id }</td>
-							<td>${qna.title }</td>
-							<td>${qna.content }</td>
-							<td>${qna.views }</td>
-							<td>${qna.created_at }</td>
-							<td><input type="text" id="answer">
-								<button type="button" onclick="registAnswer()">답변등록(아직
-									작동X)</button></td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
-		<hr>
-	</div>
-	<div id="sub">
-		
+
+	<div id="main">
+		<h2>관리자용 페이지</h2>
+		<p>Version 1.0</p>
+		<p>All Copyrights from OGGO</p>
 	</div>
 	<script>
-	
-function getQna(){
-	  location.href='/management';
-}
-	
+  function getQnAList() {
+	  const main = document.getElementById("main");
+
+	  fetch('/getQnAList')
+	    .then(response => {
+	      if (!response.ok) {
+	        throw new Error('응답 없음');
+	      }
+	      return response.json();
+	    })
+	    .then(data => {
+	      let html = `
+	        <h3>QnA 목록</h3>
+	        <table border="1">
+	          <thead>
+	            <tr>
+	              <th>식별번호</th>
+	              <th>유저 ID</th>
+	              <th>제목</th>
+	              <th>내용</th>
+	              <th>조회수</th>
+	              <th>작성일자</th>
+	            </tr>
+	          </thead>
+	          <tbody>
+	      `;
+
+	      data.forEach(qna => {
+	        html += `
+	          <tr>
+	            <td>\${qna.qna_id}</td>
+	            <td>\${qna.user_id}</td>
+	            <td>\${qna.title}</td>
+	            <td>\${qna.content}</td>
+	            <td>\${qna.views}</td>
+	            <td>\${qna.created_at}</td>
+	          </tr>
+	        `;
+	      });
+
+	      html += `
+	          </tbody>
+	        </table>
+	      `;
+
+	      main.innerHTML = html;
+	    })
+	    .catch(error => {
+	      console.error("QnA 데이터를 불러오는 데 실패했습니다:", error);
+	      main.innerHTML = "<p>QnA 데이터를 불러오지 못했습니다.</p>";
+	    });
+	}
+
   function getUserList() {
 	
     fetch('/getUserList')
@@ -159,7 +285,7 @@ function getQna(){
 		        <td>\${reservation.product_id}</td>
 		        <td>\${reservation.reservation_date}</td>
 		        <td>\${reservation.num_people}</td>
-		        <td>\${reservation.total_price}</td>
+		        <td>\${reservation.total_price.toLocaleString()}원</td>
 		        <td>\${reservation.status}</td>
 		      </tr>
 		    `;
@@ -213,12 +339,12 @@ function getQna(){
               </tr>
             </thead>
             <tbody>
-            	<td>\${data.user_Id}</td>
+            	<td>\${data.user_id}</td>
             	<td>\${data.password}</td>
             	<td>\${data.name}</td>
             	<td>\${data.email}</td>
             	<td>\${data.phone}</td>
-            	<td>\${data.birthDate}</td>
+            	<td>\${data.birth_date}</td>
             	<td>\${data.gender}</td>
             	<td>\${data.address}</td>
            		<td>\${data.regDate}</td>
@@ -371,9 +497,6 @@ function getQna(){
 	        });
 	}
 
-
-  
-</script>
-
+  </script>
 </body>
 </html>

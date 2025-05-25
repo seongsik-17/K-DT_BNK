@@ -43,11 +43,19 @@ public class MainController {
 	public String mamgementPage(Model model) {
 		List<QnaDTO>qnaList = qnadao.selectQna();
 		//System.out.println(qnaList);
-		model.addAttribute("list", qnaList);
+		model.addAttribute("qnaList", qnaList);
 		//통계 데이터 전송
 		
 		return "/admin/management";
 	}
+	@GetMapping("/getQnAList")
+	public @ResponseBody List<QnaDTO>getQnaList(){
+		List<QnaDTO> list = qnadao.selectQna();
+		System.out.println(list);
+		return list;
+	};
+	
+	
 	@GetMapping("/getUserList")
 	public @ResponseBody List<UserDTO> userList() {
 		List<UserDTO>userList = userdao.selectUserList();
