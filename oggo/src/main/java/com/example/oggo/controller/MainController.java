@@ -144,48 +144,15 @@ public class MainController {
 		return "예약 ID " + res_id + "의 결제 상태가 변경되었습니다.";
 
 	}
-
-	@GetMapping("/monthlySalesPdf")
-	public void generateMonthlySalesPdf(HttpServletResponse response) throws IOException {
-		// 1. 파일 설정
-		response.setContentType("application/pdf");
-		response.setHeader("Content-Disposition", "attachment; filename=\"monthly_sales.pdf\"");
-
-		PdfWriter writer = new PdfWriter(response.getOutputStream());
-		PdfDocument pdf = new PdfDocument(writer);
-		Document document = new Document(pdf);
-
-		// 2. 데이터 가져오기
-		List<List<Object>> data = getMonthlySalesDataset(); // 위에 있던 메서드 재사용
-
-		// 3. 제목
-		document.add(new Paragraph("월별 상품 매출 보고서").setBold().setFontSize(16).setMarginBottom(10));
-
-		// 4. 테이블 생성
-		int columnCount = data.get(0).size();
-		Table table = new Table(UnitValue.createPercentArray(columnCount)).useAllAvailableWidth();
-
-		// 헤더 행 생성
-		for (Object header : data.get(0)) {
-		    Cell headerCell = new Cell()
-		        .add(new Paragraph(header.toString()).setBold())
-		        .setBackgroundColor(ColorConstants.LIGHT_GRAY)
-		        .setTextAlignment(TextAlignment.CENTER);
-
-		    table.addHeaderCell(headerCell);
-		}
-
-
-		// 6. 데이터 행
-		for (int i = 1; i < data.size(); i++) {
-			for (Object cell : data.get(i)) {
-				
-				table.addCell(cell.toString());
-			}
-		}
-
-		document.add(table);
-		document.close();
+	
+	@GetMapping("/monthlyCount")
+	public @ResponseBody List<MonthlyStatisticsDTO> monthlyCount(@RequestParam("month")String date) {
+		String year = date.substring(0, 4);   // "2025"
+	    String month = date.substring(5, 7);  // "05"
+	    List<MonthlyStatisticsDTO> list = istasticsdao.selectMonthlySalesByYearAndMonth(year, month);
+	    return list;
+		
 	}
+
 
 }
