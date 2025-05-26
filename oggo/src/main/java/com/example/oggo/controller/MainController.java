@@ -179,6 +179,7 @@ public class MainController {
 		// 6. 데이터 행
 		for (int i = 1; i < data.size(); i++) {
 			for (Object cell : data.get(i)) {
+				
 				table.addCell(cell.toString());
 			}
 		}
