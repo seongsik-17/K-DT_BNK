@@ -122,13 +122,13 @@ input[type="submit"]:hover {
 			<ul>
 				<li class="no-hover">OGGO</li>
 				<li><div onclick="getQnAList()">❌미응답QnAList</div></li>
-				<li><div onclick="">👮🏼‍♂️필터링된 QnAList</div></li>
+				<li><div onclick="forbiddenWords()">👮🏼‍♂️필터링된 QnAList</div></li>
 				<li><div onclick="getUserList()">👥 회원 현황</div></li>
 				<li><div onclick="getUser()">🔍 개별 회원 조회</div></li>
 				<li><div onclick="getReservationList()">📝 예약 현황</div></li>
 				<li><div onclick="productStatistics()">📊 매출 보고</div></li>
 				<li><div onclick="monthlySalse()">📈 월별 매출</div></li>
-				<li><div onclick="">🧾 보고서 생성</div></li>
+				<li><div onclick="loadMonthlySalesTable()">🧾 보고서 생성</div></li>
 			</ul>
 		</nav>
 	</header>
@@ -139,6 +139,7 @@ input[type="submit"]:hover {
 		<p>All Copyrights from OGGO</p>
 	</div>
 	<script>
+		
   function getQnAList() {
 	  const main = document.getElementById("main");
 
@@ -272,6 +273,7 @@ input[type="submit"]:hover {
 		          <th>예약인원</th>
 		          <th>total_price</th>
 		          <th>상태</th>
+		          <th>결제확인</th>
 		        </tr>
 		      </thead>
 		      <tbody>
@@ -287,6 +289,7 @@ input[type="submit"]:hover {
 		        <td>\${reservation.num_people}</td>
 		        <td>\${reservation.total_price.toLocaleString()}원</td>
 		        <td>\${reservation.status}</td>
+		        <td><button onclick="checkPayment(\${reservation.reservation_id})">예약확정</button>
 		      </tr>
 		    `;
 		  });
@@ -358,7 +361,7 @@ input[type="submit"]:hover {
 	      `;
 	    })
 	    .catch(error => {
-	      document.getElementById("result").innerHTML = "에러 발생: " + error;
+	      document.getElementById("result").innerHTML = "입력하신 사용자가 존재하지 않습니다!";
 	    });
 	  });
 	}
@@ -496,7 +499,125 @@ input[type="submit"]:hover {
 	            main.innerHTML = "<p>데이터를 불러오지 못했습니다.</p>";
 	        });
 	}
+	function forbiddenWords(){
+		const main = document.getElementById("main");
+		
+		fetch("/forbiddenWords") // 컨트롤러 또는 JSP 매핑 경로
+			.then(response => {
+				if (!response.ok) throw new Error("응답 실패");
+				return response.json();
+			})
+			.then(data => {
+				console.log(data);
+	      let html = `
+	        <h3>필터링된 QnA리스트</h3>
+	        <table border="1">
+	          <thead>
+	            <tr>
+	              <th>식별번호</th>
+	              <th>유저 ID</th>
+	              <th>제목</th>
+	              <th>내용</th>
+	              <th>조회수</th>
+	              <th>작성일자</th>
+	              <th>처리</th>
+	            </tr>
+	          </thead>
+	          <tbody>
+	      `;
 
-  </script>
+	      data.forEach(qna => {
+	        html += `
+	          <tr>
+	            <td>\${qna.qna_id}</td>
+	            <td>\${qna.user_id}</td>
+	            <td>\${qna.title}</td>
+	            <td>\${qna.content}</td>
+	            <td>\${qna.views}</td>
+	            <td>\${qna.created_at}</td>
+	            <td><button onclick="deleteForbiddenWord(\${qna.qna_id})">삭제하기</button></td>
+	          </tr>
+	        `;
+	      });
+
+	      html += `
+	          </tbody>
+	        </table>
+	      `;
+
+	      main.innerHTML = html;
+	    })
+			.catch(err => {
+				console.error("비속어 목록 로딩 실패:", err);
+				main.innerHTML = "<p>비속어 데이터를 불러오지 못했습니다.</p>";
+			});
+	}
+	//비속어가 포함된걸로 감지되어 
+	function deleteForbiddenWord(qna_id){
+		alert("qna 삭제 기능에 포함 예정");
+	}
+	//결제를 확인하면 상태를 변경
+	function checkPayment(res_id) {
+  	const main = document.getElementById("main");
+	console.log(res_id);
+ 	 fetch("/updateResStatus", {
+	 method: "POST",
+	  headers: {
+	    "Content-Type": "application/x-www-form-urlencoded"
+	  },
+	  body: "res_id=" + encodeURIComponent(res_id)
+	})
+    .then(result => {
+      console.log("처리 결과:", result);
+      alert("결제 상태가 성공적으로 변경되었습니다.");
+      // 예: 상태 갱신을 위해 페이지 새로고침 또는 목록 다시 불러오기
+      location.reload();
+    })
+    .catch(err => {
+      console.error("에러:", err);
+      main.innerHTML = '<p>처리 실패</p>';
+    });
+}
+
+function loadMonthlySalesTable() {
+  fetch("/getMonthlySalesDataset")
+    .then(response => response.json())
+    .then(data => {
+      const main = document.getElementById("main");
+
+      let html = "<h3>월별 상품 매출</h3><table border='1'><thead><tr>";
+
+      // 첫 행은 헤더
+      data[0].forEach(header => {
+        html += `<th>\${header}</th>`;
+      });
+      html += "</tr></thead><tbody>";
+
+      // 나머지 행은 데이터
+      for (let i = 1; i < data.length; i++) {
+        html += "<tr>";
+        data[i].forEach(cell => {
+          html += `<td>\${cell}</td>`;
+        });
+        html += "</tr>";
+      }
+      html += "<button onclick='monthlySalesPdf()'>보고서 PDF로 출력하기</button>";	
+      html += "</tbody></table>";
+      main.innerHTML = html;
+    })
+    .catch(err => {
+      console.error("데이터 로딩 실패:", err);
+      document.getElementById("main").innerHTML = "<p>매출 데이터를 불러오는 데 실패했습니다.</p>";
+    });
+}
+	function monthlySalesPdf(){
+		location.href='/monthlySalesPdf';
+	}
+
+
+
+
+
+	</script>
 </body>
 </html>
