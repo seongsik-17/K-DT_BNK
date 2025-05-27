@@ -158,7 +158,7 @@
                     <div onclick="getUser()">🔍 개별 회원 조회</div>
                 </li>
                 <li>
-                    <div onclick="getUser()">📝 예약 전체 조회</div>
+                    <div onclick="getAllReservation()">📝 예약 전체 조회</div>
                 </li>
                 <li>
                     <div onclick="getReservationList()">📝 결제확인</div>
@@ -280,7 +280,7 @@
         function replyToQna(qna_id) {
             let answer = document.querySelector("input[name=answer]").value;
             console.log(answer);
-            fetch('updateQnA_Ans?qna_id=' + qna_id + '&answer=${answer}')
+            fetch('updateQnA_Ans?qna_id=' + qna_id + '&answer=' + answer)
                 .then(response => response.text())
                 .then(data => {
                     alert(data)
@@ -352,6 +352,59 @@
                     alert("데이터 로딩에 실패하였습니다!");
                     return;
                 });
+        }
+        //예약내역 전체 조회
+        function getAllReservation(){
+        	const main = document.getElementById("main");
+        	fetch('/getAllReservation')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('응답없음')
+                }return response.json();
+            })
+            .then(reservationList => {
+                console.log(reservationList)
+                let html = `
+	    <table border="1">
+	      <thead>
+	        <tr>
+	          <th>예약번호</th>
+	          <th>유저ID</th>
+	          <th>상품ID</th>
+	          <th>예약일</th>
+	          <th>예약인원</th>
+	          <th>total_price</th>
+	          <th>상태</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	  `;
+
+                reservationList.forEach(reservation => {
+                    html += `
+	      <tr>
+	        <td>\${reservation.reservation_id}</td>
+	        <td>\${reservation.user_id}</td>
+	        <td>\${reservation.product_id}</td>
+	        <td>\${reservation.reservation_date}</td>
+	        <td>\${reservation.num_people}</td>
+	        <td>\${reservation.total_price.toLocaleString()}원</td>
+	        <td>\${reservation.status}</td>
+	      </tr>
+	    `;
+                });
+
+                html += `
+	      </tbody>
+	    </table>
+	  `;
+
+                document.getElementById('main').innerHTML = html;
+            })
+            .catch(error => {
+                alert("데이터 로딩에 실패하였습니다!");
+                return;
+            });
         }
 
         function getReservationList() {

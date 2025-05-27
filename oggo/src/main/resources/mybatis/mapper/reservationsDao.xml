@@ -8,7 +8,9 @@
  <select id="selectReservation" resultType="com.example.oggo.dto.ReservationDTO">
  	SELECT * FROM reservations WHERE status = 'PENDING'
  </select>
- 
+ <select id="selectAllReservation" resultType="com.example.oggo.dto.ReservationDTO">
+ 	SELECT * FROM reservations
+ </select>
  <!-- 상태를 수정하는 쿼리 -->
  <update id="updateResStatus">
  	UPDATE reservations SET status = 'CONFIRMED' WHERE reservation_id = #{id}

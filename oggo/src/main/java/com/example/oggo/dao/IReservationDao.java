@@ -10,5 +10,6 @@ import com.example.oggo.dto.ReservationDTO;
 @Mapper
 public interface IReservationDao {
 	List<ReservationDTO>selectReservation();
+	List<ReservationDTO>selectAllReservation();
 	void updateResStatus(@Param("id")int id);
 }

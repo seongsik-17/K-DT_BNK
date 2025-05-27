@@ -112,7 +112,11 @@ public class MainController {
 				}
 		return "회원정보 수정 실패!";
 	}
-
+	@GetMapping("/getAllReservation")
+	public @ResponseBody List<ReservationDTO> allReservations(){
+		List<ReservationDTO> list = reservationdao.selectAllReservation();
+		return list;
+	}
 	@GetMapping("/getReservations")
 	public @ResponseBody List<ReservationDTO> Reservations() {
 		List<ReservationDTO> reservationList = reservationdao.selectReservation();
