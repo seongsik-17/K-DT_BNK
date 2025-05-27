@@ -127,6 +127,12 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #1e8449;
 }
+#main2 {
+	position: absolute;
+	top: 200px; /* main 내부의 h2 아래에 배치되도록 조정 */
+	left: 250px; /* sidebar 너비보다 살짝 오른쪽 */
+	z-index: 10;
+}
 
 
 
