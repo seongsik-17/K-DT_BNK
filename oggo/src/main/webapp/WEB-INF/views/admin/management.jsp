@@ -5,184 +5,192 @@
 <html>
 
 <head>
-<meta charset="UTF-8">
-<title>ManageMentPage</title>
-<script
-	src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js"></script>
-<style>
-* {
-	box-sizing: border-box;
-	font-family: 'Segoe UI', sans-serif;
-}
+    <meta charset="UTF-8">
+    <title>ManageMentPage</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
 
-body {
-	margin: 0;
-	display: flex;
-	height: 100vh;
-}
+        body {
+            margin: 0;
+            display: flex;
+            height: 100vh;
+        }
 
-header {
-	width: 220px;
-	background-color: #2c3e50;
-	color: white;
-	padding: 20px 0;
-}
+        header {
+            width: 220px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+        }
 
-nav ul {
-	list-style: none;
-	padding: 0;
-}
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
 
-nav ul li {
-	padding: 15px 20px;
-	cursor: pointer;
-	transition: background-color 0.3s;
-}
+        nav ul li {
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-nav ul li:hover {
-	background-color: #34495e;
-}
+        nav ul li:hover {
+            background-color: #34495e;
+        }
 
-nav li.no-hover:hover {
-	background-color: inherit;
-	cursor: default;
-	font-weight: bold;
-}
+        nav li.no-hover:hover {
+            background-color: inherit;
+            cursor: default;
+            font-weight: bold;
+        }
 
-nav ul li div {
-	color: white;
-	text-decoration: none;
-}
+        nav ul li div {
+            color: white;
+            text-decoration: none;
+        }
 
-#main {
-	flex: 1;
-	padding: 20px;
-	overflow-y: auto;
-	background-color: #f4f6f9;
-}
+        #main {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f4f6f9;
+        }
 
-h1 {
-	background-color: #1abc9c;
-	color: white;
-	padding: 20px;
-	margin: 0;
-	text-align: center;
-}
+        h1 {
+            background-color: #1abc9c;
+            color: white;
+            padding: 20px;
+            margin: 0;
+            text-align: center;
+        }
 
-table {
-	width: 100%;
-	border-collapse: collapse;
-	margin: 20px 0;
-	background: white;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
 
-th, td {
-	border: 1px solid #ddd;
-	padding: 10px;
-	text-align: center;
-}
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
 
-th {
-	background-color: #ecf0f1;
-	font-weight: bold;
-}
+        th {
+            background-color: #ecf0f1;
+            font-weight: bold;
+        }
 
-input[type="text"], input[type="date"], input[type="submit"] {
-	padding: 6px 10px;
-	margin: 5px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-}
+        input[type="text"],
+        input[type="date"],
+        input[type="submit"] {
+            padding: 6px 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
 
-input[type="submit"] {
-	background-color: #3498db;
-	color: white;
-	cursor: pointer;
-}
+        input[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+        }
 
-input[type="submit"]:hover {
-	background-color: #2980b9;
-}
+        input[type="submit"]:hover {
+            background-color: #2980b9;
+        }
 
-#salesChart {
-	background-color: white;
-	border-radius: 10px;
-	padding: 20px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+        #salesChart {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
+        input[type="submit"] {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-input[type="submit"] {
-    background-color: #27ae60;
-    color: white;
-    border: none;
-    padding: 9px 18px;
-    border-radius: 4px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+        input[type="submit"]:hover {
+            background-color: #1e8449;
+        }
 
-input[type="submit"]:hover {
-    background-color: #1e8449;
-}
-#main2 {
-	position: absolute;
-	top: 200px; /* main 내부의 h2 아래에 배치되도록 조정 */
-	left: 250px; /* sidebar 너비보다 살짝 오른쪽 */
-	z-index: 10;
-}
-
-
-
-</style>
+        #main2 {
+            position: absolute;
+            top: 200px;
+            /* main 내부의 h2 아래에 배치되도록 조정 */
+            left: 250px;
+            /* sidebar 너비보다 살짝 오른쪽 */
+            z-index: 10;
+        }
+    </style>
 </head>
+
 <body>
-	<header>
-		<nav>
-			<ul>
-				<li class="no-hover">OGGO</li>
-				<li>
-					<div onclick="getQnAList()">❌미응답QnAList</div>
-				</li>
-				<li>
-					<div onclick="forbiddenWords()">👮🏼‍♂️필터링된 QnAList</div>
-				</li>
-				<li>
-					<div onclick="getUserList()">👥 회원 현황</div>
-				</li>
-				<li>
-					<div onclick="getUser()">🔍 개별 회원 조회</div>
-				</li>
-				<li>
-					<div onclick="getReservationList()">📝 결제확인</div>
-				</li>
-				<li>
-					<div onclick="productStatistics()">📊 총 매출 보고</div>
-				</li>
-				<li>
-					<div onclick="monthlySalse()">📈 월별 매출 추세</div>
-				</li>
-				<li>
-					<div onclick="loadMonthlySalesTable()">🧾 월간 보고서 생성</div>
-				</li>
-			</ul>
-		</nav>
-	</header>
-
-	<div id="main">
-		<h2>관리자용 페이지</h2>
-		<p>Version 1.0</p>
-		<p>All Copyrights from OGGO</p>
-	</div>
-	<div id="main2"></div>
-	<div id="main3"></div>
-	<script>
-
+    <header>
+        <nav>
+            <ul>
+                <li class="no-hover">OGGO</li>
+                <li>
+                    <div onclick="getQnAList()">❌미응답QnAList</div>
+                </li>
+                <li>
+                    <div onclick="forbiddenWords()">👮🏼‍♂️필터링된 QnAList</div>
+                </li>
+                <li>
+                    <div onclick="getUserList()">👥 회원 현황</div>
+                </li>
+                <li>
+                    <div onclick="getUser()">🔍 개별 회원 조회</div>
+                </li>
+                <li>
+                    <div onclick="getUser()">📝 예약 전체 조회</div>
+                </li>
+                <li>
+                    <div onclick="getReservationList()">📝 결제확인</div>
+                </li>
+                <li>
+                    <div onclick="productStatistics()">📊 총 매출 보고</div>
+                </li>
+                <li>
+                    <div onclick="monthlySalse()">📈 월별 매출 추세</div>
+                </li>
+                <li>
+                    <div onclick="loadMonthlySalesTable()">🧾 월간 보고서 생성</div>
+                </li>
+                <li>
+                    <div onclick="exitManagement()">🛠 관리자 페이지 나가기</div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div id="main">
+        <h2>관리자용 페이지</h2>
+        <p>Version 1.0</p>
+        <p>All Copyrights from OGGO</p>
+    </div>
+    <div id="main2"></div>
+    <div id="main3"></div>
+    <script>
+        function exitManagement() { location.href = '/' }//컨트롤러와 연결 필요!!
         function getQnAList() {
             const main = document.getElementById("main");
-            document.getElementById("main2").innerHTML='<div id="main2"></div>';
+            document.getElementById("main2").innerHTML = '<div id="main2"></div>';
+
             fetch('/getQnAList')
                 .then(response => {
                     if (!response.ok) {
@@ -192,49 +200,101 @@ input[type="submit"]:hover {
                 })
                 .then(data => {
                     let html = `
-	        <h3>QnA 목록</h3>
-	        <table border="1">
-	          <thead>
-	            <tr>
-	              <th>식별번호</th>
-	              <th>유저 ID</th>
-	              <th>제목</th>
-	              <th>내용</th>
-	              <th>조회수</th>
-	              <th>작성일자</th>
-	            </tr>
-	          </thead>
-	          <tbody>
-	      `;
+	                <h3>QnA 목록</h3>
+	                <table border="1">
+	                    <thead>
+	                        <tr>
+	                            <th>식별번호</th>
+	                            <th>유저 ID</th>
+	                            <th>제목</th>
+	                            <th>내용</th>
+	                            <th>조회수</th>
+	                            <th>작성일자</th>
+	                            <th>답변 잔여시간</th>
+	                            <th>답변달기</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody>
+	            `;
 
-                    data.forEach(qna => {
+                    data.forEach((qna, index) => {
                         html += `
-	          <tr>
-	            <td>\${qna.qna_id}</td>
-	            <td>\${qna.user_id}</td>
-	            <td>\${qna.title}</td>
-	            <td>\${qna.content}</td>
-	            <td>\${qna.views}</td>
-	            <td>\${qna.created_at}</td>
-	          </tr>
-	        `;
+	                    <tr>
+	                        <td>\${qna.qna_id}</td>
+	                        <td>\${qna.user_id}</td>
+	                        <td>\${qna.title}</td>
+	                        <td>\${qna.content}</td>
+	                        <td>\${qna.views}</td>
+	                        <td>\${qna.created_at}</td>
+	                        <td id="timer-\${index}">계산 중...</td>
+	                        <td><input type="text" name="answer" id="answer"><button onclick="replyToQna(\${qna.qna_id})">답변</button></td>
+	                    </tr>
+	                `;
                     });
 
                     html += `
-	          </tbody>
-	        </table>
-	      `;
+	                    </tbody>
+	                </table>
+	            `;
 
                     main.innerHTML = html;
+
+                    // 타이머 업데이트
+                    data.forEach((qna, index) => {
+                        const createdAt = new Date(qna.created_at);
+                        const endTime = new Date(createdAt.getTime() + 24 * 60 * 60 * 1000);
+
+                        function updateTimer() {
+                            const now = new Date();
+                            const diff = endTime - now;
+                            const timerEl = document.getElementById(`timer-\${index}`);
+
+                            if (!timerEl) return;
+
+                            if (diff <= 0) {
+                                timerEl.innerText = "시간 초과";
+                                timerEl.style.color = "red";
+                                clearInterval(interval);
+                                return;
+                            }
+
+                            const hours = Math.floor(diff / (1000 * 60 * 60));
+                            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                            timerEl.innerText = `\${hours.toString().padStart(2, '0')}시간 ` +
+                                `\${minutes.toString().padStart(2, '0')}분 ` +
+                                `\${seconds.toString().padStart(2, '0')}초`;
+                        }
+
+                        const interval = setInterval(updateTimer, 1000);
+                        updateTimer();
+                    });
                 })
                 .catch(error => {
                     console.error("QnA 데이터를 불러오는 데 실패했습니다:", error);
                     main.innerHTML = "<p>QnA 데이터를 불러오지 못했습니다.</p>";
                 });
         }
+        //QnA답변
+        function replyToQna(qna_id) {
+            let answer = document.querySelector("input[name=answer]").value;
+            console.log(answer);
+            fetch('updateQnA_Ans?qna_id=' + qna_id + '&answer=${answer}')
+                .then(response => response.text())
+                .then(data => {
+                    alert(data)
+                    getQnAList();
+                })
+                .catch(err => {
+                    alert(err);
+                });
+
+        }
+
 
         function getUserList() {
-        	document.getElementById("main2").innerHTML='<div id="main2"></div>';
+            document.getElementById("main2").innerHTML = '<div id="main2"></div>';
             fetch('/getUserList')
                 .then(response => {
                     if (!response.ok) {
@@ -295,7 +355,7 @@ input[type="submit"]:hover {
         }
 
         function getReservationList() {
-        	document.getElementById("main2").innerHTML='<div id="main2"></div>';
+            document.getElementById("main2").innerHTML = '<div id="main2"></div>';
             fetch('/getReservations')
                 .then(response => {
                     if (!response.ok) {
@@ -352,7 +412,7 @@ input[type="submit"]:hover {
 
         function getUser() {
             const main = document.getElementById("main");
-            document.getElementById("main2").innerHTML='<div id="main2"></div>';
+            document.getElementById("main2").innerHTML = '<div id="main2"></div>';
             main.innerHTML = `
 	    <form id="userForm">
 	      <input type="text" name="name" placeholder="성명" required>
@@ -413,7 +473,7 @@ input[type="submit"]:hover {
         //통계 차트
         function productStatistics() {
             const main = document.getElementById('main');
-            document.getElementById("main2").innerHTML='<div id="main2"></div>';
+            document.getElementById("main2").innerHTML = '<div id="main2"></div>';
             main.innerHTML = `<div id="salesChart" style="width: 1000px; height: 800px;"></div>`; // 차트 전용 div
 
             var chartDom = document.getElementById('salesChart');
@@ -466,7 +526,7 @@ input[type="submit"]:hover {
         }
         function monthlySalse() {
             const main = document.getElementById('main');
-            document.getElementById("main2").innerHTML='<div id="main2"></div>';
+            document.getElementById("main2").innerHTML = '<div id="main2"></div>';
             main.innerHTML = `<div id="salesChart" style="width: 1000px; height: 800px;"></div>`;
             var chartDom = document.getElementById('salesChart');
             var myChart = echarts.init(chartDom);
@@ -547,7 +607,7 @@ input[type="submit"]:hover {
         }
         function forbiddenWords() {
             const main = document.getElementById("main");
-			document.getElementById("main2").innerHTML='<div id="main2"></div>';
+            document.getElementById("main2").innerHTML = '<div id="main2"></div>';
             fetch("/forbiddenWords") // 컨트롤러 또는 JSP 매핑 경로
                 .then(response => {
                     if (!response.ok) throw new Error("응답 실패");
@@ -702,13 +762,13 @@ input[type="submit"]:hover {
                 });
         }
 
-		//회원정보 수정
-        function userInfoUpdate(userId){
-			const main = document.getElementById("main");
-			fetch('getUserById?user_id='+userId)
-			.then(response => response.json())
-			.then(data => {
-				main.innerHTML = `
+        //회원정보 수정
+        function userInfoUpdate(userId) {
+            const main = document.getElementById("main");
+            fetch('getUserById?user_id=' + userId)
+                .then(response => response.json())
+                .then(data => {
+                    main.innerHTML = `
 				<form id="userUpdateForm">
 					<input type="text" name="user_id" id="user_id" value="\${data.user_id}" readonly>
 					<input type="text" name="password" id="password" value="\${data.password}">
@@ -718,32 +778,32 @@ input[type="submit"]:hover {
 					<input type="submit" value="변경하기">
 				</form>	
 					`;
-				document.getElementById("userUpdateForm").addEventListener("submit", function(event) {
-				    event.preventDefault(); // 새로고침 방지
+                    document.getElementById("userUpdateForm").addEventListener("submit", function (event) {
+                        event.preventDefault(); // 새로고침 방지
 
-				    const formData = new FormData(this);
+                        const formData = new FormData(this);
 
-				    fetch("/userInfoUpdate", {
-				        method: "POST",
-				        body: formData
-				    })
-				    .then(res => res.text())
-				    .then(msg => {
-				        alert(msg);
-				        getUserList();
-				        
-				    })
-				    .catch(err => {
-						alert("오류발생:"+err);
-				        console.error(err);
-				    });
-				});
-					
-			})
-			.catch(err => {
-				alert("오류!");
-			})
-           
+                        fetch("/userInfoUpdate", {
+                            method: "POST",
+                            body: formData
+                        })
+                            .then(res => res.text())
+                            .then(msg => {
+                                alert(msg);
+                                getUserList();
+
+                            })
+                            .catch(err => {
+                                alert("오류발생:" + err);
+                                console.error(err);
+                            });
+                    });
+
+                })
+                .catch(err => {
+                    alert("오류!");
+                })
+
         }
     </script>
 </body>

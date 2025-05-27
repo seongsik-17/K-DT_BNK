@@ -55,10 +55,17 @@ public class MainController {
 	@GetMapping("/getQnAList")
 	public @ResponseBody List<QnaDTO> getQnaList() {
 		List<QnaDTO> list = qnadao.selectQna();
-		System.out.println(list);
+		//System.out.println(list);
 		return list;
 	};
-
+	
+	@GetMapping("updateQnA_Ans")
+	public @ResponseBody String insertQnA_Ans(QnaDTO qna_ans){
+		int result = qnadao.updateQnA_Ans(qna_ans);
+		if(result == 1) {
+			return "답변 성공";
+		}return "등록 실패";
+	}
 	@GetMapping("/getUserList")
 	public @ResponseBody List<UserDTO> userList() {
 		List<UserDTO> userList = userdao.selectUserList();

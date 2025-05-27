@@ -17,4 +17,7 @@
 		WHERE INSTR(qna.content, forbidden_words.word) > 0
 		)
 	</select>
+	<update id="updateQnA_Ans">
+		UPDATE qna SET answer = #{qna.answer}, answered_at = SYSDATE, is_answered = 'T' WHERE qna_id = #{qna.qna_id}
+	</update>
 </mapper>
