@@ -1,11 +1,11 @@
 package com.example.oggo.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,17 +24,6 @@ import com.example.oggo.dto.QnaDTO;
 import com.example.oggo.dto.ReservationDTO;
 import com.example.oggo.dto.TotalSalseDTO;
 import com.example.oggo.dto.UserDTO;
-import com.itextpdf.kernel.colors.ColorConstants;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.properties.TextAlignment;
-import com.itextpdf.layout.properties.UnitValue;
-
-import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class MainController {
@@ -81,8 +70,40 @@ public class MainController {
 	public @ResponseBody UserDTO userByName(UserDTO user) {
 		System.out.println(user);
 		UserDTO getUser = userdao.serchUserInfo(user);
-		System.out.println(getUser);
+		//System.out.println(getUser);
 		return getUser;
+	}
+	@GetMapping("/getUserById")
+	public @ResponseBody UserDTO userById(UserDTO user) {
+		System.out.println(user);
+		UserDTO getUser = userdao.selectUserById(user);
+		//System.out.println(getUser);
+		return getUser;
+	}
+	@PostMapping("/userInfoUpdate")
+	public @ResponseBody String userInfoUpdate(UserDTO getuser) {
+		// 비밀번호 암호화
+				// 1. salt 생성
+				String salt = mySalt.getSalt();
+				// 2. SHA-256 해싱(암호화)
+				String encodePassword = myEncode.getEncodePw(getuser.getPassword(), salt);
+						
+				UserDTO user = new UserDTO();
+				// join_date랑 마지막 로그인 시간, role은 dao에서 입력해주기
+				user.setUser_id(getuser.getUser_id());
+				user.setPassword(encodePassword);
+				user.setSalt(salt);
+				user.setName(getuser.getName());
+				user.setEmail(getuser.getEmail());
+				user.setPhone(getuser.getPhone());
+				user.setAddress(getuser.getAddress());
+				user.setBirth_date(getuser.getBirth_date());
+				// 회원가입 정보 저장
+				int result = userdao.userInfoUpdate(user);
+				if(result == 1) {
+					return "회원정보 수정 성공";
+				}
+		return "회원정보 수정 실패!";
 	}
 
 	@GetMapping("/getReservations")
@@ -149,10 +170,40 @@ public class MainController {
 	public @ResponseBody List<MonthlyStatisticsDTO> monthlyCount(@RequestParam("month")String date) {
 		String year = date.substring(0, 4);   // "2025"
 	    String month = date.substring(5, 7);  // "05"
+	    System.out.println(date);
 	    List<MonthlyStatisticsDTO> list = istasticsdao.selectMonthlySalesByYearAndMonth(year, month);
 	    return list;
 		
 	}
+	// 솔트값 생성(랜덤)
+		public class mySalt{
+			public static String getSalt() {
+				Random random = new Random();
+				String salt = "";
+				for(int i=0; i<16; i++) {
+					int ascii = random.nextInt(94) + 33; // ascii 코드에서 랜덤값 (공백이랑 이상한 거 제외)
+					salt += (char)ascii;
+				}			
+				return salt;
+			}
+		}
+		
+		// 입력한 pw + salt를 암호화하기
+		public class myEncode{
+			public static String getEncodePw(String password, String salt) {
+				
+				// 사용자가 입력한 pw랑 랜덤 salt값을 합친 문장
+				String input = password + salt;
+				int hash = 0;
+				// 문자열마다 가중치 연산해서 더하기
+		        for (int i = 0; i < input.length(); i++) {
+		            char c = input.charAt(i);
+		            hash += (c * (i + 1));  // 가중치 곱해서 더함
+		        }
+		        // 16진수 문자열로 반환
+		        return Integer.toHexString(hash);
+			}
+		}
 
 
 }

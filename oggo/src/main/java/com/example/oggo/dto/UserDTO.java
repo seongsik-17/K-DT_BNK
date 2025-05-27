@@ -16,6 +16,7 @@ public class UserDTO {
 	private String role;
 	private String lastLogin;
 	private String mbti;
+	private String salt;
 	private String personalities;
 	private String drinking_level;
 }

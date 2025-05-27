@@ -11,4 +11,6 @@ import com.example.oggo.dto.UserDTO;
 public interface IUserDao {
 	List<UserDTO> selectUserList();
 	UserDTO serchUserInfo(@Param("user")UserDTO user);
+	UserDTO selectUserById(@Param("user")UserDTO user);
+	int userInfoUpdate(@Param("user")UserDTO user);
 }
