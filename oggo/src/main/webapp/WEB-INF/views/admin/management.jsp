@@ -239,15 +239,15 @@
 
                     main.innerHTML = html;
 
-                    // 타이머 업데이트
+                    // 타이머
                     data.forEach((qna, index) => {
-                        const createdAt = new Date(qna.created_at);
-                        const endTime = new Date(createdAt.getTime() + 24 * 60 * 60 * 1000);
+                        const createdAt = new Date(qna.created_at);//현재 시간
+                        const endTime = new Date(createdAt.getTime() + 24 * 60 * 60 * 1000);//24시간 이후의 시간
 
                         function updateTimer() {
-                            const now = new Date();
-                            const diff = endTime - now;
-                            const timerEl = document.getElementById(`timer-\${index}`);
+                            const now = new Date();//오늘 날짜를 가져옴
+                            const diff = endTime - now;//24시간 이후의 시간에서 현재 시간의 차이를 저장
+                            const timerEl = document.getElementById(`timer-\${index}`);//표시될 위치 지정
 
                             if (!timerEl) return;
 
@@ -267,7 +267,7 @@
                                 `\${seconds.toString().padStart(2, '0')}초`;
                         }
 
-                        const interval = setInterval(updateTimer, 1000);
+                        const interval = setInterval(updateTimer, 1000);//1초마다 함수 실행
                         updateTimer();
                     });
                 })
@@ -761,7 +761,7 @@
             }
 
             const chartDom = document.getElementById('main2');
-            chartDom.innerHTML = `<div id="monthlyChart" style="width: 900px; height: 600px;"></div>`;
+            chartDom.innerHTML = `<div id="monthlyChart" style="width: 1200px; height: 600px;"></div>`;
             const myChart = echarts.init(document.getElementById('monthlyChart'));
 
             fetch(`/monthlyCount?month=\${selectedMonth}`)
@@ -775,37 +775,60 @@
                     const sales = data.map(item => item.total_sales);    // 매출 값
 
                     const option = {
-                        title: {
-                            text: `\${selectedMonth} 상품별 매출`,
-                            left: 'center'
-                        },
-                        tooltip: {
-                            trigger: 'axis',
-                            formatter: '{b}<br/>매출: {c}원'
-                        },
-                        xAxis: {
-                            type: 'category',
-                            data: titles
-                        },
-                        yAxis: {
-                            type: 'value',
-                            axisLabel: {
-                                formatter: function (value) {
-                                    return value.toLocaleString(); // 1,000 단위 구분
-                                }
-                            }
-                        },
-                        series: [
-                            {
-                                name: '매출',
-                                data: sales,
-                                type: 'bar',
-                                itemStyle: {
-                                    color: '#3498db'
-                                }
-                            }
-                        ]
-                    };
+                    	    title: {
+                    	        text: `${selectedMonth} 상품별 매출`,
+                    	        left: 'center',
+                    	        textStyle: {
+                    	            fontSize: 24,         // 제목 글자 크기
+                    	            fontWeight: 'bold'
+                    	        }
+                    	    },
+                    	    grid:{
+                    	        bottom: 100, // x축 글자 확보
+                    	    },
+                    	    tooltip: {
+                    	        trigger: 'axis',
+                    	        formatter: '{b}<br/>매출: {c}원',
+                    	        textStyle: {
+                    	            fontSize: 16          // 툴팁 글자 크기
+                    	        }
+                    	    },
+                    	    xAxis: {
+                    	        type: 'category',
+                    	        data: titles,
+                    	        axisLabel: {
+                    	            fontSize: 18,// X축 글자 크기
+                    	            rotate: 30,
+                    	            color: '#333'
+                    	        }
+                    	    },
+                    	    yAxis: {
+                    	        type: 'value',
+                    	        axisLabel: {
+                    	            formatter: function (value) {
+                    	                return value.toLocaleString(); // 1,000 단위 구분
+                    	            },
+                    	            fontSize: 20,         // Y축 글자 크기
+                    	            color: '#333'
+                    	        }
+                    	    },
+                    	    series: [
+                    	        {
+                    	            name: '매출',
+                    	            data: sales,
+                    	            type: 'bar',
+                    	            itemStyle: {
+                    	                color: '#3498db'
+                    	            },
+                    	            label: {
+                    	                show: true,
+                    	                position: 'top',
+                    	                fontSize: 20       // 막대 위의 데이터 라벨 글자 크기
+                    	            }
+                    	        }
+                    	    ]
+                    	};
+
 
                     myChart.setOption(option);
                 })

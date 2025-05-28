@@ -132,12 +132,9 @@ public class MainController {
 	}
 
 	@GetMapping("/getMonthlySalesDataset")
-	@ResponseBody
-	public List<List<Object>> getMonthlySalesDataset() {
+	public @ResponseBody List<List<Object>> getMonthlySalesDataset() {
 		List<MonthlyStatisticsDTO> stats = istasticsdao.selectMonthlyProductSales();
-		// dto: title, month (1~12), total_sales
 
-		// Map<상품명, Double[12]> 생성
 		Map<String, Double[]> productMonthlyMap = new LinkedHashMap<>();
 		for (MonthlyStatisticsDTO dto : stats) {
 			String title = dto.getTitle();
@@ -147,7 +144,7 @@ public class MainController {
 			productMonthlyMap.get(title)[monthIdx] = (double) dto.getTotal_sales();
 		}
 
-		// dataset.source 형태로 변환
+		//차트에ㅐ 적용 가능한 형태로 데이터 구성
 		List<List<Object>> source = new ArrayList<>();
 		source.add(Arrays.asList("product", "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"));
 
