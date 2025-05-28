@@ -156,14 +156,14 @@ public class MainController {
 			}
 			source.add(row);
 		}
-
+		System.out.println(source);
 		return source;
 	}
 
 	@GetMapping("/forbiddenWords")
 	public @ResponseBody List<QnaDTO> forbiddenWords() {
 		List<QnaDTO> forbiddenWords = qnadao.selectForbiddenWords();
-		System.out.println(forbiddenWords);
+		//System.out.println(forbiddenWords);
 		return forbiddenWords;
 	}
 
