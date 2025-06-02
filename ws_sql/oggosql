@@ -1,0 +1,553 @@
+-- travel_products 테이블 생성
+CREATE TABLE travel_products (
+  product_id VARCHAR2(50) PRIMARY KEY,
+  title VARCHAR2(100) NOT NULL,
+  description VARCHAR2(2000),
+  region VARCHAR2(50),
+  price NUMBER(8) NOT NULL,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  total_seats NUMBER(3),
+  min_seats NUMBER(1),
+  left_seats NUMBER(3),--추가함
+  image_url VARCHAR2(200),
+  created_at DATE,
+  views NUMBER(3) DEFAULT 0,--추가함
+  tag varchar2(100),--추가함
+  status VARCHAR2(20) DEFAULT 'AVAILABLE'
+);
+
+-- t_user 테이블
+CREATE TABLE t_user (
+  user_id VARCHAR2(50) PRIMARY KEY,
+  password VARCHAR2(100) NOT NULL,
+  salt varchar2(50) NOT NULL,
+  name VARCHAR2(50) NOT NULL,
+  email VARCHAR2(100) UNIQUE NOT NULL,
+  phone VARCHAR2(13) NOT NULL,
+  birth_date DATE,
+  gender CHAR(1),
+  address VARCHAR2(200),
+  join_date DATE,
+  role VARCHAR2(50),
+  lastLogin DATE,
+  mbti VARCHAR2(4),
+  personalities VARCHAR2(200),
+  drinking_level VARCHAR2(50)
+);
+
+-- reservations 테이블
+CREATE TABLE reservations (
+  reservation_id NUMBER(5) GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  user_id VARCHAR2(50) NOT NULL,
+  product_id VARCHAR2(50) NOT NULL,
+  reservation_date DATE,
+  num_people NUMBER(3) NOT NULL,
+  total_price NUMBER(8),
+  status VARCHAR2(20) DEFAULT 'PENDING'
+);
+
+-- qna 테이블
+CREATE TABLE qna (
+  qna_id NUMBER(5) PRIMARY KEY,
+  user_id VARCHAR2(50),
+  title VARCHAR2(255) NOT NULL,
+  content VARCHAR2(2000) NOT NULL,
+  answer VARCHAR2(2000),
+  is_answered CHAR(1) DEFAULT 'F',  -- Boolean 대체
+  views NUMBER(3) DEFAULT 0,
+  created_at DATE,
+  answered_at DATE
+);
+
+-- faq 테이블
+CREATE TABLE faq (
+  id VARCHAR2(36) PRIMARY KEY,  -- UUID 대체
+  question VARCHAR2(255) NOT NULL,
+  answer VARCHAR2(4000) NOT NULL,
+  source_inquiry_id VARCHAR2(36),
+  created_from VARCHAR2(20),
+  created_at TIMESTAMP
+);
+
+-- companion_posts 테이블
+CREATE TABLE companion_posts (
+  id NUMBER(5),
+  user_id VARCHAR2(50) NOT NULL,
+  title VARCHAR2(255) NOT NULL,
+  content VARCHAR2(2000) NOT NULL,
+  product_id VARCHAR2(50),
+  product_title VARCHAR2(100) NOT NULL,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  total_members NUMBER(3),
+  current_members NUMBER(3) DEFAULT 1,
+  status VARCHAR2(20) DEFAULT 'open',
+  created_at DATE,
+  PRIMARY KEY (id, product_id)
+);
+
+-- companion_comments 테이블
+CREATE TABLE companion_comments (
+  id NUMBER(5) PRIMARY KEY,
+  post_id NUMBER(5) NOT NULL,
+  user_id VARCHAR2(50) NOT NULL,
+  content VARCHAR2(2000) NOT NULL,
+  created_at DATE
+);
+
+-- user_wishlist 테이블
+CREATE TABLE user_wishlist (
+  wishlist_id NUMBER(5) PRIMARY KEY,
+  user_id VARCHAR2(50) NOT NULL,
+  product_id VARCHAR2(50) NOT NULL,
+  added_at DATE
+);
+
+-- reviews 테이블
+CREATE TABLE reviews (
+  review_id NUMBER(5) PRIMARY KEY,
+  user_id VARCHAR2(50) NOT NULL,
+  product_id VARCHAR2(50) NOT NULL,
+  rating NUMBER(1) NOT NULL,
+  title VARCHAR2(100),
+  content VARCHAR2(2000) NOT NULL,
+  created_at DATE,
+  updated_at DATE,
+  is_public CHAR(1) DEFAULT 'T'
+);
+---------------------------------------------------------------
+--더미데이터--
+INSERT INTO qna (qna_id, user_id, title, content, answer, is_answered, views, created_at, answered_at) VALUES
+(1, 'user001', '로그인 오류가 발생합니다', '로그인 시 알 수 없는 오류가 발생합니다. 원인이 무엇일까요?', '캐시 문제일 수 있으니 브라우저를 새로고침 후 시도해보세요.', 'T', 15, TO_DATE('2025-05-20', 'YYYY-MM-DD'), TO_DATE('2025-05-21', 'YYYY-MM-DD'));
+
+INSERT INTO qna (qna_id, user_id, title, content, answer, is_answered, views, created_at, answered_at) VALUES
+(2, 'user002', '비밀번호 변경 방법 문의', '비밀번호는 어디서 변경하나요?', '내 정보 페이지에서 변경 가능합니다.', 'T', 8, TO_DATE('2025-05-18', 'YYYY-MM-DD'), TO_DATE('2025-05-19', 'YYYY-MM-DD'));
+
+INSERT INTO qna (qna_id, user_id, title, content, answer, is_answered, views, created_at, answered_at) VALUES
+(3, 'user003', '게시글 작성이 안 됩니다', '작성 버튼을 눌러도 반응이 없습니다.', NULL, 'F', 3, TO_DATE('2025-05-21', 'YYYY-MM-DD'), NULL);
+
+INSERT INTO qna (qna_id, user_id, title, content, answer, is_answered, views, created_at, answered_at) VALUES
+(4, 'user004', '회원가입 이메일이 안 옵니다', '이메일 인증 메일이 오지 않아요. 어떻게 해야 하나요?', '스팸메일함을 확인해 보시고, 그래도 안 오면 문의 바랍니다.', 'T', 10, TO_DATE('2025-05-17', 'YYYY-MM-DD'), TO_DATE('2025-05-18', 'YYYY-MM-DD'));
+
+INSERT INTO qna (qna_id, user_id, title, content, answer, is_answered, views, created_at, answered_at) VALUES
+(5, 'user005', '프로필 사진 변경이 안돼요', '사진을 업로드했는데 반영이 안 됩니다.', NULL, 'F', 5, TO_DATE('2025-05-19', 'YYYY-MM-DD'), NULL);
+
+SELECT * FROM qna WHERE is_answered =  'F';
+commit;
+--userData
+INSERT INTO t_user VALUES (
+  'user01', 'pass1234', '김민수', 'minsu.kim@example.com', '010-1234-5678',
+  TO_DATE('1995-03-12', 'YYYY-MM-DD'), 'M', '서울시 강남구 테헤란로 123',
+  SYSDATE, 'USER', SYSDATE, 'INTJ', '분석적, 신중함', '가끔 마심'
+);
+
+INSERT INTO t_user VALUES (
+  'user02', 'qwer5678', '이서연', 'seoyeon.lee@example.com', '010-2345-6789',
+  TO_DATE('1998-07-22', 'YYYY-MM-DD'), 'F', '부산시 해운대구 달맞이로 77',
+  SYSDATE, 'ADMIN', SYSDATE, 'ENFP', '외향적, 호기심 많음', '자주 마심'
+);
+
+INSERT INTO t_user VALUES (
+  'user03', 'hello123', '박지훈', 'jihun.park@example.com', '010-3456-7890',
+  TO_DATE('1992-11-05', 'YYYY-MM-DD'), 'M', '대구시 수성구 범어로 321',
+  SYSDATE, 'USER', SYSDATE, 'ISTP', '실용적, 독립적', '안 마심'
+);
+
+INSERT INTO t_user VALUES (
+  'user04', 'world999', '정하늘', 'haneul.jung@example.com', '010-4567-8901',
+  TO_DATE('1990-01-30', 'YYYY-MM-DD'), 'F', '광주시 북구 하남대로 88',
+  SYSDATE, 'USER', SYSDATE, 'INFJ', '감성적, 직관적', '가끔 마심'
+);
+
+INSERT INTO t_user VALUES (
+  'user05', 'secure88', '최윤호', 'yunho.choi@example.com', '010-5678-9012',
+  TO_DATE('1997-09-18', 'YYYY-MM-DD'), 'M', '인천시 연수구 센트럴로 456',
+  SYSDATE, 'MODERATOR', SYSDATE, 'ENTP', '논리적, 창의적', '가끔 마심'
+);
+commit;
+-----------------------
+--예약 더미데이터--
+INSERT INTO reservations (user_id, product_id, reservation_date, num_people, total_price)
+VALUES ('user01', 'tp001', SYSDATE, 2, 200000);
+
+INSERT INTO reservations (user_id, product_id, reservation_date, num_people, total_price, status)
+VALUES ('user02', 'tp002', TO_DATE('2025-06-01', 'YYYY-MM-DD'), 1, 120000, 'CONFIRMED');
+commit;
+--------------------
+SELECT u.user_id, name, phone, reservation_id, reservation_date,num_people
+FROM t_user u, reservations r
+WHERE u.user_id = r.user_id;
+commit;
+
+----------------------------------------
+SELECT * 
+ FROM(SELECT u.user_id, name, phone, reservation_id, reservation_date,num_people,birth_date
+		FROM t_user u, reservations r
+		WHERE u.user_id = r.user_id)
+WHERE name ='김민수' OR birth_date=TO_DATE('1995-03-12');
+--월/ 상품코드/ 예약 카운트
+SELECT
+  TO_CHAR(reservation_date, 'MM') AS month,
+  product_id,
+  COUNT(*) AS reservation_count
+FROM reservations
+GROUP BY TO_CHAR(reservation_date, 'MM'), product_id
+ORDER BY month, product_id;
+--
+SELECT
+  TO_CHAR(r.reservation_date, 'YYYY-MM') AS month,
+  tp.title AS product_title,
+  COUNT(*) AS reservation_count
+FROM reservations r
+JOIN travel_products tp ON r.product_id = tp.product_id
+GROUP BY TO_CHAR(r.reservation_date, 'YYYY-MM'), tp.title
+ORDER BY month, product_title;
+--
+SELECT
+  TO_CHAR(r.reservation_date, 'MM') AS month,
+  tp.title AS product_title,
+  COUNT(*) AS reservation_count
+FROM reservations r
+JOIN travel_products tp ON r.product_id = tp.product_id
+GROUP BY TO_CHAR(r.reservation_date, 'MM'), tp.title
+ORDER BY product_title, month;
+
+select product_id from reservations;
+select product_id from travel_products;
+DELETE FROM reservations;
+-------------------------------------
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, image_url, created_at, status
+) VALUES (
+  'tp001', '북극 탐험 7일', '북극의 아름다운 빙하와 야생동물을 탐험하는 7일 여행', '북극', 3500000
+  TO_DATE('2025-08-01', 'YYYY-MM-DD'), TO_DATE('2025-08-07', 'YYYY-MM-DD'),
+  20, 5, '/images/arctic.jpg', SYSDATE - 60, 'AVAILABLE'
+);
+
+-- tp002
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, image_url, created_at, status
+) VALUES (
+  'tp002', '몽골 초원 트레킹', '광활한 몽골 초원을 걷는 5일 트레킹 여행', '몽골', 1500000,
+  TO_DATE('2025-09-10', 'YYYY-MM-DD'), TO_DATE('2025-09-14', 'YYYY-MM-DD'),
+  15, 3, '/images/mongolia.jpg', SYSDATE - 45, 'AVAILABLE'
+);
+
+-- tp003
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, image_url, created_at, status
+) VALUES (
+  'tp003', '산티아고 순례길 10일', '스페인 산티아고 순례길을 걷는 10일 여행', '산티아고', 2000000,
+  TO_DATE('2025-10-01', 'YYYY-MM-DD'), TO_DATE('2025-10-10', 'YYYY-MM-DD'),
+  25, 4, '/images/santiago.jpg', SYSDATE - 50, 'AVAILABLE'
+);
+
+-- tp004
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, image_url, created_at, status
+) VALUES (
+  'tp004', '남극 대륙 탐험 14일', '남극 대륙의 미지의 자연을 탐험하는 14일 여행', '남극', 6000000,
+  TO_DATE('2025-11-05', 'YYYY-MM-DD'), TO_DATE('2025-11-18', 'YYYY-MM-DD'),
+  10, 5, '/images/antarctic.jpg', SYSDATE - 30, 'AVAILABLE'
+);
+
+-- tp005
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, image_url, created_at, status
+) VALUES (
+  'tp005', '몽골 전통문화 체험', '몽골 유목민과 함께하는 7일 전통문화 체험', '몽골', 1800000,
+  TO_DATE('2025-08-15', 'YYYY-MM-DD'), TO_DATE('2025-08-21', 'YYYY-MM-DD'),
+  18, 4, '/images/mongolia_culture.jpg', SYSDATE - 40, 'AVAILABLE'
+);
+--필요한 데이터: 상품이름, 상태, 예약건수, 전체예약건수
+SELECT
+  TO_CHAR(r.reservation_date, 'MM') AS month,
+  tp.title AS product_title,
+  COUNT(*) AS reservation_count
+FROM reservations r
+JOIN travel_products tp ON r.product_id = tp.product_id
+GROUP BY TO_CHAR(r.reservation_date, 'MM'), tp.title
+ORDER BY tp.title, month;
+---
+SELECT
+  TO_CHAR(r.reservation_date, 'MM') AS month,
+  tp.title AS product_title,
+  SUM(r.total_price) AS total_sales
+FROM reservations r
+JOIN travel_products tp ON r.product_id = tp.product_id
+GROUP BY TO_CHAR(r.reservation_date, 'MM'), tp.title
+ORDER BY tp.title, month;
+--
+DELETE FROM reservations;
+DELETE FROM travel_products;
+--여행예약 추가 데이터
+INSERT INTO reservations (user_id, product_id, reservation_date, num_people, total_price, status)
+VALUES ('user10', 'tp002', TO_DATE('2025-08-14', 'YYYY-MM-DD'), 2, 240000, 'CONFIRMED');
+commit;
+
+INSERT INTO reservations (user_id, product_id, reservation_date, num_people, total_price, status) VALUES ('user01', 'tp001', SYSDATE - 10, 2, 200000, 'CONFIRMED');
+INSERT INTO reservations (user_id, product_id, reservation_date, num_people, total_price, status) VALUES ('user02', 'tp002', TO_DATE('2025-06-01', 'YYYY-MM-DD'), 1, 120000, 'CONFIRMED');
+INSERT INTO reservations (user_id, product_id, reservation_date, num_people, total_price, status) VALUES ('user03', 'tp003', SYSDATE - 20, 3, 300000, 'CANCELLED');
+INSERT INTO reservations (user_id, product_id, reservation_date, num_people, total_price, status) VALUES ('user04', 'tp004', SYSDATE - 5, 1, 150000, 'PENDING');
+INSERT INTO reservations (user_id, product_id, reservation_date, num_people, total_price, status) VALUES ('user05', 'tp005', SYSDATE - 15, 4, 400000, 'CONFIRMED');
+INSERT INTO reservations (user_id, product_id, reservation_date, num_people, total_price, status) VALUES ('user06', 'tp001', SYSDATE - 25, 2, 180000, 'CONFIRMED');
+INSERT INTO reservations (user_id, product_id, reservation_date, num_people, total_price, status) VALUES ('user07', 'tp002', SYSDATE - 3, 2, 220000, 'PENDING');
+INSERT INTO reservations (user_id, product_id, reservation_date, num_people, total_price, status) VALUES ('user08', 'tp003', SYSDATE - 7, 1, 110000, 'CONFIRMED');
+INSERT INTO reservations (user_id, product_id, reservation_date, num_people, total_price, status) VALUES ('user09', 'tp004', TO_DATE('2025-05-15', 'YYYY-MM-DD'), 3, 270000, 'CONFIRMED');
+INSERT INTO reservations (user_id, product_id, reservation_date, num_people, total_price, status) VALUES ('user10', 'tp005', SYSDATE - 12, 2, 230000, 'CANCELLED');
+
+--샘플데이터
+
+-- tp001
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, left_seats, image_url, created_at, tag, status
+) VALUES (
+  'tp001', '북극 탐험 7일', '북극의 아름다운 빙하와 야생동물을 탐험하는 7일 여행', '북극', 3500000,
+  TO_DATE('2025-08-01', 'YYYY-MM-DD'), TO_DATE('2025-08-07', 'YYYY-MM-DD'),
+  20, 5, 20, '/images/arctic.jpg', SYSDATE - 60, '#힐링#시원', 'AVAILABLE'
+);
+
+-- tp002
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, left_seats, image_url, created_at, tag, status
+) VALUES (
+  'tp002', '몽골 초원 트레킹', '광활한 몽골 초원을 걷는 5일 트레킹 여행', '몽골', 1500000,
+  TO_DATE('2025-09-10', 'YYYY-MM-DD'), TO_DATE('2025-09-14', 'YYYY-MM-DD'),
+  15, 3, 15, '/images/mongolia.jpg', SYSDATE - 45, '#액티비티#더움#몽골#오지', 'AVAILABLE'
+);
+
+-- tp003
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, left_seats, image_url, created_at, tag, status
+) VALUES (
+  'tp003', '산티아고 순례길 10일', '스페인 산티아고 순례길을 걷는 10일 여행', '산티아고', 2000000,
+  TO_DATE('2025-10-01', 'YYYY-MM-DD'), TO_DATE('2025-10-10', 'YYYY-MM-DD'),
+  25, 4, 25, '/images/santiago.jpg', SYSDATE - 50, '#액티비티#더움#스페인#유럽', 'AVAILABLE'
+);
+
+-- tp004
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, left_seats, image_url, created_at, tag, status
+) VALUES (
+  'tp004', '남극 대륙 탐험 14일', '남극 대륙의 미지의 자연을 탐험하는 14일 여행', '남극', 6000000,
+  TO_DATE('2025-11-05', 'YYYY-MM-DD'), TO_DATE('2025-11-18', 'YYYY-MM-DD'),
+  10, 5, 10, '/images/antarctic.jpg', SYSDATE - 30, '#시원#펭귄#크루즈', 'AVAILABLE'
+);
+
+-- tp005
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, left_seats, image_url, created_at, tag, status
+) VALUES (
+  'tp005', '몽골 전통문화 체험', '몽골 유목민과 함께하는 7일 전통문화 체험', '몽골', 1800000,
+  TO_DATE('2025-08-15', 'YYYY-MM-DD'), TO_DATE('2025-08-21', 'YYYY-MM-DD'),
+  18, 4, 18, '/images/mongolia_culture.jpg', SYSDATE - 40, '#사막#게르#문화', 'AVAILABLE'
+);
+
+-- tp006
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, left_seats, image_url, created_at, tag, status
+) VALUES (
+  'tp006', '산티아고 문화탐방 8일', '산티아고의 역사적 유적과 현지 문화를 체험하는 여행', '산티아고', 2100000,
+  TO_DATE('2025-09-05', 'YYYY-MM-DD'), TO_DATE('2025-09-12', 'YYYY-MM-DD'),
+  20, 5, 20, '/images/antarctic.jpg', SYSDATE - 25, '#문화#유럽#도보여행', 'AVAILABLE'
+);
+
+-- tp007
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, left_seats, image_url, created_at, tag, status
+) VALUES (
+  'tp007', '몽골 별빛 캠핑', '드넓은 몽골 초원에서 별을 보며 캠핑하는 힐링 여행', '몽골', 1700000,
+  TO_DATE('2025-08-20', 'YYYY-MM-DD'), TO_DATE('2025-08-26', 'YYYY-MM-DD'),
+  12, 3, 12, '/images/antarctic.jpg', SYSDATE - 35, '#자연#힐링#야경', 'AVAILABLE'
+);
+
+-- tp008
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, left_seats, image_url, created_at, tag, status
+) VALUES (
+  'tp008', '남극 야생 탐사 10일', '펭귄과 바다표범을 가까이서 관찰하는 생태 여행', '남극', 5800000,
+  TO_DATE('2025-12-01', 'YYYY-MM-DD'), TO_DATE('2025-12-10', 'YYYY-MM-DD'),
+  8, 4, 8, '/images/antarctic.jpg', SYSDATE - 15, '#펭귄#자연#탐사', 'AVAILABLE'
+);
+
+-- tp009
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, left_seats, image_url, created_at, tag, status
+) VALUES (
+  'tp009', '산티아고 와인로드', '스페인의 와이너리를 따라 떠나는 미식 여행', '산티아고', 2200000,
+  TO_DATE('2025-09-25', 'YYYY-MM-DD'), TO_DATE('2025-10-02', 'YYYY-MM-DD'),
+  16, 4, 16, '/images/antarctic.jpg', SYSDATE - 20, '#미식#와인#산책', 'AVAILABLE'
+);
+
+-- tp010
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, left_seats, image_url, created_at, tag, status
+) VALUES (
+  'tp010', '몽골 오프로드 어드벤처', '사막과 초원을 달리는 스릴 넘치는 오프로드 여행', '몽골', 1900000,
+  TO_DATE('2025-09-05', 'YYYY-MM-DD'), TO_DATE('2025-09-11', 'YYYY-MM-DD'),
+  10, 3, 10, '/images/antarctic.jpg', SYSDATE - 28, '#액티비티#사막#오프로드', 'AVAILABLE'
+);
+
+-- tp011
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, left_seats, image_url, created_at, tag, status
+) VALUES (
+  'tp011', '북극 오로라 체험', '밤하늘을 수놓는 오로라를 감상하며 휴식을 취하는 여행', '북극', 3700000,
+  TO_DATE('2025-11-10', 'YYYY-MM-DD'), TO_DATE('2025-11-16', 'YYYY-MM-DD'),
+  14, 5, 14, '/images/antarctic.jpg', SYSDATE - 18, '#오로라#힐링#북극', 'AVAILABLE'
+);
+
+-- tp012
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, left_seats, image_url, created_at, tag, status
+) VALUES (
+  'tp012', '산티아고 예술 기행', '예술과 건축을 중심으로 산티아고를 둘러보는 여행', '산티아고', 2000000,
+  TO_DATE('2025-08-28', 'YYYY-MM-DD'), TO_DATE('2025-09-04', 'YYYY-MM-DD'),
+  18, 4, 18, '/images/antarctic.jpg', SYSDATE - 10, '#예술#건축#유럽', 'AVAILABLE'
+);
+
+-- tp013
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, left_seats, image_url, created_at, tag, status
+) VALUES (
+  'tp013', '남극 빙하 크루즈', '빙하 사이를 항해하며 절경을 감상하는 고품격 크루즈 여행', '남극', 6200000,
+  TO_DATE('2025-12-15', 'YYYY-MM-DD'), TO_DATE('2025-12-28', 'YYYY-MM-DD'),
+  20, 6, 20, '/images/antarctic.jpg', SYSDATE - 12, '#크루즈#절경#빙하', 'AVAILABLE'
+);
+
+-- tp014
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, left_seats, image_url, created_at, tag, status
+) VALUES (
+  'tp014', '몽골 사진 여행', '자연과 유목민의 삶을 사진으로 담는 감성 여행', '몽골', 1600000,
+  TO_DATE('2025-09-15', 'YYYY-MM-DD'), TO_DATE('2025-09-21', 'YYYY-MM-DD'),
+  12, 3, 12, '/images/antarctic.jpg', SYSDATE - 8, '#사진#자연#문화', 'AVAILABLE'
+);
+
+-- tp015
+INSERT INTO travel_products (
+  product_id, title, description, region, price, start_date, end_date,
+  total_seats, min_seats, left_seats, image_url, created_at, tag, status
+) VALUES (
+  'tp015', '북극 서핑 챌린지', '극한의 바다에서 즐기는 이색 서핑 체험', '북극', 3900000,
+  TO_DATE('2025-09-20', 'YYYY-MM-DD'), TO_DATE('2025-09-27', 'YYYY-MM-DD'),
+  10, 4, 10, '/images/antarctic.jpg', SYSDATE - 5, '#서핑#액티비티#북극', 'AVAILABLE'
+);
+--------------------------------------------------------------------------
+SELECT r.product_id, sum(r.total_price) as total_sale
+FROM travel_products tp
+   JOIN reservations r ON tp.product_id = r.product_id
+GROUP BY r.product_id;
+
+SELECT tp.title, SUM(r.total_price) AS total_sale
+FROM travel_products tp
+JOIN reservations r ON tp.product_id = r.product_id
+GROUP BY tp.title;
+
+SELECT 
+    TO_CHAR(r.reservation_date, 'MM') AS month,
+    tp.title,
+    SUM(r.total_price) AS total_sale
+FROM 
+    travel_products tp
+JOIN 
+    reservations r ON tp.product_id = r.product_id
+GROUP BY 
+    TO_CHAR(r.reservation_date, 'MM'), tp.title
+ORDER BY 
+    month, tp.title;
+    
+-------------------------
+SELECT tp.title, TO_CHAR(r.reservation_date, 'MM') AS month, SUM(r.total_price) AS total_sales
+FROM travel_products tp
+JOIN reservations r ON tp.product_id = r.product_id
+GROUP BY tp.title, TO_CHAR(r.reservation_date, 'MM')
+ORDER BY tp.title, month;
+--월별 총 매출
+
+
+
+drop table travel_products;
+--<연간 총 매출 조회하기>
+--<월별 매출 조회하기>
+SELECT SUM(total_price)
+FROM reservations
+WHERE TO_CHAR(reservation_date, 'YYYY-MM') = '2025-05';
+
+--<특정 단어 DB>
+CREATE TABLE forbidden_words (
+  word_id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  word VARCHAR2(100) NOT NULL UNIQUE
+);
+
+--<특정 단어가 포함된 QnA List 뽑아오기>
+SELECT *
+FROM qna
+WHERE EXISTS (
+  SELECT 1
+  FROM forbidden_words
+  WHERE INSTR(qna.content, forbidden_words.word) > 0
+);
+
+--샘플데이터 삽입하기(비속어 필터)
+INSERT INTO forbidden_words (word) VALUES ('바보');
+INSERT INTO forbidden_words (word) VALUES ('멍청이');
+INSERT INTO forbidden_words (word) VALUES ('XX');
+INSERT INTO forbidden_words (word) VALUES ('xx');
+INSERT INTO forbidden_words (word) VALUES ('쓰레기');
+--Qna 샘플데이터
+INSERT INTO qna (qna_id, user_id, title, content, answer, is_answered, views, created_at, answered_at) VALUES
+(7, 'user003', '게시글 작성이 안 됩니다', '바보야', NULL, 'F', 3,SYSDATE, NULL);   
+INSERT INTO qna (qna_id, user_id, title, content, answer, is_answered, views, created_at, answered_at) VALUES
+(8, 'user003', '게시글 작성이 안 됩니다', '멍청이', NULL, 'F', 3, SYSDATE, NULL);   
+INSERT INTO qna (qna_id, user_id, title, content, answer, is_answered, views, created_at, answered_at) VALUES
+(9, 'user003', '게시글 작성이 안 됩니다', 'XX', NULL, 'F', 3,SYSDATE, NULL);   
+INSERT INTO qna (qna_id, user_id, title, content, answer, is_answered, views, created_at, answered_at) VALUES
+(10, 'user003', '게시글 작성이 안 됩니다', '쓰레기같은 숙소', NULL, 'F', 3, SYSDATE, NULL);   
+INSERT INTO qna (qna_id, user_id, title, content, answer, is_answered, views, created_at, answered_at) VALUES
+(11, 'user003', '게시글 작성이 안 됩니다', 'xx', NULL, 'F', 3, SYSDATE, NULL);   
+INSERT INTO qna (qna_id, user_id, title, content, answer, is_answered, views, created_at, answered_at) VALUES
+(12, 'user003', '게시글 작성이 안 됩니다', '바보멍청이XXxx쓰레기', NULL, 'F', 3,SYSDATE, NULL);   
+DELETE
+FROM qna
+WHERE EXISTS (
+  SELECT 1
+  FROM forbidden_words
+  WHERE INSTR(qna.content, forbidden_words.word) > 0
+);
+commit;
+
+
+		SELECT tp.title AS title, TO_CHAR(r.reservation_date, 'MM') AS
+		month, SUM(r.total_price) AS total_sales
+		FROM travel_products tp
+		JOIN reservations r ON tp.product_id = r.product_id
+		GROUP BY tp.title, TO_CHAR(r.reservation_date, 'MM')
+		ORDER BY tp.title, month;
+
+--총 예약율
+--전체 예약수 가져오기
+
+UPDATE reservations SET status='PENDING';
+
+select * from qna;
