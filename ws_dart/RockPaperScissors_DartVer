@@ -1,0 +1,60 @@
+import 'dart:io';
+import 'dart:math';
+
+void main() {
+  final choices = ['가위', '바위', '보'];
+  final random = Random();
+
+  bool flag = true;
+
+  int win = 0;
+  int draw = 0;
+  int lose = 0;
+
+  while(flag){
+    stdout.write('가위(1), 바위(2), 보(3) 중 숫자를 입력하세요: ');
+  String? input = stdin.readLineSync();
+
+  int? userChoice = int.tryParse(input ?? '');
+  if (userChoice == null || userChoice < 1 || userChoice > 3) {
+    print('게임을 종료합니다...');
+    print('전적 (승/무/패)');
+    print('$win/$draw/$lose');
+    flag = false;
+    return;
+  }
+
+  int computerChoice = random.nextInt(3) + 1;
+
+  print('당신: ${choices[userChoice - 1]}');
+  print('컴퓨터: ${choices[computerChoice - 1]}');
+
+  
+  if (userChoice == computerChoice) {
+    draw++;
+    print('비겼습니다!');
+  } else if ((userChoice == 1 && computerChoice == 3) ||
+             (userChoice == 2 && computerChoice == 1) ||
+             (userChoice == 3 && computerChoice == 2)) {
+              win++;
+    print('당신이 이겼습니다!');
+  } else {
+    lose++;
+    print('컴퓨터가 이겼습니다!');
+  }
+  }
+  
+}
+
+int winlose(int player, int cpu){
+  if(player == cpu){
+    print("비겼습니다!!");
+  }else if((player == 1 && cpu == 3)||
+            (player == 2 && cpu == 1)||
+            (player == 3 && cpu == 2)){
+              print("이겼습니다!!");
+            }else{
+              print("졌습니다!!");
+            }
+  return 0;
+}
