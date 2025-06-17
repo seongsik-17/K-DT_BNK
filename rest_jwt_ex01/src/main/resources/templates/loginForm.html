@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+</head>
+<body>
+	<h1>Login</h1>
+	<hr>
+	<input type="text" id="username" name="username" placeholder="username...."><br>
+	<input type="text" id="password" name="password" placeholder="password"><br>
+	<button onclick="login()">로그인</button>
+	
+	<div id="token">사용자 정보</div>
+	
+	<script>
+		const info = document.getElementById("token");
+		function login(){
+			const username = document.querySelector("input[name=username]").value;
+			const password = document.querySelector("input[name=password]").value;
+			fetch("/login",{
+				method: "POST",
+				  headers: {
+				    "Content-Type": "application/json"  // JSON 전송임을 명시
+				  },
+				  body: JSON.stringify({
+					  "username":username,
+					  "password":password
+				  })
+				  		// JavaScript 객체 → JSON 문자열로 변환
+			})
+			.then(response => response.text())
+			.then(data => {
+				info.innerHTML = data;
+			})
+			.catch(err =>{
+				alert(err)
+			});
+		}
+		
+		function userInfo(Baerer){
+			fetch("user/",{
+				method: "GET",
+				headers:{
+					"USER-AUTH":"Bearer "+ Baerer
+				}
+			})
+			.then(response => response.json())
+			.then(data => console.log(data))
+			.catch(err =>{
+				alert(err);
+			});
+		}
+	</script>
+	
+</body>
+</html>

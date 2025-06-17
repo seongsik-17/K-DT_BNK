@@ -1,5 +1,10 @@
 package com.example.rest_jwt_ex01.controller;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
+
+import javax.crypto.SecretKey;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.rest_jwt_ex01.dto.LoginDto;
 import com.example.rest_jwt_ex01.utils.JWTUtil;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtParser;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -28,7 +38,7 @@ public class JwtTestController {
 		//로그인 성공
 		if("user01".equals(loginDto.getUsername())&& "1234".equals(loginDto.getPassword())) {
 			//토큰 준비
-			String token = makeJwt(loginDto.getUsername());
+			String token = makeJwt(loginDto.getUsername(), "user01@email.com");
 			//토큰 발행
 			response.setHeader("USER-AUTH", token);
 			
@@ -38,8 +48,8 @@ public class JwtTestController {
 		return "Bad";
 	}
 
-	private String makeJwt(String username) {
-		String jwt = jwtUtil.createJwt(username);
+	private String makeJwt(String username, String email) {
+		String jwt = jwtUtil.createJwt(username, email, 1000*60*3L);
 		String token = "Bearer "+ jwt;
 		
 		return token;
@@ -47,13 +57,28 @@ public class JwtTestController {
 	
 	@GetMapping("/user")
 	public String getUserInfo(HttpServletRequest request) {
-		String userAuth = request.getHeader("userAuth");
+		String userAuth = request.getHeader("USER-AUTH");
 		if(userAuth == null || userAuth.isEmpty()) {
 			return "Bad";
 		}
 		String jwt = userAuth.split(" ")[1];
 		String username = jwtUtil.getUsername(jwt);
+		String email = jwtUtil.getEmail(jwt);
 		
-		return "현재 접속중인 사용자: "+username;
+		SecretKey key = Keys.hmacShaKeyFor(secretkey.getBytes(StandardCharsets.UTF_8));
+		JwtParser parser = Jwts.parser()
+				.verifyWith(key)
+				.build();
+		Jws<Claims> jws = parser.parseSignedClaims(jwt);//서명
+		Claims claims = jws.getPayload();
+		
+		Date iat = claims.getIssuedAt();
+		Date exp = claims.getExpiration();
+		
+		System.out.println("발급(iat): "+iat);
+		System.out.println("발급(exp): "+exp);
+		
+		return "현재 접속중인 사용자: "+username+", "+email;
 	}
+	
 }
