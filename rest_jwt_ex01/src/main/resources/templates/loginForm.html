@@ -13,8 +13,13 @@
 	
 	<div id="token">사용자 정보</div>
 	
+	<hr>
+	<button onclick="userInfo()">사용자 데이터 가져오기</button>
+	<div id="msg"></div>
+	
 	<script>
 		const info = document.getElementById("token");
+		let userToken = null;
 		function login(){
 			const username = document.querySelector("input[name=username]").value;
 			const password = document.querySelector("input[name=password]").value;
@@ -31,26 +36,37 @@
 			})
 			.then(response => response.text())
 			.then(data => {
-				info.innerHTML = data;
+				userToken = data;
+				console.log(data);
+				info.innerHTML = "사용자 토큰: " + data;
 			})
 			.catch(err =>{
 				alert(err)
 			});
 		}
 		
-		function userInfo(Baerer){
-			fetch("user/",{
+		function userInfo(){
+			fetch("/user",{
 				method: "GET",
 				headers:{
-					"USER-AUTH":"Bearer "+ Baerer
+					"USER-AUTH":"Bearer "+ userToken
 				}
 			})
-			.then(response => response.json())
-			.then(data => console.log(data))
+			.then(response => response.text())
+			.then(data => {
+				console.log(data);
+				if(data == '401'){
+					login();
+				}
+				document.getElementById("msg").innerHTML = data;
+				
+			})
 			.catch(err =>{
 				alert(err);
 			});
 		}
+		
+		
 	</script>
 	
 </body>

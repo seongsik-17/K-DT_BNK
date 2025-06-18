@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 	@GetMapping("/")
 	public String root() {
+		return "index";
+	}
+	
+	@GetMapping("/login")
+	public String loginForm() {
 		return "loginForm";
 	}
 }

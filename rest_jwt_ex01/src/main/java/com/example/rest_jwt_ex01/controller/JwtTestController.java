@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.rest_jwt_ex01.dto.LoginDto;
+import com.example.rest_jwt_ex01.entity.User;
+import com.example.rest_jwt_ex01.service.UserService;
 import com.example.rest_jwt_ex01.utils.JWTUtil;
 
 import io.jsonwebtoken.Claims;
@@ -31,21 +33,26 @@ public class JwtTestController {
 	@Autowired
 	private JWTUtil jwtUtil;
 	
+	@Autowired
+	private UserService userService;
+	
 	@PostMapping("/login")
 	public String login(@RequestBody LoginDto loginDto, 
 				//HttpServletRequest result,//요청(세션을 사용하지 않아서 필요없음 
 				HttpServletResponse response) {//응답
 		//로그인 성공
-		if("user01".equals(loginDto.getUsername())&& "1234".equals(loginDto.getPassword())) {
+		if(userService.loginCheck(loginDto.getUsername(), loginDto.getPassword())) {
+			User user = new User();
+			user = userService.getUserInfo(loginDto.getUsername());
 			//토큰 준비
-			String token = makeJwt(loginDto.getUsername(), "user01@email.com");
+			String token = makeJwt(loginDto.getUsername(), user.getEmail());
 			//토큰 발행
 			response.setHeader("USER-AUTH", token);
 			
-			return "Good";
+			return token;
 		}
 		
-		return "Bad";
+		return "401";
 	}
 
 	private String makeJwt(String username, String email) {
@@ -61,24 +68,30 @@ public class JwtTestController {
 		if(userAuth == null || userAuth.isEmpty()) {
 			return "Bad";
 		}
-		String jwt = userAuth.split(" ")[1];
-		String username = jwtUtil.getUsername(jwt);
-		String email = jwtUtil.getEmail(jwt);
+		try {
+			String jwt = userAuth.split(" ")[2];
+			System.out.println(jwt);
+			String username = jwtUtil.getUsername(jwt);
+			String email = jwtUtil.getEmail(jwt);
+			
+			SecretKey key = Keys.hmacShaKeyFor(secretkey.getBytes(StandardCharsets.UTF_8));
+			JwtParser parser = Jwts.parser()
+					.verifyWith(key)
+					.build();
+			Jws<Claims> jws = parser.parseSignedClaims(jwt);//서명
+			Claims claims = jws.getPayload();
+			
+			Date iat = claims.getIssuedAt();
+			Date exp = claims.getExpiration();
+			
+			System.out.println("발급(iat): "+iat);
+			System.out.println("발급(exp): "+exp);
+			
+			return "현재 접속중인 사용자: "+username+", "+email;
+		}catch(Exception e){
+			return "401";
+		}
 		
-		SecretKey key = Keys.hmacShaKeyFor(secretkey.getBytes(StandardCharsets.UTF_8));
-		JwtParser parser = Jwts.parser()
-				.verifyWith(key)
-				.build();
-		Jws<Claims> jws = parser.parseSignedClaims(jwt);//서명
-		Claims claims = jws.getPayload();
-		
-		Date iat = claims.getIssuedAt();
-		Date exp = claims.getExpiration();
-		
-		System.out.println("발급(iat): "+iat);
-		System.out.println("발급(exp): "+exp);
-		
-		return "현재 접속중인 사용자: "+username+", "+email;
 	}
 	
 }
