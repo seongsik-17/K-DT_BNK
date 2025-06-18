@@ -63,7 +63,7 @@ public class JwtTestController {
 	}
 	
 	@GetMapping("/user")
-	public String getUserInfo(HttpServletRequest request) {
+	public String getUserInfo(HttpServletRequest request, HttpServletResponse response) {
 		String userAuth = request.getHeader("USER-AUTH");
 		if(userAuth == null || userAuth.isEmpty()) {
 			return "Bad";
@@ -89,7 +89,8 @@ public class JwtTestController {
 			
 			return "현재 접속중인 사용자: "+username+", "+email;
 		}catch(Exception e){
-			return "401";
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);//401에러코드
+			return "사용자 정보 만료됨...";
 		}
 		
 	}

@@ -1,73 +1,192 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>Login</title>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #74ebd5, #ACB6E5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      width: 320px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-sizing: border-box;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #74ebd5;
+      outline: none;
+    }
+    
+     input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-sizing: border-box;
+      transition: border-color 0.3s;
+    }
+
+    input[type="password"]:focus {
+      border-color: #74ebd5;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4e9af1;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #3b7ed0;
+    }
+
+    #token, #msg {
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #444;
+      word-wrap: break-word;
+    }
+
+    #timer {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #e63946;
+    }
+
+    hr {
+      margin: 30px 0;
+      border: 0;
+      height: 1px;
+      background-color: #ddd;
+    }
+  </style>
 </head>
 <body>
-	<h1>Login</h1>
-	<hr>
-	<input type="text" id="username" name="username" placeholder="username...."><br>
-	<input type="text" id="password" name="password" placeholder="password"><br>
-	<button onclick="login()">로그인</button>
-	
-	<div id="token">사용자 정보</div>
-	
-	<hr>
-	<button onclick="userInfo()">사용자 데이터 가져오기</button>
-	<div id="msg"></div>
-	
-	<script>
-		const info = document.getElementById("token");
-		let userToken = null;
-		function login(){
-			const username = document.querySelector("input[name=username]").value;
-			const password = document.querySelector("input[name=password]").value;
-			fetch("/login",{
-				method: "POST",
-				  headers: {
-				    "Content-Type": "application/json"  // JSON 전송임을 명시
-				  },
-				  body: JSON.stringify({
-					  "username":username,
-					  "password":password
-				  })
-				  		// JavaScript 객체 → JSON 문자열로 변환
-			})
-			.then(response => response.text())
-			.then(data => {
-				userToken = data;
-				console.log(data);
-				info.innerHTML = "사용자 토큰: " + data;
-			})
-			.catch(err =>{
-				alert(err)
-			});
-		}
-		
-		function userInfo(){
-			fetch("/user",{
-				method: "GET",
-				headers:{
-					"USER-AUTH":"Bearer "+ userToken
-				}
-			})
-			.then(response => response.text())
-			.then(data => {
-				console.log(data);
-				if(data == '401'){
-					login();
-				}
-				document.getElementById("msg").innerHTML = data;
-				
-			})
-			.catch(err =>{
-				alert(err);
-			});
-		}
-		
-		
-	</script>
-	
+  <div class="container">
+    <h1>🔐 Login</h1>
+    <input type="text" id="username" name="username" placeholder="아이디를 입력하세요">
+    <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요">
+    <button onclick="login()">로그인</button>
+
+    <div id="token">사용자 정보</div>
+    <div id="timer"></div>
+
+    <hr>
+
+    <button onclick="userInfo()">사용자 데이터 가져오기</button>
+    <div id="msg"></div>
+  </div>
+
+  <script>
+    const info = document.getElementById("token");
+    const timerEl = document.getElementById("timer");
+    let userToken = null;
+    let timerInterval = null;
+
+    function parseJwt(token) {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+    }
+
+    function startTokenTimer(token) {
+      const payload = parseJwt(token);
+      const exp = payload.exp * 1000;
+      clearInterval(timerInterval);
+
+      timerInterval = setInterval(() => {
+        const now = Date.now();
+        const diff = exp - now;
+
+        if (diff <= 0) {
+          clearInterval(timerInterval);
+          timerEl.innerText = "⛔️ 토큰 만료됨 - 다시 로그인하세요";
+          alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+          return;
+        }
+
+        const seconds = Math.floor(diff / 1000) % 60;
+        const minutes = Math.floor(diff / 1000 / 60) % 60;
+        const hours = Math.floor(diff / 1000 / 60 / 60);
+        timerEl.innerText = `⏳ 남은 시간: ${hours}시간 ${minutes}분 ${seconds}초`;
+      }, 1000);
+    }
+
+    function login() {
+      const username = document.querySelector("input[name=username]").value;
+      const password = document.querySelector("input[name=password]").value;
+      fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      })
+      .then(response => response.text())
+      .then(data => {
+        userToken = data;
+        info.innerHTML = "✅ 사용자 토큰 발급 완료!";
+        startTokenTimer(userToken);
+      })
+      .catch(err => {
+        alert("로그인 오류: " + err);
+      });
+    }
+
+    function userInfo() {
+      fetch("/user", {
+        method: "GET",
+        headers: { "USER-AUTH": "Bearer " + userToken }
+      })
+      .then(response => response.text())
+      .then(data => {
+        if (data === '401') {
+          alert("토큰이 만료되었습니다. 다시 로그인하세요.");
+          login();
+        } else {
+          document.getElementById("msg").innerHTML = data;
+        }
+      })
+      .catch(err => {
+        alert("에러 발생: " + err);
+      });
+    }
+  </script>
 </body>
 </html>
